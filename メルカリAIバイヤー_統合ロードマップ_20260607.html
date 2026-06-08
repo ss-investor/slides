@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ローカルLLM AIバイヤー 統合ロードマップ 2026-06-07</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1e222b; --line:#2b303b;
+    --txt:#e7ebf2; --sub:#9aa4b2; --accent:#ff8a3d; --accent2:#4da3ff;
+    --green:#37c978; --yellow:#f5c451; --red:#ff6b6b; --purple:#b98aff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.7;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 22px 80px}
+  h1{font-size:27px;margin:0 0 6px;letter-spacing:.5px}
+  h2{font-size:21px;margin:38px 0 12px;padding-left:11px;border-left:5px solid var(--accent)}
+  h3{font-size:17px;margin:22px 0 8px;color:var(--accent2)}
+  .lead{color:var(--sub);font-size:14px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0}
+  .panel2{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0}
+  code{background:#0b0d11;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:13px;color:#ffd9b8}
+  .grid{display:grid;gap:12px}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;margin-right:5px;vertical-align:middle}
+  .S{background:#173a2a;color:var(--green);border:1px solid #2c6b4d}
+  .M{background:#3a3417;color:var(--yellow);border:1px solid #6b5f2c}
+  .L{background:#3a1f17;color:var(--red);border:1px solid #6b3a2c}
+  .P1{background:#2a1740;color:var(--purple);border:1px solid #4f2c8a}
+  .done{background:#173a2a;color:var(--green);border:1px solid #2c6b4d}
+  .now{background:#17313a;color:var(--accent2);border:1px solid #2c5a6b}
+  .next{background:#2b2f3a;color:var(--sub);border:1px solid var(--line)}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:#0b0d11;color:var(--sub);font-weight:700}
+  .task{border:1px solid var(--line);border-radius:9px;padding:11px 14px;margin:8px 0;background:var(--panel2)}
+  .task .id{font-family:ui-monospace,monospace;color:var(--accent);font-weight:700;font-size:13px}
+  .task .meta{color:var(--sub);font-size:12.5px;margin-top:3px}
+  .flow{font-family:ui-monospace,monospace;font-size:12.5px;background:#0b0d11;border:1px solid var(--line);
+    border-radius:9px;padding:14px 16px;overflow-x:auto;white-space:pre;color:#cfe3ff}
+  .legend span{margin-right:14px;font-size:12.5px;color:var(--sub)}
+  .warn{border-left:4px solid var(--yellow);background:#221f12}
+  .good{border-left:4px solid var(--green);background:#10241a}
+  .key{border-left:4px solid var(--accent);background:#241a10}
+  ul{margin:6px 0 6px 0;padding-left:20px}
+  li{margin:3px 0}
+  .muted{color:var(--sub)}
+  .phasehead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .num{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#111;
+    align-items:center;justify-content:center;font-weight:800}
+  .kpi{display:inline-block;background:#0b0d11;border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:4px 6px 4px 0;font-size:13px}
+  .kpi b{color:var(--green);font-size:16px}
+  hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+  a{color:var(--accent2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>🤖🛒 ローカルLLM「AIバイヤー」統合ロードマップ</h1>
+  <div class="lead">作成 2026-06-07 ／ 対象: <code>~/projects/ebay-arbitrage</code> 古本・メディア アービトラージ ／
+  目的: <b>スクレイピング済データのISBN紐付け</b> と <b>ローカルLLMによる識別・買い判定</b> を一本のパイプラインに統合する。</div>
+
+  <div class="panel good">
+    <b>✅ PoCで実証済み（本ロードマップの土台）</b>
+    <div style="margin-top:6px">
+      <span class="kpi">画像識別 <b>94.7%</b> <span class="muted">(実メルカリ228件)</span></span>
+      <span class="kpi">誤マッチ <b>7→1件</b> <span class="muted">(照合改良後)</span></span>
+      <span class="kpi">バーコード照合 <b>誤マッチ捕捉</b> <span class="muted">(アリスDVD→skip)</span></span>
+      <span class="kpi">買い判定 <b>14bで整合</b> <span class="muted">(1年ポリシー準拠)</span></span>
+    </div>
+    <div class="muted" style="margin-top:6px">本機=Mac mini M4 Pro 24GB / 識別=<code>qwen2.5vl:7b</code> / 判定=<code>qwen2.5:14b</code> / Keepa残トークン潤沢。
+    成果物は <code>poc_mercari_llm/</code>（本番非接触）。</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2 id="handover">🔄 現在地と次ターミナルへの引き継ぎ（2026-06-08 夕 更新）</h2>
+  <div class="panel good">
+    <b>📍 本日(6/8 夜)の到達点：★①メルカリAIバイヤーが2台構成で本番稼働開始★。隔離テーブル+識別/照合/検証/買い判定ワーカー+素材投入コレクター+ポータル/mercari-ai を実装・実機実証。重大バグ(売値に新品価格)も修正済。次は監視→問題なければヤフオク展開。</b>
+    <div style="margin-top:6px">
+      <span class="kpi">🍎リンゴ=LLM方式 <b>稼働</b></span>
+      <span class="kpi">🍑モモ=ISBN方式 <b>稼働</b> <span class="muted">(別IP=二重巡回なし)</span></span>
+      <span class="kpi">本カテゴリ新着 画像取得 <b>100%</b></span>
+      <span class="kpi">隔離テーブル mercari_llm_match <b>本番適用</b></span>
+    </div>
+  </div>
+  <div class="panel key">
+    <b>🖥️ Mac mini 命名規則（果物名・2026-06-08制定）</b>
+    <ul>
+      <li><b>🍎 リンゴ</b> = 旧「メインMac mini」。メルカリ <b>LLM方式</b>(コレクター+AI判定ワーカー)。Ollama(qwen2.5vl:7b/14b)稼働。メルカリISBN方式は永続無効化済。</li>
+      <li><b>🍑 モモ</b> = 旧「2代目・新Mac mini」。メルカリ <b>ISBN番号検索方式</b>(mercari_continuous)。</li>
+      <li>方針＝同一サイトを「リンゴ=LLM / モモ=ISBN」のように<b>別マシン・別IPで役割分担</b>→二重巡回(CAPTCHA)が原理的に起きない。サイト/LLM増設のたびに果物名Mac miniを追加。spec(/spec)にも命名表を記載。</li>
+    </ul>
+  </div>
+  <div class="panel good">
+    <b>✅ 本番構成（稼働中・🍎リンゴ）＋修正した重大バグ</b>
+    <ul>
+      <li><b>① コレクター</b> <code>mercari_noisbn_continuous.py</code>(launchd <code>mercari-noisbn</code>常駐)＝本カテゴリ新着を<b>カードのみ巡回</b>しコード無し出品をimage_url付きでlistings保存。<b>isbn/asin列は触らない</b>。</li>
+      <li><b>② ワーカー</b> <code>mercari_llm_worker.py</code>(launchd <code>mercari-llm-worker</code>・15分毎)＝画像DL→vl:7b識別→match2照合→14b検証→買い判定→<b>隔離テーブルmercari_llm_match</b>。</li>
+      <li><b>③ ポータル</b> <code>/mercari-ai</code>＝verify済み候補を買い→利益降順・写真サムネ付き・<b>現物確認用</b>。</li>
+      <li><b>🐛売値バグ修正</b>：中古本なのに新品BuyBox(¥2200)で売値算定し赤字をbuyと誤判定→<b>売値は中古相場のみ</b>(Keepa avg_used_365→90日→DB中古)+<b>死蔵ゲート(drops365=0→skip)</b>。修正後おやゆびちゃん=売値¥120→赤字→skip✓。言い値トラップも自動回避。</li>
+      <li class="muted">仕入価ドリフト(¥899→¥1299)=パーサー正常・出品者値変更(現物確認でカバー)。ポータル500=confidence型→::float8で修正。Web=リンゴのnpm run start(port3000)。runner=scripts/mercari_noisbn_runner.sh,mercari_llm_worker_runner.sh。</li>
+    </ul>
+  </div>
+  <div class="panel key">
+    <b>方針確定（ユーザー合意）：①取得を「キーワードISBN検索」→「本カテゴリ新着巡回」に変える。画像は永続保存しない。ASINは隔離テーブルに。段階的に小さく都度確認。</b>
+
+    <h3 style="margin-top:10px">★本日の重要な事実訂正（本番の実体）★</h3>
+    <ul>
+      <li><b>本番メルカリの実体は <code>scripts/mercari_continuous.py</code></b>（launchd <code>com.ssinvestor.arbitrage.mercari-continuous</code>）。<code>runner.py</code>/<code>mercari_fullscan.py</code>ではない。</li>
+      <li>その動作＝<b>キーワード「ISBN」で検索</b>→詳細ページでISBN正規表現必須(無ければskip)→book_products照合→<b>image_urlを保存しない</b>。結果：DBのmercariは<b>画像0件・ISBN99.9%</b>、真のNo-ISBN出品は定期削除で<b>残20件</b>。</li>
+      <li>＝「既存listingsを読んでAIにかける」は<b>不可</b>（画像が無い・No-ISBNが残らない）。①には本番scraper改修(新パイプライン追加)が前提。<code>continuous</code>は壊さず別系統で。</li>
+    </ul>
+
+    <h3>★① 計測フェーズ 完了（本番非接触・continuousを一時bootout→計測→bootstrapで実施）★</h3>
+    <ul>
+      <li><b>カテゴリ判明</b>：現メルカリ <code>category_id=5</code> = <b>「本・雑誌・漫画」</b>＝本のカテゴリそのもの(CD/DVD/ゲームは別上位)。子=本/漫画/雑誌。</li>
+      <li><b>第1段</b>(<code>category_measure.py</code>)：本カテゴリ新着200件巡回=<b>13秒/画像100%/タイトルISBN 0%</b>(＝現本番が捨てている層を丸ごと取得可)。</li>
+      <li><b>第2段</b>(<code>category_phase2_match2.py</code>)：写真AI識別→照合→利益。旧matcher 照合24/黒字7(誤2) → <b>match2+verify(14b) 照合19/黒字5(誤マッチ排除)</b>。目視の<b>真のクリーン黒字 ≈ 8-10%</b>。</li>
+    </ul>
+
+    <h3>★計測で発見した「2層バグ」（①本番化の前提）★</h3>
+    <ul>
+      <li>(1) <b>match2の年度ゲートが和暦/漢数字を拾えなかった</b>（衛生管理者2019↔令和7が誤マッチ）→ <code>_extract_year</code>を令和/平成/昭和+漢数字対応に<b>修正済</b>(単体テスト全件一致)。</li>
+      <li>(2) <b>写真AI(vl:7b)がタイトルから年を落とす</b>（「令和八年 高島易断本暦」→「高島易断本暦」）→match2に年が渡らず不発。<b>①本番化時の必須対策＝数字(年/巻)ゲートは“元メルカリタイトル”からも抽出</b>（LLMタイトル=意味照合用 / 元タイトル=数字シグナル用）。【未実装】</li>
+    </ul>
+
+    <h3>★② pg_trgm 完了★</h3>
+    <ul>
+      <li>本番DBに <code>CREATE EXTENSION pg_trgm</code> <b>適用済(v1.6)</b>。<code>match2.py</code>に<b>trgmフォールバック追加</b>(ILIKEで本命が取れない時のみ発火・ILIKE温存)。</li>
+      <li><code>altedition_v3.py</code>再測定(同一80件)：別版救済 <b>40.0%→48.8%</b>(+8.8pt・32→39件)・黒字13.8%→16.2%・<b>誤マッチ≒0維持</b>。索引無しseq scanでこの精度。</li>
+      <li>⚠️ <b>重いGIN索引は今は作らない</b>：book_products書き込みは<b>約20スクリプト/launchd10+本(keepa-*)</b>が担い、全停止しないと構築不可。さらに今は<b>6/18 Keepa格安移行前の駆け込みsprintで書込ピーク</b>。→<b>6/18以降の窓で手順書付き実施</b>(<code>db/migrations/0056_pg_trgm_book_products_title.sql</code>に書込ジョブ一覧+手順記載)。拡張済なので①は索引無しでも動作可(遅いだけ)。</li>
+    </ul>
+
+    <h3>次ターミナルの具体タスク＝① 本番パイプライン設計・着手</h3>
+    <div class="task"><span class="id">①本命: No-ISBN画像識別を本番化（設計→小さく実装）</span> <span class="pill L">L</span>
+      <div><b>本カテゴリ巡回worker</b>(category_id=5・新着・external_id重複除外・continuousと二重巡回しない=別時間帯orカテゴリ専用) → <b>写真AI識別</b>(vl:7b・画像は一時DL→判定後即削除) → <b>match2+verify</b>(★元メルカリタイトルから年/巻の数字抽出を入れる=高島易断型対策★) → <b>隔離テーブル <code>mercari_llm_match</code></b>(listings本体を汚さない) → <b>buy_judge</b>(14b+Keepa・決定論利益) → <b>ポータル「🤖AI識別候補」別枠表示</b>。</div>
+      <div class="meta">画像は永続保存しない(結果だけ保存)。隔離テーブル方式・確証が積めば本体合流を検討。MercariClient.search()は<code>category_id</code>引数を追加済(後方互換)。</div></div>
+    <div class="task"><span class="id">②残: GIN索引(本番速度用)</span> <span class="pill M">M</span> <span class="pill P1">⚑6/18以降の窓</span>
+      <div>書込ジョブ全停止→<code>CREATE INDEX ... gin(title gin_trgm_ops)</code>→再開。手順はmigration 0056参照。①が索引無しで遅いと感じたら前倒し検討。</div></div>
+
+    <h3>実行コマンド例（apps/scraper の venv 使用）</h3>
+    <div class="flow">cd /Users/apple/projects/ebay-arbitrage/apps/scraper
+# 本カテゴリ新着の母数計測(本番非接触・要continuous一時停止)
+#   停止: launchctl bootout gui/$(id -u)/com.ssinvestor.arbitrage.mercari-continuous
+.venv/bin/python ../../poc_mercari_llm/category_measure.py --category-id 5 --max 200
+#   再開: launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.ssinvestor.arbitrage.mercari-continuous.plist
+# 写真AI識別(40件) → クリーン照合(match2 trgm + verify)
+.venv/bin/python ../../poc_mercari_llm/analyze.py --in ../../poc_mercari_llm/category_measure.jsonl --outdir ../../poc_mercari_llm/category_phase2 --limit 40
+.venv/bin/python ../../poc_mercari_llm/category_phase2_match2.py
+# 別版救済(②trgm版)・ollama起動
+.venv/bin/python ../../poc_mercari_llm/altedition_v3.py --n 80 --seed 3
+# ollama: /Applications/Ollama.app/Contents/Resources/ollama serve</div>
+    <div class="muted" style="margin-top:8px">全設計・判断ログは <code>poc_mercari_llm/IMPLEMENTATION_PLAN.md</code>。新規ファイル: <code>category_measure.py</code> / <code>category_phase2_match2.py</code> / <code>db/migrations/0056_pg_trgm_book_products_title.sql</code>。編集(後方互換): <code>mercari/client.py</code>(category_id引数) / <code>match2.py</code>(trgm+和暦ゲート)。</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2>1. 核心の論点：ISBN紐付けとLLM照合を「どう統合するか」</h2>
+
+  <div class="panel">
+    <h3>現状の紐付けパイプライン（問題点）</h3>
+    <div class="flow">スクレイパー（mercari_continuous 等）
+   └─ タイトル/説明文を正規表現でISBN抽出
+        ├─ <span style="color:#37c978">ISBN見つかる</span> → book_products.isbn_13 で照合 → listings.asin に保存 ✅
+        └─ <span style="color:#ff6b6b">ISBN無し</span>      → <b>その場で破棄（continue）</b> ❌  ← mercari_fullscan.py:203
+                          （NDL補完=タイトル→ISBNは和書7サイトのみ・ヒット率約6%）</div>
+    <div class="muted">＝個人出品（メルカリ等）の大半は識別できず捨てられている。これが今回埋める「宝の山」。</div>
+  </div>
+
+  <div class="panel key">
+    <h3>あるべき統合パイプライン（2段紐付け）</h3>
+    <div class="flow">スクレイパー
+   └─ <b>第1段</b>：正規表現ISBN抽出 → 見つかれば従来通り照合（速い・確実）→ listings.asin ✅
+   └─ <b>ISBN無し</b> → <span style="color:#ff6b6b">破棄せず保持</span> → <b>LLM識別キュー</b>へ
+        ↓
+   <b>第2段：ローカルLLM識別サービス</b>（価格フィルタで安い候補に限定）
+     ① 写真+タイトルを vl:7b で識別（書名/著者/種別）
+     ② 照合エンジン（正規化+著者+コアタイトル+<code>pg_trgm</code>）→ 候補ASIN+信頼度
+     ③ 詳細ページのバーコードを読めれば ISBN/JAN で<b>完全一致＝誤マッチゼロ</b>
+     ④ 結果を <b>listings の LLM列</b>（or 専用テーブル）に保存
+        ↓
+   <b>第3段：買い判定デーモン</b>（Keepa統計 + 14b + 決定論floor）
+     → buy/conditional/skip/trap + 利益 + 理由 → <b>buy_verdict テーブル</b>
+        ↓
+   <b>ポータル</b>：「今日の買うべきリスト」+ /books等にAI推定バッジ + 人間レビュー</div>
+  </div>
+
+  <div class="panel warn">
+    <b>⚠️ 統合の設計原則（ここを外すと事故る）</b>
+    <ul>
+      <li><b>ISBN確定 &gt; LLM推定</b>：正規表現/バーコードで確定したISBNは絶対優先。LLM推定がそれを上書きしない。</li>
+      <li><b>権威列を汚さない</b>：LLM推定は <code>listings.asin</code> に直書きせず、<b>別列（llm_asin / llm_confidence / barcode_status）</b>に置く。
+        「高信頼 or バーコード一致」のみ <code>asin</code> へ昇格（promotion rule）。誤マッチが本番表示に混ざらない。</li>
+      <li><b>NDLパターンを踏襲</b>：<code>ndl_queried_at</code> と同じく <code>llm_queried_at</code> で処理済み管理（再処理・冪等・キュー化が楽）。</li>
+      <li><b>価格フィルタを先に</b>：全listingにLLMを回さず「Keepa相場より十分安い＝黒字になりうる」候補だけに限定（DVD構築のstats-only先行と同思想）。</li>
+      <li><b>削除運用の見直し</b>：ISBN無し紐付け不能listingの定期削除は、<b>LLM識別を一巡させてから</b>に変更（消す前に拾う）。</li>
+      <li><b>NDLはLLMの下位互換</b>：和書タイトル→ISBNのNDL補完は残しつつ、LLMが画像で上位互換（海外/コード無しもカバー）。役割を整理。</li>
+    </ul>
+  </div>
+
+  <div class="panel warn">
+    <b>⚠️ 「LLMで処理する」対象には2種類の入口がある（混同注意・2026-06-07追記）</b>
+    <table style="margin-top:8px">
+      <tr><th>区分</th><th>状態</th><th>詰まりの原因</th><th>LLMの役割</th></tr>
+      <tr><td><b>①コード無し</b><br>(メルカリ等 個人出品)</td><td>ISBNが<b>全く無い</b></td><td>コードが読めない</td><td><b>写真+タイトルでゼロから商品特定</b>→Keepa照合。バーコード写りで完全一致(誤マッチゼロ)。実測識別94.7%</td></tr>
+      <tr><td><b>②絶版/未掲載</b><br>(例: 紐付け待ち9,203種ISBN)</td><td>ISBNは<b>有る</b>がAmazon/Keepaに<b>無い</b></td><td>その<b>版がAmazonカタログに不在</b>(コードは読めている)</td><td>exact逆引きは0。<b>あいまいタイトル照合で同じ本の別版ASINを救済</b>(画像は確認用・既にタイトルがあるので画像無しでも可)。別版も無ければ他販路で評価 or 対象外</td></tr>
+    </table>
+    <div class="muted" style="margin-top:6px">→ 別ターミナルの「紐付け待ち9,203件(全体0.36%)＝Amazonに無い絶版ISBN」は<b>②</b>。これらをLLMに委ねるのは正しいが、仕事は〈コード読取〉でなく〈別版救済＋他販路評価〉。①(画像識別)とは入口が違う。逆引きdaemonの exact照合の<b>後段</b>として、あいまい照合層を置く位置づけ。</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2>1.5 データ投入とLLM判定の「タイミング」（非同期エンリッチ）</h2>
+  <div class="panel key">
+    <b>結論：ポータルへは先に入れる。LLMは定期実行で後からバッジ/フラグを付与する（"判定完了を待ってから投入"ではない）。</b>
+    <div class="muted" style="margin-top:4px">理由＝既存のNDL補完(<code>ndl_queried_at</code>)・候補制限チェック・MV更新と同じ非同期パターン。LLMは1件5〜20秒と遅く、取り込みをブロックすると全体が詰まる。分離すればスクレイピングは全速・LLMは自分のペースで追従。</div>
+    <div class="flow" style="margin-top:10px">listing投入（<span style="color:#37c978">即・ポータルに表示</span> / ISBN無しも破棄せず保持）   状態=<b>未処理</b>
+   │
+   ▼ <b>定期ワーカーA</b>（識別・照合 / 価格フィルタで安い候補のみ）
+       ISBN確定 &gt; 無ければLLM識別 → 照合(pg_trgm/著者/コアタイトル) → バーコード確認
+       → llm_asin / llm_confidence / barcode_status を<b>別列</b>に付与（権威のasinは汚さない）   状態=<b>AI推定済</b>🏷️
+   │
+   ▼ <b>定期ワーカーB</b>（買い判定 / Keepa + 14b + 決定論floor）
+       drops365・avg365・利益を統合 → buy / conditional / skip / trap   状態=<b>判定済</b>🏷️
+   │
+   ▼ ポータル：「買うべき順」リスト + 高信頼/バーコード一致は<b>asinへ昇格</b>（既存の集計・利益判定に自動合流）
+                低信頼は人間レビュー行き（本番表示を汚さない）</div>
+    <div class="legend" style="margin-top:8px">
+      <span>状態遷移：<b>未処理</b> → <b>AI推定済</b>(識別バッジ) → <b>判定済</b>(買い/見送りバッジ)</span>
+    </div>
+    <div class="muted" style="margin-top:6px"><b>per-itemの依存だけ正確に</b>：利益判定(B)はASINが要るので必ず識別・紐付け(A)の後に回る＝Phase2→Phase3の順序は正しい。ただし両方とも「既にあるlistingに後から重ねる」非同期処理で、<b>判定完了までポータル投入を待たない</b>。ISBN確定組は従来通り即フル表示。</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2>1.7 収集戦略の転換：「ISBN中心」→「広く取る」（2026-06-07追記）</h2>
+  <div class="panel key">
+    <b>LLMが識別できるようになった以上、ヤフオク/メルカリ等は「ISBN付きだけ」でなく、カテゴリ/キーワードで広く収集できる。</b>
+    <div class="flow" style="margin-top:8px">【従来】 キーワード/ISBN検索 → ISBN付き出品<b>だけ</b>保持（コード無しは破棄）＝個人出品の大半を取りこぼし
+【今後】 カテゴリ/キーワードで<b>広く収集（コード無しも保持・image_url含む）</b> → LLM識別パイプラインへ
+        ※ ただし全件LLMは非現実的 → <b>収集 or 投入時に価格フィルタ</b>（Keepa相場より十分安い＝黒字になりうる帯）で絞る</div>
+    <div class="muted" style="margin-top:6px"><b>トレードオフ（必ず設計で握る）</b>：①収集量が激増→Mercari/ヤフオクのWAF・レート管理が一段重要（continuousとの協調・巡回間隔）②listings肥大→価格フィルタ＋識別不能の長期パージ③従来のISBN検索パスは"既知の良書を速く拾う"用途で<b>併存</b>させる価値あり（広域sweepと二本立て）。</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2>2. DB設計の変更（先に決めるべき土台）</h2>
+  <div class="panel">
+  <table>
+    <tr><th>対象</th><th>変更</th><th>理由 / メモ</th></tr>
+    <tr><td><code>listings.image_url</code></td><td>メルカリ等で<b>保存するよう修正</b>（現状INSERTで捨てている）</td><td>LLM識別の入力。既に列は存在。</td></tr>
+    <tr><td><code>listings</code> 新列</td><td><code>llm_asin</code>/<code>llm_confidence</code>(real)/<code>llm_method</code>(title/barcode/isbn)/<code>barcode_status</code>(confirmed/mismatch/none)/<code>llm_queried_at</code>(timestamptz)/<code>llm_payload</code>(jsonb)</td><td>LLM推定の置き場。権威の<code>asin</code>とは分離。<code>ndl_queried_at</code>と同パターン。</td></tr>
+    <tr><td>新テーブル <code>llm_buy_verdict</code></td><td>listing_id/asin/verdict/confidence/market_estimate/profit/red_flags(jsonb)/reasoning/keepa_snapshot(jsonb)/model/judged_at</td><td>買い判定の保存＋履歴。ポータルの「買うべきリスト」のソース。</td></tr>
+    <tr><td>拡張 <code>pg_trgm</code></td><td><code>CREATE EXTENSION pg_trgm;</code> + <code>book_products.title</code>にGINトリグラム索引</td><td><b>要ご承認（本番DB変更）</b>。照合8秒/件→ミリ秒に。228件110分の主因解消。</td></tr>
+    <tr><td>運用テーブル（任意）</td><td><code>llm_review</code>（人手修正ログ：誤マッチ訂正→将来の精度改善材料）</td><td>誤マッチを人が直したら記録。学習/閾値調整に。</td></tr>
+  </table>
+  <div class="muted">※ migration番号は現行の連番（最新0048系）に続けて採番。全て後方互換の列追加で既存処理に影響なし。</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2>3. フェーズ別ロードマップ（タスク細分化）</h2>
+  <div class="legend panel2">
+    <span><span class="pill done">完了</span>PoC実証済</span>
+    <span><span class="pill now">次着手</span></span>
+    <span><span class="pill next">後続</span></span>
+    &nbsp;|&nbsp;
+    <span><span class="pill S">S</span>〜半日</span>
+    <span><span class="pill M">M</span>1〜3日</span>
+    <span><span class="pill L">L</span>1週間+</span>
+    <span><span class="pill P1">⚑要承認/判断</span></span>
+  </div>
+
+  <!-- Phase 0 -->
+  <div class="panel">
+    <div class="phasehead"><span class="num">0</span><h3 style="margin:0">設計確定・基盤決定 <span class="pill now">次着手</span></h3></div>
+    <div class="task"><span class="id">P0-1</span> <span class="pill S">S</span> <span class="pill P1">⚑判断</span>
+      <div>DB設計の最終確定（上記§2の列・テーブル名・型）。migration草案を書く（適用は後段）。</div>
+      <div class="meta">依存: なし ／ 成果: migration SQLドラフト</div></div>
+    <div class="task"><span class="id">P0-2</span> <span class="pill S">S</span> <span class="pill P1">⚑承認</span>
+      <div><code>pg_trgm</code>有効化の可否決定（本番DB変更）。不可なら代替（正規化済みタイトル生成列＋btree前方一致 等）を選ぶ。</div>
+      <div class="meta">依存: なし ／ 影響: 照合性能の上限</div></div>
+    <div class="task"><span class="id">P0-3</span> <span class="pill S">S</span>
+      <div>モデル運用方針の固定：識別=<code>qwen2.5vl:7b</code>／判定=<code>qwen2.5:14b</code>、ollama常駐（<code>brew services</code> or launchd）、フェイルオーバ。</div>
+      <div class="meta">依存: なし</div></div>
+    <div class="task"><span class="id">P0-4</span> <span class="pill S">S</span>
+      <div>Keepaトークン予算設計：日次上限・優先度（新規link＞価格変動＞再判定）・既存Keepa daemonとの競合回避。</div>
+      <div class="meta">依存: なし ／ 現状: 残約5万・refill 2310/分</div></div>
+    <div class="task"><span class="id">P0-5</span> <span class="pill S">S</span> <span class="pill P1">⚑判断</span>
+      <div>Mercari巡回の協調方針：詳細収集を(a)continuousとbootout協調か(b)別時間帯か(c)低レート常時並走か。WAFリスクと鮮度のトレードオフ。</div>
+      <div class="meta">依存: なし ／ 本日は手動bootoutで実施済</div></div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="panel">
+    <div class="phasehead"><span class="num">1</span><h3 style="margin:0">識別エンジンの本番化</h3></div>
+    <div class="task"><span class="id">P1-1</span> <span class="pill M">M</span>
+      <div>PoCの <code>analyze.py</code> を再利用可能なモジュール/サービス化（識別→照合→信頼度を関数化、入出力をDB前提に）。<span class="pill done">PoC実証済</span></div>
+      <div class="meta">流用: WebP→PNG(sips)・num_ctx・画像縮小・著者主導照合・コアタイトル正規化</div></div>
+    <div class="task"><span class="id">P1-2</span> <span class="pill M">M</span>
+      <div>照合エンジンを本番品質に：NFKC/全角半角/版表記/帯ゴミ正規化 + <code>pg_trgm</code> similarity + 著者併用 + 誤マッチ防止ゲート（閾値）。<span class="pill done">PoC実証済(7→1)</span></div>
+      <div class="meta">依存: P0-2(pg_trgm)</div></div>
+    <div class="task"><span class="id">P1-3</span> <span class="pill S">S</span>
+      <div>バーコード読取の標準化（写真からISBN/JAN→isbn_13完全一致＝confirmed／不一致＝mismatchで誤マッチ排除）。<span class="pill done">PoC実証済</span></div>
+      <div class="meta">依存: 詳細ページ写真（P2-2）</div></div>
+    <div class="task"><span class="id">P1-4</span> <span class="pill S">S</span>
+      <div>信頼度スコアリング＆昇格ルール定義（confidence×barcode_status→<code>asin</code>へ昇格するか／レビュー回しか）。</div>
+      <div class="meta">依存: P0-1</div></div>
+    <div class="task"><span class="id">P1-5</span> <span class="pill M">M</span>
+      <div>精度ベンチ自動化（正解付きテスト＋実メルカリスポット）。CIで回帰検知。<span class="pill done">PoC版あり(groundtruth/rematch)</span></div>
+      <div class="meta">依存: P1-2</div></div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="panel">
+    <div class="phasehead"><span class="num">2</span><h3 style="margin:0">スクレイピング・パイプラインへの統合 <span class="pill" style="background:#241a10;color:var(--accent);border:1px solid #6b4a2c">★本丸★</span></h3></div>
+    <div class="task"><span class="id">P2-0a</span> <span class="pill M">M</span> <span class="pill P1">⚑判断</span>
+      <div><b>広域収集モードの追加</b>：ISBN検索中心 →「カテゴリ/キーワードで広く収集（コード無しも保持）」へ。各販路scraperに広域sweepを実装（従来のISBN検索パスは併存）。</div>
+      <div class="meta">依存: P0-5(巡回方針) ／ 注意: 収集量激増→WAF/レート/巡回間隔の再設計が前提</div></div>
+    <div class="task"><span class="id">P2-0b</span> <span class="pill S">S</span>
+      <div><b>価格フィルタの導入</b>：広域収集 or LLM投入の手前で「Keepa相場より十分安い＝黒字になりうる」帯に限定（全件LLMを避ける）。販路別に閾値調整。</div>
+      <div class="meta">依存: P2-0a</div></div>
+    <div class="task"><span class="id">P2-1</span> <span class="pill M">M</span>
+      <div><b>no-ISBN listingを破棄しない</b>：<code>mercari_fullscan.py:203 if not isbn: continue</code> 等を変更し、ISBN無しも保存（image_url含む）。continuous/各販路scraperにも展開。</div>
+      <div class="meta">依存: P0-1 ／ 注意: listings件数が増えるのでストレージ/MV影響を確認</div></div>
+    <div class="task"><span class="id">P2-2</span> <span class="pill M">M</span>
+      <div>詳細ページ収集の本番化（説明文/状態/全写真/バーコード）。レート安全値（P0-5）。<span class="pill done">抽出ロジックPoC実証済</span></div>
+      <div class="meta">流用: body正規表現+orig写真URL構成補完</div></div>
+    <div class="task"><span class="id">P2-3</span> <span class="pill M">M</span>
+      <div><b>LLM識別キュー/ワーカー</b>：<code>llm_queried_at IS NULL</code> かつ <code>isbn IS NULL</code> かつ価格フィルタ通過のlistingを取り出し、識別→照合→<code>llm_*</code>列書込。冪等・失敗リトライ・<code>llm_queried_at</code>更新。</div>
+      <div class="meta">依存: P1-1,P1-2,P2-1 ／ 手本: ndl_isbn_enricher の処理済み管理</div></div>
+    <div class="task"><span class="id">P2-4</span> <span class="pill S">S</span>
+      <div>昇格処理：高信頼/バーコード一致のLLM推定を <code>listings.asin</code> へ昇格（既存の集計MV・利益判定に自動的に乗る）。低信頼はレビュー行きで権威は汚さない。</div>
+      <div class="meta">依存: P1-4,P2-3</div></div>
+    <div class="task"><span class="id">P2-5</span> <span class="pill S">S</span> <span class="pill P1">⚑判断</span>
+      <div>NDL enricherとの役割整理（和書はNDL→残りをLLM、or LLM一本化）。重複処理の抑制。</div>
+      <div class="meta">依存: P2-3</div></div>
+    <div class="task"><span class="id">P2-6</span> <span class="pill S">S</span> <span class="pill P1">⚑判断</span>
+      <div>ISBN無し定期削除の運用変更：<b>LLM一巡前は消さない</b>。LLMでも不能（信頼度低・写真無）なものだけ削除対象に。</div>
+      <div class="meta">依存: P2-3 ／ 関連: 既存「ISBN無し41,331件削除」運用</div></div>
+    <div class="task"><span class="id">P2-7</span> <span class="pill S">S</span>
+      <div>launchd統合（識別ワーカーを常駐化。continuousとレート/CPU協調。多重起動ガード=flock）。</div>
+      <div class="meta">依存: P2-3 ／ 手本: netsea_phase2 flock</div></div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="panel">
+    <div class="phasehead"><span class="num">3</span><h3 style="margin:0">買い判定の本番化</h3></div>
+    <div class="task"><span class="id">P3-1</span> <span class="pill M">M</span>
+      <div>買い判定デーモン：候補（新規link or 価格変動 or 未判定）を Keepa統計+14b+決定論floorで判定→<code>llm_buy_verdict</code>保存。<span class="pill done">PoC実証済</span></div>
+      <div class="meta">流用: keepa_stats.py(gzip)・_reconcile_verdict・利益決定論化</div></div>
+    <div class="task"><span class="id">P3-2</span> <span class="pill S">S</span>
+      <div>利益計算の決定論化（Python確定値・LLMはverdict/理由のみ）。<span class="pill done">PoC実証済</span></div>
+      <div class="meta">式: round(売価×0.85)−80−185−仕入−仕入送料 / floor: drops365=0→skip, buyは利益≥500</div></div>
+    <div class="task"><span class="id">P3-3</span> <span class="pill S">S</span>
+      <div>Keepa統計のキャッシュ＆鮮度管理（同ASINの再取得抑制・book_products既存値と併用でトークン節約）。</div>
+      <div class="meta">依存: P0-4</div></div>
+    <div class="task"><span class="id">P3-4</span> <span class="pill M">M</span> <span class="pill P1">⚑判断</span>
+      <div>既存Claude買い判定（<code>claude.ts</code>）との関係決定：(a)ローカル完全置換 (b)ローカル一次・高額のみClaude二次確認 (c)A/B比較で精度検証。</div>
+      <div class="meta">依存: P3-1 ／ 参考: 現行は全販路アービトラージ・1年ポリシー</div></div>
+    <div class="task"><span class="id">P3-5</span> <span class="pill S">S</span>
+      <div>全販路シナリオ統合（Amazon/ヤフオク/メルカリ/eBay）。現行<code>sell_market_price</code>/<code>ebay_export_candidate</code>を判定入力へ。</div>
+      <div class="meta">依存: P3-1</div></div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="panel">
+    <div class="phasehead"><span class="num">4</span><h3 style="margin:0">ポータル / UX</h3></div>
+    <div class="task"><span class="id">P4-1</span> <span class="pill M">M</span>
+      <div><b>「今日の買うべきリスト」画面</b>：<code>llm_buy_verdict</code>をランク表示（verdict→利益×信頼度）。仕入リンク・理由・red_flags・バーコード✓。</div>
+      <div class="meta">依存: P3-1 ／ PoCの buy_list.csv 相当をWeb化</div></div>
+    <div class="task"><span class="id">P4-2</span> <span class="pill S">S</span>
+      <div>既存/books・/games・/purchasesに「AI推定」バッジ（信頼度・barcode_status・LLM推定 vs 確定ISBNの区別）。</div>
+      <div class="meta">依存: P2-4</div></div>
+    <div class="task"><span class="id">P4-3</span> <span class="pill M">M</span>
+      <div>人間レビュー/承認フロー：誤マッチをワンクリック訂正→<code>llm_review</code>記録。承認でasin昇格・差戻しで除外。</div>
+      <div class="meta">依存: P1-4,P4-1</div></div>
+    <div class="task"><span class="id">P4-4</span> <span class="pill S">S</span>
+      <div>透明性表示：判定根拠（Keepa drops365/avg365/rank・利益内訳・写真）を1画面で。</div>
+      <div class="meta">依存: P4-1</div></div>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="panel">
+    <div class="phasehead"><span class="num">5</span><h3 style="margin:0">スケール・性能</h3></div>
+    <div class="task"><span class="id">P5-1</span> <span class="pill S">S</span> <span class="pill P1">⚑承認</span>
+      <div><code>pg_trgm</code>索引適用（P0-2の承認後）。照合を実用速度に。</div>
+      <div class="meta">効果: 228件110分→数分</div></div>
+    <div class="task"><span class="id">P5-2</span> <span class="pill M">M</span>
+      <div>バッチ並列・キュー優先度（安い候補・高需要ASIN優先）。ollama同時実行数の最適化（M4 Pro）。</div>
+      <div class="meta">依存: P2-3</div></div>
+    <div class="task"><span class="id">P5-3</span> <span class="pill M">M</span>
+      <div>処理量の見積りと分散（メイン機＋Mac mini worker1 で識別ワーカーを分担）。</div>
+      <div class="meta">依存: P2-7</div></div>
+  </div>
+
+  <!-- Phase 6 -->
+  <div class="panel">
+    <div class="phasehead"><span class="num">6</span><h3 style="margin:0">多販路展開</h3></div>
+    <div class="task"><span class="id">P6-1</span> <span class="pill M">M</span>
+      <div>ヤフオク（即決のみ）・Yahooフリマへ横展開。各販路の検索＋詳細抽出アダプタを識別サービスに接続。</div>
+      <div class="meta">注意: ヤフオクは即決価格のみ仕入対象（オークション現在価格を買値扱いしない＝過去教訓）</div></div>
+    <div class="task"><span class="id">P6-2</span> <span class="pill S">S</span>
+      <div>ネットオフ等小売寄り販路の扱い（利益薄前提・在庫安定）。販路別の足切り調整。</div>
+      <div class="meta">依存: P6-1</div></div>
+    <div class="task"><span class="id">P6-3</span> <span class="pill S">S</span>
+      <div>販路別相場（<code>sell_market_price</code>）への自動投入（ヤフオク/メルカリ相場を判定入力に）。</div>
+      <div class="meta">依存: P3-5</div></div>
+  </div>
+
+  <!-- Phase 7 -->
+  <div class="panel">
+    <div class="phasehead"><span class="num">7</span><h3 style="margin:0">運用・監視・品質</h3></div>
+    <div class="task"><span class="id">P7-1</span> <span class="pill S">S</span>
+      <div>誤マッチ監視：barcode_mismatch率・人手訂正率を日次集計。閾値を超えたら通知（Chatwork）。</div></div>
+    <div class="task"><span class="id">P7-2</span> <span class="pill S">S</span>
+      <div>Keepaトークン・Mercari WAF・ollama死活の監視（既存pipeline-checkに項目追加）。</div></div>
+    <div class="task"><span class="id">P7-3</span> <span class="pill S">S</span>
+      <div>精度メトリクス継続測定（識別率・マッチ率・買い的中率＝実際に売れたか）。</div></div>
+    <div class="task"><span class="id">P7-4</span> <span class="pill S">S</span>
+      <div>コスト把握（電気・処理時間）と費用対効果。PL（/pl/fixed-costs）に計上要否。</div></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2>4. 推奨マイルストーン順序</h2>
+  <div class="panel">
+    <table>
+      <tr><th>順</th><th>ゴール</th><th>含むタスク</th><th>目安</th></tr>
+      <tr><td><b>M1</b></td><td>基盤確定（DB設計・pg_trgm・モデル運用・巡回方針）</td><td>P0-1〜5</td><td><span class="pill S">数日</span></td></tr>
+      <tr><td><b>M2</b></td><td>識別サービス本番化＋pg_trgmで実用速度</td><td>P1-1〜5, P5-1</td><td><span class="pill M">1週</span></td></tr>
+      <tr><td><b>M3</b></td><td><b>統合の本丸</b>：no-ISBN保持→LLM識別ワーカー→昇格（メルカリで一気通貫）</td><td>P2-1〜7</td><td><span class="pill L">1〜2週</span></td></tr>
+      <tr><td><b>M4</b></td><td>買い判定デーモン＋「買うべきリスト」画面</td><td>P3-1〜5, P4-1,P4-4</td><td><span class="pill M">1週</span></td></tr>
+      <tr><td><b>M5</b></td><td>人間レビュー＋AI推定バッジ（運用に乗せる）</td><td>P4-2,P4-3, P7-1〜3</td><td><span class="pill M">1週</span></td></tr>
+      <tr><td><b>M6</b></td><td>多販路展開・分散・最適化</td><td>P5-2,P5-3, P6-*</td><td><span class="pill L">随時</span></td></tr>
+    </table>
+    <div class="muted">※ M1→M3が「ISBN紐付け×LLM照合の統合」の核心。M3完了でメルカリのコード無し出品が自動で資産化される。</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <h2>5. リスクと対策</h2>
+  <div class="panel">
+  <table>
+    <tr><th>リスク</th><th>対策</th></tr>
+    <tr><td>誤マッチで間違った商品を仕入れる（最大の事故）</td><td>権威asinと分離＋信頼度ゲート＋バーコード照合＋人間レビュー。低信頼は仕入候補に出さない。</td></tr>
+    <tr><td>言い値相場の罠（高値出品に吊られる）</td><td>判定はavg365基準＋drops365=0はskip（PoCでMR.BIG捕捉済）。</td></tr>
+    <tr><td>Mercari WAF / 二重巡回ブロック</td><td>continuousとbootout協調 or 別時間帯。詳細収集はレート遵守・flock多重起動ガード。</td></tr>
+    <tr><td>Keepaトークン枯渇</td><td>価格フィルタで判定対象を絞る＋キャッシュ＋日次上限＋既存daemonと予算分配。</td></tr>
+    <tr><td>listings肥大（no-ISBN保持で件数増）</td><td>価格フィルタで保持/識別対象を限定。識別不能の長期放置分は定期パージ。</td></tr>
+    <tr><td>7Bの判定ノイズ</td><td>判定は14bへ分離済（PoCで改善確認）。floorは決定論で死守。</td></tr>
+    <tr><td>本番DB変更（pg_trgm）の影響</td><td>後方互換の拡張・索引のみ。検証環境/低負荷時間に適用。承認制。</td></tr>
+  </table>
+  </div>
+
+  <hr>
+  <div class="muted" style="font-size:12.5px">
+    成果物（PoC）: <code>~/projects/ebay-arbitrage/poc_mercari_llm/</code>（<b>IMPLEMENTATION_PLAN.md</b>=全設計・判断ログ / <b>category_measure.py</b>=本カテゴリ計測 / <b>category_phase2_match2.py</b>=クリーン照合 / match2 / verify_match / analyze / buy_judge / keepa_stats / altedition_v3 / collect_listings / detail_collect / 各results）。<br>
+    本番編集(後方互換): <code>apps/scraper/ebay_arbitrage_scraper/mercari/client.py</code>(category_id引数) / <code>poc_mercari_llm/match2.py</code>(trgm+和暦年度ゲート)。マイグレ: <code>db/migrations/0056_pg_trgm_book_products_title.sql</code>(拡張は適用済v1.6・GIN索引は6/18以降)。<br>
+    本ドキュメント: <code>~/Desktop/メルカリAIバイヤー_統合ロードマップ_20260607.html</code>（2026-06-08夕 更新）／ 関連メモリ: project_local_llm_mercari_arbitrage_poc_20260607。
+  </div>
+
+</div>
+</body>
+</html>
