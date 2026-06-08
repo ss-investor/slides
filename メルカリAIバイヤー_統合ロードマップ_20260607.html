@@ -75,15 +75,52 @@
   </div>
 
   <!-- ============================================================ -->
-  <h2 id="handover">🔄 現在地と次ターミナルへの引き継ぎ（2026-06-08 夕 更新）</h2>
+  <h2 id="handover">🔄 現在地と次ターミナルへの引き継ぎ（2026-06-08 <u>夜</u> 更新）</h2>
+
   <div class="panel good">
-    <b>📍 本日(6/8 夜)の到達点：★①メルカリAIバイヤーが2台構成で本番稼働開始★。隔離テーブル+識別/照合/検証/買い判定ワーカー+素材投入コレクター+ポータル/mercari-ai を実装・実機実証。重大バグ(売値に新品価格)も修正済。次は監視→問題なければヤフオク展開。</b>
+    <b>📍 6/8夜の到達点：★②ヤフオクAIバイヤー(入札上限価格つき)実装・稼働＋③重大バグ修正＋④GitHub化＋⑤判定だけデーモン仕様追記★。①メルカリAIバイヤーは引き続き2台構成で本番稼働中。</b>
     <div style="margin-top:6px">
-      <span class="kpi">🍎リンゴ=LLM方式 <b>稼働</b></span>
-      <span class="kpi">🍑モモ=ISBN方式 <b>稼働</b> <span class="muted">(別IP=二重巡回なし)</span></span>
-      <span class="kpi">本カテゴリ新着 画像取得 <b>100%</b></span>
-      <span class="kpi">隔離テーブル mercari_llm_match <b>本番適用</b></span>
+      <span class="kpi">🍎リンゴ=LLM方式(メルカリ+ヤフオク判定) <b>稼働</b></span>
+      <span class="kpi">🍑モモ=ISBN方式 <b>メルカリ稼働/ヤフオクは移設待ち</b></span>
+      <span class="kpi">yahoo-llm-worker <b>launchd稼働(30分毎)</b></span>
+      <span class="kpi">GitHub <b>ss-investor/ebay-arbitrage(private)</b></span>
     </div>
+  </div>
+
+  <div class="panel key">
+    <b>🟧 ② ヤフオクAIバイヤー＝入札制ゆえ「入札上限価格 max_bid」をAI判定価格に（2026-06-08夜・実装/稼働）</b>
+    <ul>
+      <li><b>核心</b>：ヤフオクは入札制で大半がオークション。現在価格を買値と誤認すると事故る(過去のヤフオクNO-GOの主因)。→ <b>max_bid_jpy＝再販相場から逆算した「ここまでなら入札してよい落札額」</b>を提示(現在価格に依存しない)。式＝<code>中古相場 − 手数料15% − 成約料¥80 − 自社発送¥185 − 購入送料¥300 − 目標利益¥500</code>。例: 相場¥3,000→上限¥1,485。安すぎる本は上限None=自動見送り。</li>
+      <li><b>構成</b>：隔離テーブル <code>yahoo_auctions_llm_match</code>(migration 0058・max_bid/current_price/listing_format列)＋ワーカー <code>poc_mercari_llm/yahoo_llm_worker.py</code>(★共通 <code>mercari_llm_worker.evaluate()</code> を無改変で再利用＝buy_price=現在価格+購入送料を渡すとjudgedが入札上限との比較に一致★)＋コレクター <code>apps/scraper/scripts/yahoo_auctions_noisbn_continuous.py</code>(本カテゴリ <code>auccat=21600</code> 新着・コード無し保持)＋クライアント拡張(即決/カテゴリ/現在価格分離)＋ポータル <code>/yahoo-auctions-ai</code>(入札上限を主役表示・公開済)。</li>
+      <li><b>配置(ユーザー確定=リンゴ/モモ原則に揃える)</b>：🍎リンゴ＝LLM収集+判定(<code>yahoo-noisbn</code>協調ガードで待機中＋<code>yahoo-llm-worker</code>稼働)、🍑モモ＝ISBN方式(<code>yahoo_auctions_continuous</code>をリンゴから移設)。<b>★次ターミナルの宿題＝モモにヤフオクISBN巡回を立て、リンゴのyahoo-auctions-continuousを止める→リンゴ収集が自動起動★</b>。手順=<code>scripts/DEPLOY_yahoo_noisbn_on_momo.md</code>。</li>
+      <li class="muted">注意: ヤフオク本カテゴリ新着は古書/雑誌/外国書/セット物が多く単行本照合率はメルカリより低い(誤マッチは0実証)。母数は収集を貯めて様子見。listing_format保存・即決のみ(fixed=3)仕入の精緻化はv1未実装。</li>
+    </ul>
+  </div>
+
+  <div class="panel good">
+    <b>🐛 ③ 重大バグ修正＝売値が言い値/薄相場の高値に吊られる事故（2026-06-08夜・ユーザーがポータルで発見）</b>
+    <ul>
+      <li><b>症状</b>：「黒の事件簿」AI入札上限 <b>¥5,813(大赤字)</b>。原因＝低回転本ではKeepa中古「平均」(avg_used_365=¥8,092/avg_90=¥19,893)が過去の高値出品(言い値)に吊られ、実勢(現在中古最安¥3,000・drops365=2・rank176万)より大幅高に出る→売値¥8,092を信じて上限を過大算出。</li>
+      <li><b>修正</b>(<code>mercari_llm_worker.py _used_sell_price</code>・共通)：売値＝<b>中古シグナル{avg_used_365, avg_used_90, DB現在中古最安}の最小値</b>(高値に吊られない・買い手は保守的が安全)＋<code>dead_stock</code>を <code>drops365 is None or ==0</code>(実績不明も死蔵skip)に拡張。検証＝黒の事件簿 ¥5,813→<b>¥1,485</b>(拡張の仕入目安¥1,985内)。</li>
+      <li class="muted">横展開＝共通ロジックなのでメルカリも安全化。メルカリ既存buy/conditional 3件チェック→id38は誤った薄利判定でskipが正(他2件はbuy維持で正)。3件＋ヤフオク13件を削除→修正版で再判定中。両ワーカーはlaunchd runnerが毎回freshにpython起動するため自動で修正版反映。任意の追加策＝低流動(drops365極小/rank悪)足切り(方針=死蔵承知ならOKなので未実装)。</li>
+    </ul>
+  </div>
+
+  <div class="panel key">
+    <b>🐙 ④ GitHub化＝ss-investor/ebay-arbitrage(private) 新規作成しpush（2026-06-08夜）</b>
+    <ul>
+      <li>元々Git未管理だった→GitHub化。<code>gh</code>(ss-investor認証)で private 作成→push。★平文DBパスワードが122ファイル(scripts/の.sh runner群+docs/手順書)に散在＋ブラウザCookie(.pw-chatwork-profile)＋venv→.gitignoreに <code>/scripts/ /docs/ .venv*/ .pw-*/</code> 等を追加し<b>機密を全除外</b>。push後リモート検証で機密不在を確認。上がったのは apps/・db/・poc_mercari_llm/・infra/＝<b>561ファイル・コードのみ</b>★。</li>
+      <li class="muted">モモへはgit cloneでコード取得可(runner/.envはモモ側でローカル用意)。将来課題=DBパスワードのローテ＋runner群を.env参照化(122ファイルscrub・稼働中runner多数で要慎重)。GitHub Pages公開版(ss-investor/slides)の本HTMLは未更新=古い。</li>
+    </ul>
+  </div>
+
+  <div class="panel key">
+    <b>📋 ⑤ 次ターミナルの宿題</b>
+    <ul>
+      <li><b>A. モモにヤフオクISBN巡回を設置</b>(リンゴ/モモ原則の完成)＝<code>scripts/DEPLOY_yahoo_noisbn_on_momo.md</code>。git clone→ISBN巡回起動→リンゴ側 yahoo-auctions-continuous を止める→リンゴ収集が自動起動。</li>
+      <li><b>B. 既存ISBN在庫の「判定だけ」デーモン(P3-6)を実装</b>＝§1.8参照。識別を飛ばしASIN確定済み在庫(ゲーム/DVD/ヤフオク/古本)にKeepa→14b判定(+ヤフオクは入札上限)。buy_judge再利用。<b>対象範囲(全ASIN在庫か黒字候補のみか)を要相談</b>。</li>
+      <li><b>C. ヤフオク母数の様子見＋精度確認</b>(再判定後の黒の事件簿が¥1,485になったか等)、apps/webデプロイ、trgm GIN索引(6/18以降)、GitHub Pages公開版の更新。</li>
+    </ul>
   </div>
   <div class="panel key">
     <b>🖥️ Mac mini 命名規則（果物名・2026-06-08制定）</b>
@@ -242,6 +279,17 @@
   </div>
 
   <!-- ============================================================ -->
+  <h2>1.8 LLMパイプライン＝【識別】＋【判定】の2段。既存ISBN在庫は<u>判定だけ</u>回す（2026-06-08追記）</h2>
+  <div class="panel key">
+    <b>LLMバイヤーは2つの工程に分かれる：① 識別（写真＋タイトルからASINを特定）＋ ② 判定（Keepa統計＋14bで買い/見送り＋利益・ヤフオクは入札上限）。</b>
+    <div class="flow" style="margin-top:8px"><b>コード無し品</b>（メルカリ/ヤフオクの個人出品・ISBN無し）＝<b>①識別＋②判定の両方</b>が必要（ASINが不明なので識別で繋ぐ）
+<b>既存ISBN在庫</b>（ゲーム/DVD/ヤフオク/古本＝<b>ASIN確定済み</b>）＝<b>②判定だけでよい</b>（識別は不要・スキップ）</div>
+    <div class="muted" style="margin-top:8px"><b>現状のギャップ（ここが今回の追記の肝）</b>：既存ISBN在庫は<b>確定的な利益足切り（book_summary_mv→/books・/games・/cd-dvd の黒字候補表示）</b>と<b>オンデマンドのClaude買い判定（buy-chat・🤖AI推奨価格ボタン）</b>は動いているが、<b>ローカル14bの自動買い判定は未実装</b>（今はコード無しワーカーの中だけ）。＝「既存ISBN在庫にも自動でAI買い判定」は<b>これから作る</b>。</div>
+    <div class="muted" style="margin-top:6px"><b>実装方針</b>：識別を飛ばし、ASIN確定済み在庫に対して Keepa統計→ローカル14b判定（決定論floor＋理由＋red_flags／ヤフオクは<code>max_bid_jpy</code>入札上限も）を回して保存する<b>「判定だけデーモン」</b>（下記 <b>P3-6</b>）。既存 <code>buy_judge</code>（識別後の判定半分）をそのまま再利用でき、重い画像識別が不要なので軽い。<b>範囲（全ASIN在庫か／黒字足切り通過分だけか）は要相談</b>（全件は Ollama 時間＋Keepa トークンを食うため、まず黒字候補に絞るのが現実的）。</div>
+    <div class="muted" style="margin-top:6px"><b>参考</b>：ヤフオクのLLMバイヤー（入札制ゆえ<b>入札上限価格 max_bid</b>を再販相場から逆算）は 2026-06-08 に実装済（隔離テーブル <code>yahoo_auctions_llm_match</code>／ワーカー <code>yahoo_llm_worker.py</code>／ポータル <code>/yahoo-auctions-ai</code>）。この「判定だけデーモン」は同じ判定ロジックを<b>既存ISBN在庫にも横展開</b>するもの。</div>
+  </div>
+
+  <!-- ============================================================ -->
   <h2>2. DB設計の変更（先に決めるべき土台）</h2>
   <div class="panel">
   <table>
@@ -358,6 +406,9 @@
     <div class="task"><span class="id">P3-5</span> <span class="pill S">S</span>
       <div>全販路シナリオ統合（Amazon/ヤフオク/メルカリ/eBay）。現行<code>sell_market_price</code>/<code>ebay_export_candidate</code>を判定入力へ。</div>
       <div class="meta">依存: P3-1</div></div>
+    <div class="task"><span class="id">P3-6</span> <span class="pill M">M</span> <span class="pill P1">⚑判断</span>
+      <div><b>★既存ISBN在庫の「判定だけ」デーモン（識別をスキップ）★</b>：ASIN確定済みの在庫（ゲーム/DVD/ヤフオク/古本）に、画像識別を飛ばして <b>②判定だけ</b>（Keepa統計→ローカル14b→決定論floor→verdict／ヤフオクは<code>max_bid_jpy</code>入札上限）を回し保存。＝§1.8 の本実装。<span class="pill done">判定ロジックはPoC/本番実証済</span></div>
+      <div class="meta">流用: <code>buy_judge</code>（識別後の判定半分）・<code>yahoo_llm_worker</code>の入札上限算出。依存: P3-1 ／ <b>要判断: 対象範囲＝全ASIN在庫か黒字足切り通過分のみか</b>（全件はOllama時間＋Keepaトークン大→まず黒字候補に絞るのが現実的）</div></div>
   </div>
 
   <!-- Phase 4 -->
