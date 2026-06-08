@@ -75,6 +75,74 @@
   </div>
 
   <!-- ============================================================ -->
+  <h2 id="latest">🆕 最新の到達点（2026-06-09 <u>未明</u> 更新）＝全販路「判定だけ」統合・恒久ルール確定</h2>
+
+  <div class="panel good">
+    <b>📍 6/9未明の到達点：★既存ISBN在庫の「判定だけ」を全販路に横展開し、新テーブル <code>buy_judgement</code> に集約。ポータル <code>/buy-judge</code>（📊全販路仕入れ判定）＋ <code>/ai-judge</code>（🤖全販路AI判定）を新設★。§1.8 / P3-6 の本実装に着手・本番反映済。</b>
+    <div style="margin-top:6px">
+      <span class="kpi">統合daemon <b>allsite-isbn-judge稼働(2h毎)</b></span>
+      <span class="kpi">/buy-judge <b>HTTP200(本のみ)</b></span>
+      <span class="kpi">/ai-judge <b>HTTP200(メルカリ+ヤフオク統合)</b></span>
+      <span class="kpi">楽天buy <b>938</b> / ブックオフ <b>342</b> / Yahoo <b>159</b></span>
+    </div>
+  </div>
+
+  <div class="panel key">
+    <b>🚧 ★恒久ルール（最優先・絶対遵守）★</b>
+    <ul>
+      <li><b>ルールA：ISBN識別経路とAI識別経路を絶対に混ぜない</b>。ISBN(=ASIN)が取れた商品 → <code>buy_judgement</code> → <code>/buy-judge</code>。写真AI識別 → <code>*_llm_match</code> → <code>/ai-judge</code>・個別/mercari-ai・/yahoo-auctions-ai。メルカリ/ヤフオクは両経路を持つ（ISBN分=buy_judgement／写真分=llm_match）。<code>*_llm_match</code>に<code>source='isbn_known'</code>を入れない。<span class="muted">メモリ: feedback_isbn_vs_ai_route_separation_20260608</span></li>
+      <li><b>ルールB：全サイト・全ジャンルを漏れなく判定に含める</b>。/buy-judge には本/ゲーム/CD/DVD/問屋の全ジャンル・全仕入れサイトが全件漏れなく入る。/ai-judgeも同様。特定サイト・ジャンルの取りこぼし厳禁。新規追加は自動統合＋網羅性検証。</li>
+      <li><b>ルールC：/ai-judge のUIを /buy-judge に常に一致させる</b>。サマリ/フィルタ/列/バッジを揃え、片方改修時は必ず両方。最終的に共通コンポーネント化。<span class="muted">メモリ: feedback_allsite_completeness_and_ui_unify_20260609</span></li>
+    </ul>
+  </div>
+
+  <div class="panel good">
+    <b>✅ 6/9未明 実装済み（本番反映済）</b>
+    <ul>
+      <li><b>DB</b>：migration0059 新テーブル <code>buy_judgement</code>（listing_id(unique)/platform/asin/judged/profit_jpy/sell_used/drops365/buy_price/source/judge_detail）。索引3本。</li>
+      <li><b>判定スクリプト</b>：<code>poc_mercari_llm/allsite_isbn_judge.py --platform all</code>＝全販路ISBN判定→buy_judgement UPSERT。対象＝rakuten/bookoff/yahoo_shopping/mottainai/valuebooks/abebooks/netoff/mercari/yahoo_auctions/yahoo_flea。ヤフオク/ヤフフリは買値+300＋入札上限をjudge_detailに記録。判定式は既存と完全一致。</li>
+      <li><b>統合launchd</b>：<code>com.ssinvestor.arbitrage.allsite-isbn-judge</code>（2h毎・runner=scripts/allsite_isbn_judge_runner.sh all）。旧個別daemon(rakuten/bookoff/yahoo-shopping/mercari/yahoo-isbn-judge)は廃止統合・退避。停止=touch /tmp/allsite_isbn_judge_stop。</li>
+      <li><b>トラップ精査</b>：<code>buy_trap_review.py --platform all</code>＝yahoo+mercari(写真llm_match)＋allsite(buy_judgement全販路)。</li>
+      <li><b>ポータル</b>：<code>/buy-judge</code>（lib/buy-judge-queries.ts+app/buy-judge/page.tsx・販路/judgedフィルタ・<b>出品許可バッジ</b>・入札上限）／<code>/ai-judge</code>（lib/ai-judge-queries.ts+app/ai-judge/page.tsx・メルカリ+ヤフオクUNION・写真サムネ・入札上限・AI見送り推奨）。/mercari-ai・/yahoo-auctions-ai は <code>source IS DISTINCT FROM 'isbn_known'</code> で写真のみ表示にフィルタ。NavDropdown更新済。</li>
+    </ul>
+  </div>
+
+  <div class="panel key">
+    <b>🧭 ナビ方針確定＝「2系統 × ジャンル」のグリッドで管理（2026-06-09・ユーザー合意）</b>
+    <table style="margin-top:8px">
+      <tr><th></th><th>ISBN識別</th><th>AI識別</th></tr>
+      <tr><td><b>横断</b></td><td>📊 全販路仕入れ判定</td><td>🤖 全販路AI判定</td></tr>
+      <tr><td><b>本</b></td><td>古本+独占</td><td>（メルカリ+ヤフオク統合）</td></tr>
+      <tr><td><b>ゲーム</b></td><td>ゲーム</td><td>（将来）</td></tr>
+      <tr><td><b>CD・DVD</b></td><td>CD・DVD</td><td>（将来）</td></tr>
+      <tr><td><b>問屋</b></td><td>問屋(NETSEA)</td><td>—</td></tr>
+    </table>
+    <div class="muted" style="margin-top:6px">AI識別はサイト別羅列をやめジャンル軸に統一（タスク#7）。現状AI識別は本のみ＝メルカリ+ヤフオクを統合し「全販路AI判定」＋「本(統合)」に。個別メルカリ/ヤフオクのナビ項目は廃止予定（/ai-judgeが既にUNION統合済）。AI識別がゲーム/CD/DVDへ拡張したらISBN側と同じジャンル項目を追加。</div>
+  </div>
+
+  <div class="panel warn">
+    <b>⚠️ 現状の重要な注意（次ターミナルへ）</b>
+    <ul>
+      <li><b>/buy-judge は現状「本」だけ</b>（本410,278件／ゲーム0・CD0・DVD0・問屋は別系統netsea_items）。ゲーム/CD/DVD/問屋は<b>まだ各ジャンルページが必要</b>。全ジャンル統合は<b>タスク#3</b>（ルールB）。</li>
+      <li><b>★売値バグ（最優先#1）★</b>：楽天「海城中学校 6年間+3年スーパー過去問」等で売値<b>¥7,182</b>表示だが<b>実際は売れない</b>＝Amazon相場(amazon_used_price_jpy/avg_used_365_jpy)の誤り疑い。過去問/赤本は版年で別ASIN・薄需要なのに高値が付く罠の可能性。Keepaキャッシュ妥当性を要調査・修正。</li>
+    </ul>
+  </div>
+
+  <div class="panel key">
+    <b>📋 残タスク（別ターミナルへ・優先順）</b>
+    <table style="margin-top:8px">
+      <tr><th>#</th><th>タスク</th><th>内容</th></tr>
+      <tr><td><b>1</b></td><td>🐛 売値バグ(最優先)</td><td>海城過去問¥7,182等。Amazon相場データの誤り調査・修正。</td></tr>
+      <tr><td>2</td><td>🔁 auto-evaluate解除</td><td>独占チャンスのClaude API定期AI判定が二重判定。中身確認の上 bootout+退避。</td></tr>
+      <tr><td>3</td><td>🎮 全ジャンル統合</td><td>ゲーム/CD/DVD/問屋をbuy_judgementへ接続（ルールB）。手数料/送料のジャンル差に注意。</td></tr>
+      <tr><td>4</td><td>💴 売値比較</td><td>Amazon以外にヤフオク/eBay/メルカリ相場とも比較。オークファン投入後(面談6/9)。</td></tr>
+      <tr><td>5</td><td>📏 網羅性保証(恒久)</td><td>ルールB実装＝全サイト/全ジャンルが漏れなく入る仕組み＋定期突合検証。</td></tr>
+      <tr><td>6</td><td>🎨 UI統一(恒久)</td><td>ルールC＝/ai-judgeを/buy-judgeに常時一致。共通コンポーネント化。</td></tr>
+      <tr><td>7</td><td>🧭 ナビをジャンル別に統一</td><td>AI識別もISBN側と同じジャンル軸へ。メルカリ+ヤフオク統合・個別ナビ廃止。</td></tr>
+    </table>
+  </div>
+
+  <!-- ============================================================ -->
   <h2 id="handover">🔄 現在地と次ターミナルへの引き継ぎ（2026-06-08 <u>夜</u> 更新）</h2>
 
   <div class="panel good">
@@ -503,7 +571,7 @@
   <div class="muted" style="font-size:12.5px">
     成果物（PoC）: <code>~/projects/ebay-arbitrage/poc_mercari_llm/</code>（<b>IMPLEMENTATION_PLAN.md</b>=全設計・判断ログ / <b>category_measure.py</b>=本カテゴリ計測 / <b>category_phase2_match2.py</b>=クリーン照合 / match2 / verify_match / analyze / buy_judge / keepa_stats / altedition_v3 / collect_listings / detail_collect / 各results）。<br>
     本番編集(後方互換): <code>apps/scraper/ebay_arbitrage_scraper/mercari/client.py</code>(category_id引数) / <code>poc_mercari_llm/match2.py</code>(trgm+和暦年度ゲート)。マイグレ: <code>db/migrations/0056_pg_trgm_book_products_title.sql</code>(拡張は適用済v1.6・GIN索引は6/18以降)。<br>
-    本ドキュメント: <code>~/Desktop/メルカリAIバイヤー_統合ロードマップ_20260607.html</code>（2026-06-08夕 更新）／ 関連メモリ: project_local_llm_mercari_arbitrage_poc_20260607。
+    本ドキュメント: <code>~/Desktop/メルカリAIバイヤー_統合ロードマップ_20260607.html</code>（<b>2026-06-09未明 更新</b>）／ 関連メモリ: project_local_llm_mercari_arbitrage_poc_20260607・project_isbn_known_buy_judge_daemon_20260608・feedback_isbn_vs_ai_route_separation_20260608・feedback_allsite_completeness_and_ui_unify_20260609／引き継ぎ書 docs/HANDOFF_allsite_integration_20260608.md。
   </div>
 
 </div>
