@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>北川裕斗 立ち上げ準備リスト — 合同会社SSインベスター 秋田倉庫</title>
+<style>
+  :root{
+    --navy:#1b2a4a; --navy2:#243a63; --accent:#b8902f;
+    --green:#15803d; --greenbg:#ecfdf5;
+    --amber:#b45309; --amberbg:#fffbeb;
+    --red:#b91c1c; --redbg:#fef2f2;
+    --blue:#1d4ed8; --bluebg:#eff6ff;
+    --gray:#6b7280; --line:#e2e6ec; --ink:#1f2937;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    color:var(--ink); background:#eef1f4; line-height:1.7; padding:28px 14px 80px;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .wrap{max-width:960px;margin:0 auto;}
+
+  header{
+    background:linear-gradient(135deg,var(--navy),var(--navy2));
+    color:#fff;border-radius:14px;padding:30px 32px;margin-bottom:22px;
+    box-shadow:0 8px 24px rgba(20,30,55,.18);
+  }
+  header .ey{font-size:12px;letter-spacing:.18em;color:#aebbd6;}
+  header h1{font-size:25px;font-weight:800;letter-spacing:.02em;margin:6px 0 4px;}
+  header .accent{width:54px;height:3px;background:var(--accent);border-radius:2px;margin:10px 0 12px;}
+  header p{font-size:13.5px;color:#dbe2ef;}
+  header .who{margin-top:12px;font-size:12.5px;color:#cdd7ea;border-top:1px solid rgba(255,255,255,.18);padding-top:12px;}
+
+  .progress{
+    background:#fff;border-radius:12px;padding:16px 20px;margin-bottom:22px;
+    display:flex;align-items:center;gap:16px;box-shadow:0 3px 12px rgba(20,30,55,.07);
+  }
+  .progress .bar{flex:1;height:12px;background:#e7ebf1;border-radius:8px;overflow:hidden;}
+  .progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#d4ab4e);transition:width .3s;}
+  .progress .txt{font-size:13px;font-weight:700;color:var(--navy);white-space:nowrap;}
+  .progress .reset{font-size:11px;color:var(--gray);border:1px solid var(--line);background:#fafbfc;border-radius:6px;padding:5px 10px;cursor:pointer;}
+
+  .section{background:#fff;border-radius:12px;margin-bottom:18px;overflow:hidden;box-shadow:0 3px 12px rgba(20,30,55,.07);}
+  .sh{
+    background:var(--navy);color:#fff;padding:13px 20px;font-size:15.5px;font-weight:700;
+    display:flex;align-items:center;gap:10px;
+  }
+  .sh .n{background:var(--accent);color:#fff;width:26px;height:26px;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;}
+  .sb{padding:8px 20px 18px;}
+  .lead{font-size:13px;color:var(--gray);margin:10px 0 6px;}
+
+  .task{
+    display:flex;gap:12px;padding:13px 6px;border-bottom:1px solid var(--line);align-items:flex-start;
+  }
+  .task:last-child{border-bottom:none;}
+  .task input[type=checkbox]{width:20px;height:20px;margin-top:2px;flex-shrink:0;cursor:pointer;accent-color:var(--accent);}
+  .task .body{flex:1;}
+  .task .t{font-size:14.5px;font-weight:700;color:var(--ink);}
+  .task.done .t{text-decoration:line-through;color:#9aa3af;}
+  .task .d{font-size:12.5px;color:#55606e;margin-top:3px;}
+  .task .d code{background:#f1f3f6;border-radius:4px;padding:1px 5px;font-size:11.5px;color:var(--navy);}
+  .task .how{font-size:12px;color:#55606e;margin-top:6px;background:#f7f9fb;border-left:3px solid var(--accent);
+    padding:7px 10px;border-radius:0 6px 6px 0;}
+
+  .badge{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle;}
+  .b-hi{background:var(--redbg);color:var(--red);}
+  .b-mid{background:var(--amberbg);color:var(--amber);}
+  .b-low{background:var(--bluebg);color:var(--blue);}
+  .b-done{background:var(--greenbg);color:var(--green);}
+
+  .note{font-size:12.5px;border-radius:8px;padding:11px 14px;margin:12px 0 4px;}
+  .note.g{background:var(--greenbg);border:1px solid #a7f3d0;color:#065f46;}
+  .note.a{background:var(--amberbg);border:1px solid #fcd34d;color:#7c4a02;}
+  .note.b{background:var(--bluebg);border:1px solid #bfdbfe;color:#1e40af;}
+
+  .cmp{width:100%;border-collapse:collapse;margin:10px 0 4px;font-size:12.5px;}
+  .cmp th,.cmp td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;}
+  .cmp th{background:#f4f6f9;color:var(--navy);font-weight:700;}
+  .cmp tr:nth-child(even) td{background:#fafbfc;}
+
+  footer{text-align:center;color:var(--gray);font-size:11.5px;margin-top:24px;}
+
+  @media print{
+    body{background:#fff;padding:0;}
+    .progress .reset{display:none;}
+    .section,.progress,header{box-shadow:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="ey">合同会社SS INVESTOR ／ 秋田倉庫 自社発送 立ち上げ</div>
+    <h1>北川裕斗 立ち上げ準備リスト</h1>
+    <div class="accent"></div>
+    <p>FBA代行 → <strong>自社発送（出品者出荷）</strong>への移行に伴う、秋田倉庫での実務立ち上げタスク一覧。<br>
+       事務手続き・調達・配送会社との提携交渉を、着手しやすい順に整理しています。</p>
+    <div class="who">
+      担当：北川 裕斗 ／ 拠点：秋田倉庫（〒018-2504 秋田県山本郡八峰町峰浜石川416）／
+      クリックポスト差出人：（同）SSインベスター 秋田倉庫 ／ 作成：2026-06-08
+    </div>
+  </header>
+
+  <div class="progress">
+    <div class="txt" id="ptxt">0 / 0 完了</div>
+    <div class="bar"><div class="fill" id="pfill"></div></div>
+    <button class="reset" onclick="resetAll()">チェックを全部リセット</button>
+  </div>
+
+  <!-- ===== A 配送会社との提携交渉 ===== -->
+  <div class="section">
+    <div class="sh"><span class="n">A</span>配送会社との提携・契約交渉 ＜最優先＞</div>
+    <div class="sb">
+      <p class="lead">発送量が増えるほど、個人向け料金より<strong>法人・事業者契約のほうが安く・早く</strong>なります。3社すべてに当たって運賃見積りを取り、商品サイズ別に一番安い組み合わせを作るのが目標です。月間の発送見込み個数（例：月◯◯件）を先に手元にまとめておくと交渉が早いです。</p>
+
+      <table class="cmp">
+        <tr><th>配送会社</th><th>狙う事業者向けサービス</th><th>向く商品</th></tr>
+        <tr><td><strong>日本郵便（郵便局）</strong></td><td>クリックポスト（登録済）／ゆうパケット／ゆうメール／ゆうパック＋<strong>料金後納契約</strong></td><td>薄い本・CD/DVD（主力）／中〜大型</td></tr>
+        <tr><td><strong>ヤマト運輸</strong></td><td><strong>ネコポス</strong>（A4・厚2.5cm・全国一律）／宅急便コンパクト／宅急便＋B2クラウド</td><td>厚めの本・ゲーム／中型</td></tr>
+        <tr><td><strong>佐川急便</strong></td><td>飛脚宅配便（法人運賃契約・集荷）</td><td>大型・まとめ発送（薄物は割高）</td></tr>
+      </table>
+
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">月間の発送見込み個数・サイズ構成をまとめる<span class="badge b-hi">高</span></div>
+        <div class="d">3社との交渉材料。例「月◯◯件／うち薄物（クリックポスト相当）◯割・3cm厚◯割・宅配便◯割」。ポータルの注文データから概算でOK。</div>
+      </div></div>
+
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">日本郵便と「料金後納契約」を相談<span class="badge b-hi">高</span></div>
+        <div class="d">毎月まとめ払い＋大口割引。ゆうメール／ゆうパケット／ゆうパックが対象。クリックポスト（¥185）は登録済みなので継続。</div>
+        <div class="how">進め方：秋田倉庫の集配担当郵便局（または最寄り本局）の窓口・ゆうゆう窓口で「事業所として後納契約をしたい」と相談 → 申込書・審査（保証金 or 口座振替）→ 専用の差出表示で割引。必要：法人情報・月間差出見込み・古物商/法人番号。</div>
+      </div></div>
+
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">ヤマト運輸「ヤマトビジネスメンバーズ(YBM)」登録＋ネコポス契約<span class="badge b-hi">高</span></div>
+        <div class="d">ネコポスは事業者の継続契約が必要。送り状はWebの<code>B2クラウド</code>で発行。宅急便コンパクト・宅急便もまとめて法人運賃を交渉。</div>
+        <div class="how">進め方：ヤマトのサイトでYBM（無料）登録 → 最寄りの宅急便センター or 法人営業に「ネコポス・宅急便の事業者契約と運賃見積り」を依頼 → 担当者が月間個数を見て運賃提示・集荷可否を調整。</div>
+      </div></div>
+
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">佐川急便の営業所に法人・集荷契約を問い合わせ<span class="badge b-mid">中</span></div>
+        <div class="d">飛脚宅配便の法人運賃。大型・まとめ発送が出てきたとき用。薄物には割高なので、まずは見積りだけ取って比較材料に。</div>
+        <div class="how">進め方：秋田倉庫エリアの佐川急便営業所に電話 →「事業者として集荷と運賃契約をしたい」→ 担当セールスドライバー/営業が訪問 → 月間個数・サイズで見積り。</div>
+      </div></div>
+
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">3社の見積りを比較し、商品サイズ別の「使い分け表」を確定<span class="badge b-mid">中</span></div>
+        <div class="d">例）薄物=クリックポスト¥185／3cm厚=ネコポス or ゆうパケット／大型=ゆうパック or 佐川。一番安い組み合わせを社内ルール化。</div>
+      </div></div>
+
+      <div class="note b">📌 集荷を依頼できると、毎日ポスト投函や持ち込みの手間が大きく減ります。各社との交渉時に「定期集荷の可否・時間帯」も必ず確認してください。</div>
+    </div>
+  </div>
+
+  <!-- ===== B 機材・備品の調達 ===== -->
+  <div class="section">
+    <div class="sh"><span class="n">B</span>機材・備品の調達（発送オペの土台）</div>
+    <div class="sb">
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">ラベル印刷用プリンターを用意<span class="badge b-hi">高</span></div>
+        <div class="d">2案：①<strong>ラベルプリンター（サーマル式・インク不要）</strong>＝送り状/宛名ラベルを高速印刷（例：ブラザー QLシリーズ等）／②<strong>家庭用A4プリンター＋ラベルシール</strong>でも可。発送量が増えるならサーマルが快適。</div>
+      </div></div>
+
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">ラベルシール（宛名ラベル用紙）を購入<span class="badge b-hi">高</span></div>
+        <div class="d">A4の<code>ノーカット</code>または分割ラベル用紙。クリックポストは普通紙＋透明テープでも可だが、ラベルシールのほうがきれい・速い。</div>
+      </div></div>
+
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">はかり（デジタルスケール）を用意<span class="badge b-mid">中</span></div>
+        <div class="d">重量で送料区分が変わるため必須。〜数kg対応の安価なもので十分。</div>
+      </div></div>
+
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">厚さ測定ゲージ（3cm／2.5cmスリット）を用意<span class="badge b-mid">中</span></div>
+        <div class="d">ネコポス（厚2.5cm）・ゆうパケット（厚3cm）・クリックポスト（厚3cm）の規格内かを一発判定。100均でも入手可。</div>
+      </div></div>
+
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">発送作業用のPC/スマホ・作業台・文具を整える<span class="badge b-low">低</span></div>
+        <div class="d">各社の送り状発行システム（B2クラウド等）操作用。カッター・はさみ・メジャー・油性ペンなど。</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ===== C 梱包資材 ===== -->
+  <div class="section">
+    <div class="sh"><span class="n">C</span>梱包資材の調達（常備品）</div>
+    <div class="sb">
+      <p class="lead">引き継ぎ書の梱包手順：①OPP袋で防水 → ②薄い本は厚紙で挟む／厚い本はプチプチ巻き → ③封筒・箱に入れ隙間を緩衝材で埋める → ④追跡番号付きラベルを貼る。</p>
+
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">OPP袋（防水用・本を1冊ずつ包む）<span class="badge b-hi">高</span></div>
+        <div class="d">本のサイズ別に数種。透明で見栄えも良い。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">プチプチ（エアキャップ）・厚紙（当て板）<span class="badge b-hi">高</span></div>
+        <div class="d">折れ・破損防止。厚紙はB5/A4サイズを常備。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">外装：クリックポスト用封筒／薄型ダンボール（A4）<span class="badge b-hi">高</span></div>
+        <div class="d">厚さ3cm以内に収まるもの。角2封筒（長辺34/短辺25/厚さ3cm）の規格は /shipping-guide ページ参照。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">封かん材：クラフトテープ／OPPテープ<span class="badge b-mid">中</span></div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">梱包資材の仕入れ先（法人）を決めて定期発注ルート化<span class="badge b-mid">中</span></div>
+        <div class="d">ダンボール・OPP袋・プチプチをまとめ買いできる資材通販（ダンボール専門店など）で法人購入。都度買いより安く、在庫切れも防げる。</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ===== D 発送オペレーション ===== -->
+  <div class="section">
+    <div class="sh"><span class="n">D</span>発送オペレーションの確立</div>
+    <div class="sb">
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">出荷通知＋追跡番号の登録フローを自社運用化<span class="badge b-hi">高</span></div>
+        <div class="d">発送後、Amazon管理画面に<strong>期限内</strong>で出荷通知＋<strong>追跡番号を必ず入力</strong>。代行向け通知パイプラインは段階的に停止。誰が・いつ登録するか手順を固定。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">Amazon各商品のリードタイム（出荷期限）を現実的に設定<span class="badge b-mid">中</span></div>
+        <div class="d">秋田倉庫の作業ペースに合わせて1〜2営業日など。遅延率はアカウント健全性に直結。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">追跡なしの普通郵便（定形外）は使わないルールを徹底<span class="badge b-hi">高</span></div>
+        <div class="d">未着クレーム時に証明できず自動返金リスク。必ず追跡番号付きで発送。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">移行期（6月中）の代行／自社の線引きを明確化<span class="badge b-mid">中</span></div>
+        <div class="d">どの注文をどちらが処理するか決め、出荷通知漏れ・二重発送を防ぐ。</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ===== E 法令・表記・許認可 ===== -->
+  <div class="section">
+    <div class="sh"><span class="n">E</span>法令・表記・許認可</div>
+    <div class="sb">
+      <div class="task"><input type="checkbox" checked><div class="body">
+        <div class="t">古物商許可<span class="badge b-done">取得済</span></div>
+        <div class="d">第2310500001025（秋田県公安委員会）。中古多販路出品の法的要件はクリア済み。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">各販路の「特定商取引法に基づく表記」を設定<span class="badge b-mid">中</span></div>
+        <div class="d">メルカリShops／ヤフオクストア／Yahoo!ショッピングの各ストアページに表記。承認後に対応。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">Yahoo!ショッピングの納品書ルールを確認<span class="badge b-low">低</span></div>
+        <div class="d">法人ストアは注文ごとの納品書発行が原則。Amazon/メルカリ/ヤフオクは明細同梱しない方針。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">インボイス対応の運用を把握<span class="badge b-low">低</span></div>
+        <div class="d">BtoC個人客には原則不要。法人客が求めた時のみ登録番号<code>T4010403016497</code>で対応。</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ===== F 出品制限本の転送 ===== -->
+  <div class="section">
+    <div class="sh"><span class="n">F</span>出品制限本の秋田倉庫への転送対応</div>
+    <div class="sb">
+      <p class="lead">出品制限（要許可）の本は代行経由で出品できないため、秋田倉庫に集約して自社発送します。</p>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">発注済み残29冊の代行到着を待つ<span class="badge b-mid">中</span></div>
+        <div class="d">発送済18／未発送29の計47冊。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">到着分の出品制限を判定し、制限本を抽出<span class="badge b-mid">中</span></div>
+        <div class="d"><code>listing_restrictions.needs_approval</code> で判定。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">制限本を代行→秋田倉庫へ転送（再発送）依頼<span class="badge b-mid">中</span></div>
+        <div class="d">宛先：〒018-2504 秋田県山本郡八峰町峰浜石川416（秋田倉庫／北川さん）。</div>
+      </div></div>
+      <div class="task"><input type="checkbox"><div class="body">
+        <div class="t">秋田倉庫着 → 自社発送で出品<span class="badge b-low">低</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <footer>合同会社SSインベスター ／ 秋田倉庫 自社発送 立ち上げ準備リスト ／ 2026-06-08 作成<br>
+  チェック状態はこのブラウザに自動保存されます（端末・ブラウザが変わると引き継がれません）。</footer>
+
+</div>
+
+<script>
+  const KEY = 'kitagawa_setup_checklist_v1';
+  const boxes = Array.from(document.querySelectorAll('.task input[type=checkbox]'));
+  // 各タスクに安定IDを付与
+  boxes.forEach((b,i)=> b.dataset.id = 'task'+i);
+
+  function load(){
+    let saved={};
+    try{ saved = JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){}
+    boxes.forEach(b=>{ if(saved[b.dataset.id]) b.checked=true; toggleClass(b); });
+    update();
+  }
+  function save(){
+    const s={}; boxes.forEach(b=>{ if(b.checked) s[b.dataset.id]=1; });
+    localStorage.setItem(KEY, JSON.stringify(s));
+  }
+  function toggleClass(b){ b.closest('.task').classList.toggle('done', b.checked); }
+  function update(){
+    const done = boxes.filter(b=>b.checked).length;
+    const total = boxes.length;
+    document.getElementById('ptxt').textContent = done+' / '+total+' 完了';
+    document.getElementById('pfill').style.width = (total? (done/total*100):0)+'%';
+  }
+  boxes.forEach(b=> b.addEventListener('change', ()=>{ toggleClass(b); save(); update(); }));
+  function resetAll(){
+    if(!confirm('チェックを全てリセットしますか？')) return;
+    boxes.forEach(b=>{ b.checked = b.hasAttribute('checked'); toggleClass(b); });
+    save(); update();
+  }
+  load();
+</script>
+</body>
+</html>
