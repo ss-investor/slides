@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>古物商許可 営業再開・住所変更 対応ガイド（秋田営業所）</title>
+<title>古物商許可 営業再開・住所変更・管理者選任 対応ガイド（秋田営業所）</title>
 <style>
   :root{
     --navy:#1a3a5c; --accent:#c0392b; --green:#1e7a46; --bg:#f5f3ee;
-    --line:#d8d2c4; --soft:#fbfaf7;
+    --line:#d8d2c4; --soft:#fbfaf7; --blue:#2c6e9c;
   }
   *{box-sizing:border-box;}
   body{
@@ -18,17 +18,24 @@
   .wrap{max-width:880px; margin:0 auto; padding:28px 20px 80px;}
   header.doc{
     background:var(--navy); color:#fff; border-radius:12px;
-    padding:24px 28px; margin-bottom:24px;
+    padding:24px 28px; margin-bottom:18px;
   }
-  header.doc h1{margin:0 0 6px; font-size:1.45rem; letter-spacing:.02em;}
+  header.doc h1{margin:0 0 6px; font-size:1.4rem; letter-spacing:.02em;}
   header.doc .sub{font-size:.92rem; opacity:.9;}
+  .reflink{
+    display:block; background:#eef4f8; border:1px solid #b9d2e2;
+    border-radius:10px; padding:12px 16px; margin-bottom:22px;
+    font-size:.9rem; color:var(--blue); text-decoration:none;
+  }
+  .reflink b{color:var(--navy);}
+  .reflink:hover{background:#e2eef6;}
   .meta{
     background:var(--soft); border:1px solid var(--line); border-radius:10px;
     padding:14px 18px; margin-bottom:26px; font-size:.9rem;
   }
   .meta table{width:100%; border-collapse:collapse;}
   .meta td{padding:4px 8px; vertical-align:top;}
-  .meta td.k{color:var(--navy); font-weight:700; width:34%; white-space:nowrap;}
+  .meta td.k{color:var(--navy); font-weight:700; width:36%; white-space:nowrap;}
   .bg{
     background:#fff5f3; border-left:5px solid var(--accent);
     padding:14px 18px; border-radius:0 8px 8px 0; margin-bottom:28px; font-size:.92rem;
@@ -48,12 +55,13 @@
     border-bottom:2px solid var(--line); padding-bottom:5px;
   }
   h3 .tag{
-    font-size:.72rem; color:#fff; background:var(--accent);
-    padding:2px 8px; border-radius:10px; margin-left:8px; vertical-align:middle;
+    font-size:.72rem; color:#fff; padding:2px 8px; border-radius:10px;
+    margin-left:8px; vertical-align:middle;
   }
   h3 .tag.must{background:var(--accent);}
   h3 .tag.real{background:var(--green);}
-  h3 .tag.addr{background:#2c6e9c;}
+  h3 .tag.addr{background:var(--blue);}
+  h3 .tag.free{background:#5a5a5a;}
   ul.ck{list-style:none; padding:0; margin:0 0 12px;}
   ul.ck li{
     position:relative; padding:9px 12px 9px 40px; margin-bottom:6px;
@@ -70,7 +78,7 @@
     background:#eef4f8; border:1px solid #b9d2e2; border-radius:10px;
     padding:18px 20px; font-size:.93rem; margin-bottom:14px;
   }
-  .script .q{color:#2c6e9c; font-weight:700; margin-bottom:8px;}
+  .script .q{color:var(--blue); font-weight:700; margin-bottom:8px;}
   .fill{
     border:1px dashed #aaa; border-radius:8px; padding:14px 16px;
     background:#fff; margin-top:14px; font-size:.9rem;
@@ -79,9 +87,29 @@
   .fill .row:last-child{border-bottom:none;}
   .fill .lbl{width:140px; color:var(--navy); font-weight:700;}
   .fill .ln{flex:1; border-bottom:1px solid #999; min-height:1.4em;}
+  /* 委任状 */
+  .inin{
+    background:#fff; border:2px solid var(--navy); border-radius:10px;
+    padding:30px 34px; margin-top:8px; font-size:.95rem; line-height:2;
+  }
+  .inin h4{text-align:center; font-size:1.4rem; letter-spacing:.6em;
+    margin:0 0 24px; color:#000;}
+  .inin .lead{margin-bottom:14px;}
+  .inin .items{margin:10px 0 18px; padding-left:0; list-style:none;}
+  .inin .items li{padding:4px 0;}
+  .inin .agent, .inin .principal{
+    border:1px solid #bbb; border-radius:8px; padding:12px 16px; margin-top:14px;
+    background:#fafafa;
+  }
+  .inin .label{font-weight:700; color:var(--navy); margin-bottom:6px;}
+  .inin .u{display:inline-block; border-bottom:1px solid #333; min-width:280px;}
+  .inin .date{text-align:right; margin:20px 0 8px;}
+  .inin .seal{display:inline-block; width:54px; height:54px; border:1px dashed #c0392b;
+    border-radius:6px; color:#c0392b; font-size:.7rem; text-align:center; line-height:54px;
+    vertical-align:middle; margin-left:8px;}
   .warn{
-    font-size:.84rem; color:#7a5; background:#fffbe6;
-    border:1px solid #e8dca0; border-radius:8px; padding:12px 16px; margin-top:24px; color:#6b5b00;
+    font-size:.84rem; background:#fffbe6; border:1px solid #e8dca0;
+    border-radius:8px; padding:12px 16px; margin-top:24px; color:#6b5b00;
   }
   footer{margin-top:40px; font-size:.78rem; color:#888; text-align:center;}
   @media print{
@@ -89,6 +117,8 @@
     .wrap{padding:0;}
     h2{break-after:avoid;}
     ul.ck li{break-inside:avoid;}
+    .inin{break-before:page;}
+    .reflink{display:none;}
   }
 </style>
 </head>
@@ -96,9 +126,13 @@
 <div class="wrap">
 
   <header class="doc">
-    <h1>古物商許可 ― 営業再開・本店住所の書換え 対応ガイド</h1>
-    <div class="sub">秋田営業所（北川さん 対応用）／作成日：2026年6月9日</div>
+    <h1>古物商許可 ― 営業再開・本店住所の書換え・管理者選任 対応ガイド</h1>
+    <div class="sub">秋田営業所（北川 裕斗さん 対応用）／作成日：2026年6月9日</div>
   </header>
+
+  <a class="reflink" href="https://genuine-bienenstitch-1a496b.netlify.app/" target="_blank" rel="noopener">
+    🔗 関連資料：<b>業務委託契約 提案シート（北川さん向け）</b> ― genuine-bienenstitch-1a496b.netlify.app
+  </a>
 
   <div class="meta">
     <table>
@@ -107,13 +141,16 @@
       <tr><td class="k">名称</td><td>合同会社SSインベスター（代表者：薩摩 賢幸）</td></tr>
       <tr><td class="k">主たる営業所</td><td>秋田倉庫（秋田県山本郡八峰町石川416）</td></tr>
       <tr><td class="k">許可証の旧住所（要修正）</td><td>東京都港区西新橋三丁目14番8-1602号 → 新本店（銀座）へ書換え</td></tr>
+      <tr><td class="k">新本店住所</td><td>東京都中央区銀座7丁目13番6号 サガミビル2F ※登記簿の表記に合わせる</td></tr>
+      <tr><td class="k">予定する管理者</td><td>北川 裕斗さん（秋田営業所）</td></tr>
       <tr><td class="k">想定窓口</td><td>能代警察署 生活安全課（八峰町の管轄。要・電話確認）</td></tr>
     </table>
   </div>
 
   <div class="bg">
     <b>背景：</b>先日、秋田営業所（実家兼）に警察が来訪し「<b>営業していないのであれば免許を返納するように</b>」と指導を受けた。これは
-    <b>営業の実態があるかどうかの確認</b>。このたび<b>営業を再開する</b>方針のため、(1) 営業実態を整えること、(2) 法人本店が東京・西新橋から<b>銀座へ移転済み</b>のため許可証の住所書換え、の2点を同時に進める。
+    <b>営業の実態があるかの確認</b>。このたび<b>営業を再開する</b>方針のため、(1) 営業実態を整える、(2) 法人本店が東京・西新橋から<b>銀座へ移転済み</b>のため許可証の住所書換え、(3) 営業所の<b>管理者を北川さんに選任</b>、の3点を同時に進める。<br>
+    <b>※費用の目安：</b>住所の<b>書換え＝1,500円</b>／管理者の選任（変更）届出＝<b>無料</b>（管理者名は許可証に印字されないため書換え不要）。
   </div>
 
   <!-- ====================== 1 ====================== -->
@@ -122,9 +159,8 @@
   <h3>A. 法令上の必須要件<span class="tag must">無いと「実態なし」と見られる</span></h3>
   <ul class="ck">
     <li>古物商の<b>標識（プレート）</b>を営業所の見やすい場所に掲示する
-      <span class="note">規格：縦8cm×横16cm／紺色地に白文字。記載＝許可種別・「秋田県公安委員会許可」・許可番号(第2310500001025号)・名称(合同会社SSインベスター)。正式様式は警察で確認。</span></li>
-    <li>営業所ごとの<b>管理者を1名選任</b>する（古物営業法 第13条）
-      <span class="note">秋田営業所の管理者を誰にするか明確化。北川さんを管理者にする場合は届出が必要。</span></li>
+      <span class="note">規格：縦8cm×横16cm／紺色地に白文字。記載＝「秋田県公安委員会許可」・許可番号(第2310500001025号)・名称(合同会社SSインベスター)。正式様式は警察で確認。</span></li>
+    <li>営業所ごとの<b>管理者を選任</b>する（古物営業法 第13条）→ <b>北川さんを管理者に</b>（→ 下記セクション2で届出）</li>
     <li><b>古物台帳（帳簿）</b>を営業所に備え付け、仕入・売却の取引を記録する
       <span class="note">電子帳簿も可。直近の取引から記録を開始しておく。</span></li>
     <li>登録している<b>取扱品目</b>と実際の取扱い（書籍・ゲーム・CD・DVD等）が一致しているか確認</li>
@@ -138,52 +174,65 @@
     <li>営業所の<b>写真（外観・内部・標識の掲示状況）</b>を用意しておく</li>
   </ul>
 
-  <h3>C. 住所書換えの持参書類<span class="tag addr">許可証の修正</span></h3>
+  <h3>C. 住所書換えの持参書類<span class="tag addr">許可証の修正・1,500円</span></h3>
   <ul class="ck">
-    <li><b>法人の登記事項証明書（履歴事項全部証明書）</b>：新本店（銀座）が反映済・発行から3ヶ月以内のもの</li>
+    <li><b>法人の登記事項証明書（履歴事項全部証明書）</b>：新本店（銀座）が反映済・発行から3ヶ月以内</li>
     <li>古物商許可証の<b>原本</b></li>
     <li>法人の<b>印鑑</b>（代表者印）</li>
     <li><b>変更届出書 兼 書換申請書</b>（警察窓口 または 秋田県警HPで入手）</li>
     <li>書換<b>手数料 1,500円</b>（納付方法は要確認）</li>
     <li>※代表者（薩摩さん）の個人住所も変わっている場合 → <b>代表者の住民票</b></li>
-    <li>※北川さんが代理で提出する場合 → <b>委任状</b>（代表者作成）＋北川さんの本人確認書類</li>
+    <li>北川さんが代理で提出 → <b>委任状</b>（本書末尾のひな形）＋北川さんの本人確認書類</li>
   </ul>
 
-  <!-- ====================== 2 ====================== -->
-  <h2><span class="num">2</span>警察に確認・質問すべき事項</h2>
+  <!-- ====================== 2 管理者 ====================== -->
+  <h2><span class="num">2</span>管理者の選任（変更）届出 ― 北川さん<span class="tag free" style="margin-left:10px;">手数料 無料</span></h2>
+  <p style="font-size:.9rem; margin:0 0 12px;">秋田営業所の管理者を北川さんに選任する届出。管理者名は許可証に印字されないため<b>書換え不要・無料</b>。届出期限は<b>変更日から14日以内</b>。</p>
+  <ul class="ck">
+    <li><b>変更届出書（管理者）</b>（警察窓口 または 秋田県警HP）</li>
+    <li>北川さんの<b>住民票の写し</b>（本籍記載あり・マイナンバー記載なし）</li>
+    <li>北川さんの<b>身分証明書</b>（本籍地の市区町村が発行＝後見等を受けていない旨の証明）</li>
+    <li>北川さんの<b>略歴書</b>（最近5年間）</li>
+    <li>北川さんの<b>誓約書</b>（管理者用・欠格事由に該当しない旨）</li>
+    <li>古物商許可証の<b>原本</b>（提示用）</li>
+    <li>北川さんの<b>本人確認書類</b>（運転免許証など）</li>
+  </ul>
+  <div class="warn">※ 様式（略歴書・誓約書・届出書）は秋田県警HP または 能代署で入手できます。住所書換えと<b>同じ日にまとめて提出</b>すると一度で済みます。</div>
+
+  <!-- ====================== 3 警察確認 ====================== -->
+  <h2><span class="num">3</span>警察に確認・質問すべき事項</h2>
 
   <h3>営業再開について</h3>
   <ul class="ck">
     <li>営業を再開する旨を正式に伝え、<b>返納は不要</b>であることを確認する</li>
-    <li>「営業実態がある」と認められるために、<b>具体的に何を満たせばよいか</b></li>
+    <li>「営業実態がある」と認められるために<b>具体的に何を満たせばよいか</b></li>
     <li>営業所として備えるべきもの（<b>標識・古物台帳・管理者</b>）の最終確認</li>
     <li>過去の来訪時の指導は<b>記録に残っているか／今後問題にならないか</b></li>
   </ul>
 
-  <h3>住所書換えについて</h3>
+  <h3>住所書換え・管理者選任について</h3>
   <ul class="ck">
-    <li>変更届出・書換申請の<b>必要書類の最終確認</b>（登記簿・住民票の要否）</li>
+    <li>住所書換え＋管理者選任の<b>必要書類の最終確認</b>（登記簿・住民票・身分証明書の要否）</li>
     <li>提出は<b>能代署の窓口のみ</b>か、<b>郵送は可能</b>か</li>
     <li>書換<b>手数料1,500円の納付方法</b>（収入証紙か現金か等）</li>
     <li><b>代表者の住所</b>も変更が必要か（個人住所が変わっている場合）</li>
     <li>提出から<b>新しい許可証を受け取るまでの期間</b></li>
-    <li>北川さんが代理提出する場合の<b>委任状の様式・要否</b></li>
+    <li>北川さんが代理提出する場合の<b>委任状の様式・要否</b>（本書ひな形で可か）</li>
   </ul>
 
-  <h3>管理者・その他</h3>
+  <h3>その他</h3>
   <ul class="ck">
-    <li>秋田営業所の<b>管理者を北川さんに変更／選任</b>する場合の届出方法</li>
     <li><b>取扱品目</b>の追加・変更が必要か</li>
     <li>標識（プレート）の<b>正式な記載様式・入手方法</b></li>
   </ul>
 
   <!-- ====================== 電話台本 ====================== -->
-  <h2><span class="num">☎</span>問い合わせ（電話）台本</h2>
+  <h2><span class="num">☎</span>問い合わせ（電話）台本 ＋ 記録欄</h2>
   <div class="script">
     <div class="q">▼ そのまま読める切り出し例</div>
     「お世話になっております。古物商許可（第2310500001025号、合同会社SSインベスター）の件でお電話しました。
     先日、秋田営業所に来ていただいた際に営業の実態についてご指導をいただきましたが、このたび<b>営業を再開する</b>ことになりました。
-    つきましては、<b>①営業を続けるために営業所として整えるべきこと</b>と、<b>②法人の本店住所が変わったため許可証の住所書換えの手続き</b>の2点をご相談したいです。
+    つきましては、<b>①営業を続けるために営業所として整えるべきこと</b>、<b>②法人の本店住所が変わったため許可証の住所書換え</b>、<b>③営業所の管理者を選任する届出</b>の3点をご相談したいです。
     必要な書類や手続きの方法、<b>郵送が可能かどうか</b>も教えていただけますでしょうか。」
   </div>
 
@@ -194,12 +243,47 @@
     <div class="row"><div class="lbl">訪問予約日時</div><div class="ln"></div></div>
     <div class="row"><div class="lbl">郵送可否</div><div class="ln">可 ・ 不可（窓口のみ）</div></div>
     <div class="row"><div class="lbl">手数料 納付方法</div><div class="ln"></div></div>
-    <div class="row"><div class="lbl">委任状の要否</div><div class="ln">要 ・ 不要</div></div>
+    <div class="row"><div class="lbl">委任状の要否</div><div class="ln">要 ・ 不要（本書ひな形で可 ・ 専用様式あり）</div></div>
     <div class="row"><div class="lbl">メモ</div><div class="ln"></div></div>
   </div>
 
+  <!-- ====================== 委任状 ====================== -->
+  <h2><span class="num">✎</span>委任状（ひな形・印刷して使用）</h2>
+  <p style="font-size:.85rem; margin:0 0 10px; color:#555;">
+    北川さんが代表者に代わって手続き（変更届出・書換申請・管理者選任届出）を行うための委任状です。下線部を記入し、委任者欄に<b>法人の代表者印</b>を押してください。日付は提出日に合わせます。
+  </p>
+
+  <div class="inin">
+    <h4>委 任 状</h4>
+
+    <div class="lead">私は、下記の者を代理人と定め、当社の古物商許可（秋田県公安委員会 第2310500001025号）に関する次の手続きについて、その一切の権限を委任します。</div>
+
+    <div class="label">【委任事項】</div>
+    <ul class="items">
+      <li>一、古物商許可事項の変更届出（法人の住所変更）に関する一切の件</li>
+      <li>一、古物商許可証の書換申請に関する一切の件</li>
+      <li>一、営業所の管理者の選任（変更）届出に関する一切の件</li>
+      <li>一、上記に付随する書類の作成・提出及び許可証の受領に関する一切の件</li>
+    </ul>
+
+    <div class="agent">
+      <div class="label">【代理人】</div>
+      住　所：<span class="u">秋田県山本郡八峰町石川416</span><br>
+      氏　名：<span class="u">北川 裕斗</span>
+    </div>
+
+    <div class="date">令和　　　年　　　月　　　日</div>
+
+    <div class="principal">
+      <div class="label">【委任者（古物商）】</div>
+      名　称：<span class="u">合同会社SSインベスター</span><br>
+      住　所：<span class="u">東京都中央区銀座7丁目13番6号 サガミビル2F</span><br>
+      代表者：代表社員　<span class="u">薩摩 賢幸</span><span class="seal">代表者印</span>
+    </div>
+  </div>
+
   <div class="warn">
-    ※ 標識の様式・管理者の届出・台帳の形式など細かい運用は都道府県警によって異なります。最終的には<b>能代警察署の指示を最優先</b>にしてください。電話の前に許可証の写真と新本店の住所を手元に用意しておくとスムーズです。
+    ※ 警察によっては<b>独自様式の委任状</b>を求める場合があります。電話確認の際に「本書のひな形で可か、専用様式があるか」を必ず聞いてください。住所・名称は<b>登記事項証明書の表記</b>と完全に一致させること。
   </div>
 
   <footer>合同会社SSインベスター ／ 古物商許可 第2310500001025号 ／ 2026-06-09 作成</footer>
