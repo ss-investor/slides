@@ -66,13 +66,21 @@
   ul.ck li{
     position:relative; padding:9px 12px 9px 40px; margin-bottom:6px;
     background:var(--soft); border:1px solid var(--line); border-radius:8px;
-    font-size:.93rem;
+    font-size:.93rem; cursor:pointer; user-select:none; transition:background .15s,opacity .15s;
   }
+  ul.ck li:hover{background:#f1ede3;}
   ul.ck li::before{
     content:""; position:absolute; left:12px; top:11px;
     width:18px; height:18px; border:2px solid var(--navy);
-    border-radius:4px; background:#fff;
+    border-radius:4px; background:#fff; transition:background .15s,border-color .15s;
   }
+  ul.ck li.done{background:#eef7f0; border-color:#bfe0c8;}
+  ul.ck li.done::before{background:var(--green); border-color:var(--green);}
+  ul.ck li.done::after{
+    content:"✓"; position:absolute; left:15px; top:9px;
+    color:#fff; font-size:14px; font-weight:900; line-height:1;
+  }
+  ul.ck li.done > .ckmain{text-decoration:line-through; color:#8a8a8a;}
   ul.ck li .note{display:block; font-size:.8rem; color:#666; margin-top:3px;}
   .script{
     background:#eef4f8; border:1px solid #b9d2e2; border-radius:10px;
@@ -289,5 +297,34 @@
   <footer>合同会社SSインベスター ／ 古物商許可 第2310500001025号 ／ 2026-06-09 作成</footer>
 
 </div>
+
+<script>
+(function(){
+  var KEY = "kobutsu-guide-checks-v1";
+  var items = Array.prototype.slice.call(document.querySelectorAll("ul.ck li"));
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e){ saved = {}; }
+  function save(){
+    var state = {};
+    items.forEach(function(li, i){ if(li.classList.contains("done")) state[i] = 1; });
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){}
+  }
+  items.forEach(function(li, i){
+    li.setAttribute("role","checkbox");
+    li.setAttribute("tabindex","0");
+    if(saved[i]){ li.classList.add("done"); }
+    li.setAttribute("aria-checked", li.classList.contains("done") ? "true" : "false");
+    function toggle(){
+      li.classList.toggle("done");
+      li.setAttribute("aria-checked", li.classList.contains("done") ? "true" : "false");
+      save();
+    }
+    li.addEventListener("click", toggle);
+    li.addEventListener("keydown", function(e){
+      if(e.key === " " || e.key === "Enter"){ e.preventDefault(); toggle(); }
+    });
+  });
+})();
+</script>
 </body>
 </html>
