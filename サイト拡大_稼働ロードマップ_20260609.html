@@ -46,62 +46,54 @@
   同一サイトを両方式で扱う場合も必ず別マシン担当。新サイト追加時も厳守。
 </p>
 
-<!-- ===== 本日の作業 ===== -->
+<!-- ===== 完了作業（6/09） ===== -->
 <h2 class="sec-now">✅ 完了作業（2026-06-09）</h2>
 <table>
   <thead><tr><th>作業</th><th>内容</th><th>状態</th></tr></thead>
   <tbody>
     <tr>
       <td>① LLM判定ワーカー修復</td>
-      <td class="note">
-        メルカリ/ヤフオクのAI判定ワーカーがDBエラー（<code>InFailedSqlTransaction</code>）で停止していた問題を修正。<br>
-        <b>原因</b>：照合エンジン match2 がSQL失敗時に <b>rollbackせず例外を握り潰し</b> → trgmタイムアウトでトランザクション汚染 → 後続クエリが連鎖死しバッチごとクラッシュ。<br>
-        <b>修正</b>：①match2の2クエリで rollback＋エラー出力（握り潰し解消）／②各itemを try/except で囲み1件失敗でもバッチ継続。
-      </td>
+      <td class="note">メルカリ/ヤフオクのAI判定ワーカーが<code>InFailedSqlTransaction</code>で停止していた問題を修正。原因：match2がSQL失敗時にrollbackせず例外を握り潰し→trgmタイムアウトでトランザクション汚染→連鎖クラッシュ。修正：rollback追加＋try/exceptで1件失敗でもバッチ継続。</td>
       <td><span class="badge ok">✅完了</span></td>
     </tr>
     <tr>
       <td>② メルカリSOLD相場DB<br><span class="note">モモ稼働開始</span></td>
-      <td class="note">
-        オークファンAPI却下（JAN検索不可・全件1,290万円）の代替として、メルカリ「売り切れ」＝実成約価格を自前スクレイピングしてDB化。<code>sold_listings</code>テーブル新設・LLM不要（ISBN抽出＋match2）・巻/年ゲートで誤マッチ0。<b>モモで東京Mullvad SOCKS5別IP（¥0）にて本番稼働開始</b>。180件収集・28 ASIN相場化。
-      </td>
+      <td class="note">オークファンAPI却下（JAN検索不可・全件1,290万円）の代替として、メルカリ「売り切れ」＝実成約価格を自前スクレイピングしてDB化。sold_listingsテーブル新設・LLM不要（ISBN抽出＋match2）・巻/年ゲートで誤マッチ0。モモで東京Mullvad SOCKS5別IP（¥0）にて稼働。180件収集・28 ASIN相場化。</td>
       <td><span class="badge ok">✅モモ稼働中</span></td>
     </tr>
   </tbody>
 </table>
 
-<h2 class="sec-now">🚧 本日の作業（2026-06-10）</h2>
+<!-- ===== 完了作業（6/10） ===== -->
+<h2 class="sec-now">✅ 完了作業（2026-06-10）</h2>
 <table>
   <thead><tr><th>作業</th><th>内容</th><th>状態</th></tr></thead>
   <tbody>
     <tr>
-      <td>① LLM待ち分の照合<br><span class="note">マッチ率向上</span></td>
-      <td class="note">
-        <code>mercari_sold_match.py --llm-verify</code>：<code>status='pending_llm'</code>（タイトル類似スコア閾値0.92未満・候補はあり）の行を <code>verify_match（qwen2.5:14b）</code> で再照合 → <code>matched</code>/<code>no_match</code> に確定。<br>
-        <b>仕組み</b>：候補上位6件に対し「同じ作品か？」をLLMに判定させ、巻違い・年違いを弾く。Ollama（GPU）必須のためリンゴ専用。<br>
-        <b>launchd</b>：<code>mercari-sold-llm-verify</code>（2時間毎・リンゴ）自動実行。ヤフオク落札版にも同じ <code>--llm-verify</code> 実装済み。
-      </td>
-      <td><span class="badge ok">✅完了・launchd登録済み</span></td>
+      <td>① LLM照合 —— pending_llm再判定</td>
+      <td class="note"><code>mercari_sold_match.py --llm-verify</code>：タイトル類似スコア0.92未満の候補をqwen2.5:14bで再照合。<b>launchd</b>：mercari-sold-llm-verify（2時間毎・リンゴ）自動実行。ヤフオク落札版にも実装済み。</td>
+      <td><span class="badge ok">✅完了</span></td>
     </tr>
     <tr>
-      <td>② mercari_sold→mercari昇格<br><span class="note">実売値を足切りに反映</span></td>
-      <td class="note">
-        <code>mercari_sold_match.py --promote</code>：<code>sell_market_price(channel='mercari_sold')</code>（実成約価格の中央値）を <code>channel='mercari'</code>（本番チャネル）へ UPSERT で昇格。<br>
-        <b>なぜ必要か</b>：ポータルの足切り計算（BEST_PROFIT_SQL）は <code>channel='mercari'</code> を参照するため、昇格前は実売値が判定に使われていなかった。昇格後は「実際に売れた価格」をベースに利益判定が走る。<br>
-        <b>即時実行済み</b>：610→<b>638件</b>に更新。モモの <code>mercari_sold_match_runner.sh</code> 末尾に <code>--promote</code> を追加し <b>30分毎に自動昇格</b>（データが増えるたびに相場が自動更新される）。
-      </td>
-      <td><span class="badge ok">✅完了・自動昇格済み</span></td>
+      <td>② mercari_sold → mercari昇格</td>
+      <td class="note"><code>sell_market_price(channel='mercari_sold')</code>の中央値を<code>channel='mercari'</code>へUPSERT昇格。即時638件をポータル足切りに反映。モモのrunner末尾に<code>--promote</code>追加し30分毎自動昇格。</td>
+      <td><span class="badge ok">✅完了・自動昇格中</span></td>
     </tr>
     <tr>
-      <td>③ ヤフオク落札相場 横展開<br><span class="note">リンゴで新規稼働</span></td>
+      <td>③ ヤフオク落札相場 横展開</td>
+      <td class="note"><code>yahoo_sold_continuous.py</code>（istatus=close+p=isbn）で落札済みを巡回→<code>sold_listings(platform='yahoo_auctions')</code>蓄積。<code>yahoo_sold_match.py</code>でISBN逆引き+match2照合→<code>sell_market_price(channel='yahoo_sold')</code>中央値集計。launchd：yahoo-sold-continuous（KeepAlive・<b>モモ移管済2026-06-10</b>）＋yahoo-sold-match（30分毎・リンゴ）。Mullvad SOCKS5東京(146.70.138.x)経由でIP分離済み。</td>
+      <td><span class="badge ok">✅完了・モモSOCKS5東京稼働中</span></td>
+    </tr>
+    <tr>
+      <td>④ CDパイプライン全体修正<br><span class="note">楽天CD新規 + is_cd補完</span></td>
       <td class="note">
-        メルカリSOLD相場DBのヤフオク版を構築。<br>
-        <b>クローラ</b>（<code>yahoo_sold_continuous.py</code>）：<code>istatus=close</code>+<code>p=isbn</code> で落札済みISBN入り出品を巡回 → <code>sold_listings(platform='yahoo_auctions')</code> に蓄積。初回実行で <b>95件収集確認</b>。ISBN一致率≈45%（タイトルにISBNが埋め込まれている件数の割合）。<br>
-        <b>照合+集計</b>（<code>yahoo_sold_match.py</code>）：ISBN逆引き＋match2タイトル類似で照合 → <code>sell_market_price(channel='yahoo_sold')</code> へ中央値集計。<code>--llm-verify</code>も実装。<br>
-        <b>launchd（リンゴ）</b>：<code>yahoo-sold-continuous</code>（KeepAlive常駐）＋ <code>yahoo-sold-match</code>（30分毎）登録済み。<br>
-        <b>データが増えると</b>：ASIN単位で落札価格の中央値が自動更新 → 将来ポータルの足切りにも統合可能。
+        <b>根本原因判明</b>：book_productsのis_cd=TRUE ASINにJANが115件しかない（Keepaがfillしていない）。一方、もったいない本舗のCD listingsは<b>289,286件取得済み・JAN有</b>→isbn_13と274K件マッチするがis_cd=FALSE のまま。<br>
+        ・<code>backfill_cd_is_cd_flag.py</code>（新規）でis_cd=TRUEを274K件補完（実行中・4,773件完了済）<br>
+        ・<code>rakuten/client.py</code>に<code>search_by_jan()</code>追加（genreId指定なし・全ジャンル検索）<br>
+        ・<code>rakuten/cd_runner.py</code>（新規）is_cd=TRUE JAN順でローテ・日次30,000件<br>
+        ・楽天本runnerもモモへ移管（リンゴはbak停止中）＋launchd登録（6:00本・6:30 CD）
       </td>
-      <td><span class="badge ok">✅完了・リンゴ稼働中</span></td>
+      <td><span class="badge near">⏳ is_cd補完実行中</span></td>
     </tr>
   </tbody>
 </table>
@@ -113,17 +105,17 @@
   <tbody>
     <tr>
       <td>🟧 もったいない本舗</td>
-      <td><span class="genre">本</span><span class="genre">DVD</span></td>
+      <td><span class="genre">本</span><span class="genre">CD</span><span class="genre">DVD</span></td>
       <td><span class="badge isbn">ISBN/JAN</span></td>
-      <td class="note">サイトマップ全件巡回（178万件・24h・1.5秒間隔）</td>
+      <td class="note">サイトマップ全件巡回（178万件・24h・1.5秒間隔）。<b>CDも取得済み（289,286件・JAN有）</b>→is_cd補完でpipeline全体が有効化</td>
       <td><span class="badge ok">✅稼働中</span></td>
     </tr>
     <tr>
       <td>🟥 楽天市場</td>
       <td><span class="genre">本</span><span class="genre">DVD</span></td>
       <td><span class="badge api">公式API</span> <span class="badge isbn">JAN</span></td>
-      <td class="note">楽天WebサービスAPI（IchibaItem/Search）</td>
-      <td><span class="badge ok">✅稼働中</span></td>
+      <td class="note"><b>2026-06-10 モモへ移管済み</b>（リンゴはbak停止中）</td>
+      <td><span class="badge" style="background:#888;color:#fff;">📦モモへ移管</span></td>
     </tr>
     <tr>
       <td>🟦 VALUE BOOKS</td>
@@ -182,18 +174,18 @@
       <td><span class="badge ok">✅稼働中</span></td>
     </tr>
     <tr>
-      <td>💰 ヤフオク <b>落札相場</b><br><span class="note">※仕入れでなく売値相場収集</span></td>
+      <td>💰 ヤフオク <b>落札相場 match</b><br><span class="note">※照合・集計のみ</span></td>
       <td><span class="genre">本</span></td>
       <td><span class="badge jan">ISBN/タイトル照合</span></td>
-      <td class="note">落札済み(<code>istatus=close</code>+<code>p=isbn</code>)を巡回→<code>sold_listings(platform='yahoo_auctions')</code>に蓄積→<code>sell_market_price(channel='yahoo_sold')</code>へ中央値集計。<b>2026-06-10 リンゴで稼働開始</b>。初回95件収集確認。continuous(KeepAlive)＋match(30分毎)。LLM verify（--llm-verify）対応済み</td>
-      <td><span class="badge ok">✅稼働中（収集開始）</span></td>
+      <td class="note">yahoo-sold-match（30分毎）でISBN逆引き+match2照合→sell_market_price(channel='yahoo_sold')集計。LLM verify（2時間毎）も稼働中。<b>★continuous収集はモモSOCKS5東京へ移管済み（2026-06-10）★</b></td>
+      <td><span class="badge ok">✅稼働中（match・verify）</span></td>
     </tr>
     <tr>
       <td>🟪 Yahoo!フリマ（ISBN）</td>
       <td><span class="genre">本</span></td>
       <td><span class="badge isbn">ISBN</span></td>
-      <td class="note">⚠️ <b>2026-06-10 モモへ移管済み</b>。リンゴではbootout済み。</td>
-      <td><span class="badge" style="background:#888;color:#fff;">📦移管済み</span></td>
+      <td class="note"><b>2026-06-10 モモへ移管済み</b>。リンゴはbootout済み。</td>
+      <td><span class="badge" style="background:#888;color:#fff;">📦モモへ移管</span></td>
     </tr>
     <tr>
       <td>🟪 Yahoo!フリマ（LLM）</td>
@@ -214,22 +206,36 @@
       <td>🎮 駿河屋（ゲーム）</td>
       <td><span class="genre">ゲーム</span></td>
       <td><span class="badge jan">JAN逆引き</span></td>
-      <td class="note">自社JAN→駿河屋検索（誤マッチゼロ・連続・14日ローテ）<b>2026-06-10 リンゴから移管完了</b></td>
+      <td class="note">自社JAN 83,464件→駿河屋検索（誤マッチゼロ・連続・14日ローテ）。2026-06-10 リンゴから移管完了</td>
       <td><span class="badge ok">✅稼働中</span></td>
     </tr>
     <tr>
       <td>🎬 駿河屋（DVD）</td>
       <td><span class="genre">DVD</span></td>
       <td><span class="badge jan">JAN逆引き</span></td>
-      <td class="note">DVD JAN(45/49始まり 49万件)→駿河屋検索・14日ローテ・<b>2026-06-10 新規稼働</b></td>
+      <td class="note">DVD JAN 928,839件→駿河屋検索・14日ローテ。2026-06-10 新規稼働</td>
       <td><span class="badge ok">✅稼働中</span></td>
     </tr>
     <tr>
       <td>🎵 駿河屋（CD）</td>
       <td><span class="genre">CD</span></td>
       <td><span class="badge jan">JAN逆引き</span></td>
-      <td class="note">CD JAN(現在115件・仕入増で自動拡大)→駿河屋検索・14日ローテ・<b>2026-06-10 新規稼働</b></td>
+      <td class="note">CD JAN→駿河屋検索・14日ローテ。<b>is_cd補完で115件→274K件に自動拡大中</b>（補完完了後に本格稼働）</td>
+      <td><span class="badge ok">✅稼働中（JAN拡大中）</span></td>
+    </tr>
+    <tr>
+      <td>🟥 楽天市場（本）</td>
+      <td><span class="genre">本</span><span class="genre">DVD</span></td>
+      <td><span class="badge api">公式API</span> <span class="badge isbn">JAN</span></td>
+      <td class="note">リンゴから移管。毎日6:00・日次30,000 ISBN（Keepa上位rank順）。2026-06-10 モモで新規稼働</td>
       <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🟥 楽天市場（CD）</td>
+      <td><span class="genre">CD</span></td>
+      <td><span class="badge api">公式API</span> <span class="badge jan">JAN</span></td>
+      <td class="note">is_cd=TRUE JAN順でローテ・毎日6:30・日次30,000 JAN・genreId指定なし全ジャンル検索。2026-06-10 新規実装・モモlaunchd登録済み。<b>is_cd補完完了後に本格稼働</b></td>
+      <td><span class="badge near">⏳ JAN補完完了後に本格稼働</span></td>
     </tr>
     <tr>
       <td>🟧 ブックオフ</td>
@@ -256,56 +262,73 @@
       <td>🟪 Yahoo!フリマ（ISBN）</td>
       <td><span class="genre">本</span></td>
       <td><span class="badge isbn">ISBN</span></td>
-      <td class="note">keyword=ISBN×新着順・24h連続・httpx。<b>2026-06-10 リンゴから移管・モモで稼働開始</b>（com.ssinvestor.arbitrage.yahoo-flea-continuous）</td>
+      <td class="note">keyword=ISBN×新着順・24h連続・httpx。2026-06-10 リンゴから移管（com.ssinvestor.arbitrage.yahoo-flea-continuous）</td>
       <td><span class="badge ok">✅稼働中</span></td>
     </tr>
     <tr>
-      <td>💰 メルカリ <b>売り切れ相場</b><br><span class="note">※仕入れでなく売値相場収集</span></td>
+      <td>💰 メルカリ <b>売り切れ相場</b><br><span class="note">※仕入でなく売値相場収集</span></td>
       <td><span class="genre">本</span></td>
       <td><span class="badge jan">ISBN/タイトル照合</span></td>
-      <td class="note">売り切れ(実成約価格)を収集→<code>sell_market_price(channel='mercari')</code>へ中央値集計（昇格済）。<b>★出口IPは東京Mullvad SOCKS5（146.70.138.x）＝出品中ISBN(大阪194.x)と別IPで分離（¥0）★</b>。continuous(KeepAlive)＋match(30分毎・昇格込み)。LLM not required・巻/年ゲートで誤マッチ0。<b>638 ASIN の売値相場が足切りに反映済み</b></td>
+      <td class="note">売り切れ実成約価格を収集→sell_market_price(channel='mercari')へ中央値集計・昇格済み。出口IP=東京Mullvad SOCKS5（出品中ISBN別IP）。continuous(KeepAlive)＋match(30分毎・昇格込み)。<b>638 ASINの売値相場が足切りに反映済み</b></td>
       <td><span class="badge ok">✅稼働中・昇格済み</span></td>
+    </tr>
+    <tr>
+      <td>💰 ヤフオク <b>落札相場</b><br><span class="note">※仕入でなく売値相場収集</span></td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge jan">ISBN/タイトル照合</span></td>
+      <td class="note">落札済み(istatus=close+p=isbn)巡回→sold_listings(yahoo_auctions)蓄積。出口IP=<b>Mullvad SOCKS5東京(jp-tyo-wg-socks5-201)＝ヤフオクISBN仕入と分離</b>。2026-06-10 リンゴから移管。match(30分毎)・LLM verify(2時間毎)はリンゴ担当。★残：channel='yahoo_sold'をBEST_PROFIT_SQLへ統合</td>
+      <td><span class="badge ok">✅稼働中（SOCKS5東京・足切り未統合）</span></td>
     </tr>
   </tbody>
 </table>
 
 <!-- ===== 残タスク ===== -->
-<h2 class="sec-tasks">🔧 残タスク（実装待ち）</h2>
+<h2 class="sec-tasks">🔧 残タスク（優先度順）</h2>
 <table>
-  <thead><tr><th>タスク</th><th>内容</th><th>前提条件</th></tr></thead>
+  <thead><tr><th>タスク</th><th>内容・理由</th><th>前提・優先度</th></tr></thead>
   <tbody>
     <tr>
-      <td>売却検知→自動取下げdaemon</td>
-      <td class="note">MFN売却後に他販路の在庫を自動取下げ</td>
-      <td class="note">即着手可</td>
+      <td>① is_cd補完 完了待ち</td>
+      <td class="note">backfill_cd_is_cd_flag.py実行中（4,773/274,039件完了）。完了すると駿河屋CD・楽天CDが274K JAN規模で本格稼働。Keepa365スプリントと競合してデッドロックしやすいためバッチ分割で断続実行中。</td>
+      <td class="note"><span class="badge near">自動完了待ち</span></td>
     </tr>
     <tr>
-      <td>pg_trgm GIN索引適用</td>
-      <td class="note">照合クエリ高速化（228件110分→数分）</td>
-      <td class="note">6/18 Keepa365スプリント完了後</td>
+      <td>② ヤフオク落札相場 → ポータル足切り統合</td>
+      <td class="note">channel='yahoo_sold'をBEST_PROFIT_SQLのsmp_y（ヤフオク売値）に追加。現状yahoo_soldはDBにあるがポータルの利益計算に使われていない。</td>
+      <td class="note"><span class="badge near">即着手可</span></td>
     </tr>
     <tr>
-      <td><s>メルカリ・ヤフオク 売り相場DB</s></td>
-      <td class="note"><b>✅ 2026-06-10 完了</b>：①LLM verify（pending_llm再照合・2h毎自動）②mercari_sold→mercari昇格（638 ASIN・30分毎自動）③ヤフオクSOLD横展開（リンゴ稼働中）。データは蓄積し続け相場が育っていく。残＝yahoo_sold → 将来ポータル足切りへの統合（/spec更新は別途まとめて実施）</td>
-      <td class="note"><span class="badge ok">✅完了</span></td>
+      <td>③ ブックオフ CDカテゴリ追加</td>
+      <td class="note">GENRE_SEEDSに<code>/cd/genre</code>等を追加してPhase1でCDジャンルコードを収集。Phase2のJSON-LD gtin13でJANを取得。WAFでGENREページへのアクセスが困難なため要再検証。成功すると新規CDのJANが蓄積され374K件超に拡大。</td>
+      <td class="note"><span class="badge check">WAF再検証後</span></td>
     </tr>
     <tr>
-      <td>P6 他3販路出品エンジン</td>
-      <td class="note">メルカリShops・ヤフオクストア・Yahoo!ショッピングへの自動出品</td>
+      <td>④ 売却検知 → 自動取下げdaemon</td>
+      <td class="note">MFN売却後に他販路（メルカリShops・ヤフオク等）の在庫を自動取下げ。現状は手動対応。</td>
+      <td class="note"><span class="badge near">即着手可</span></td>
+    </tr>
+    <tr>
+      <td>⑤ pg_trgm GIN索引適用</td>
+      <td class="note">照合クエリ高速化（228件110分→数分）。LLM照合・sold相場照合が全て高速化される。</td>
+      <td class="note">6/18 Keepa365完了後</td>
+    </tr>
+    <tr>
+      <td>⑥ P6 他3販路出品エンジン</td>
+      <td class="note">メルカリShops・ヤフオクストア・Yahoo!ショッピングへの自動出品API</td>
       <td class="note">各販路審査通過後</td>
     </tr>
     <tr>
-      <td>P7-4 売上・原価・変動費接続</td>
+      <td>⑦ P7-4 売上・原価・変動費接続</td>
       <td class="note">PLページに実売上・原価を自動反映</td>
       <td class="note">P6 soldログ整備後</td>
     </tr>
     <tr>
-      <td>クリックポスト住所全自動CSV</td>
-      <td class="note">北川さんの手作業をゼロに</td>
-      <td class="note">SP-API PII制限ロール承認後</td>
+      <td>⑧ クリックポスト住所全自動CSV</td>
+      <td class="note">北川さんの手作業をゼロに（SP-API PII制限ロール承認待ち）</td>
+      <td class="note">SP-API承認後</td>
     </tr>
     <tr>
-      <td>ジャンルページ廃止統合</td>
+      <td>⑨ ジャンルページ廃止統合</td>
       <td class="note">/books・/games等を/buy-judge・/ai-judgeに一本化</td>
       <td class="note">全サイト拡大完了後（最後）</td>
     </tr>
@@ -337,36 +360,6 @@
       <td><span class="badge llm">LLM画像識別</span></td>
       <td class="note"><b>本カテゴリは2026-06-09 リンゴで稼働開始済み</b>（noisbn-continuous+llm-worker）。CD/DVD/ゲームへの横展開は別タスク。固定価格なので入札上限計算不要=メルカリより判定シンプル</td>
       <td><span class="badge ok">✅稼働中（本のみ）</span></td>
-    </tr>
-    <!-- 🗑️ 駿河屋 CD/DVD/ゲーム LLM方式 → 削除済み (2026-06-10)
-         削除理由:
-           ① JAN逆引きでほぼカバー可能（DVD 96.7%・ゲーム 71.2%・CDは仕入増加で自動拡大）
-           ② CD JAN 0.0% は「ブックオフ/もったいないのCD取込充実」が先決で、
-              JAN数が増えれば suruga_cd_reverse.py が自動的に逆引きを増やす
-           ③ 駿河屋はCloudflare保護が強くカテゴリ巡回（LLM素材収集）自体が困難
-           ④ JAN逆引きは誤マッチゼロ・LLMより確実でコスト低い
-         → LLM方式を追加するメリットが薄い。JAN逆引き3本（ゲーム/DVD/CD）で運用継続。
-    -->
-    <tr>
-      <td>🟧 ブックオフ / もったいない（CDカテゴリ）</td>
-      <td><span class="genre">CD</span></td>
-      <td><span class="badge jan">JAN逆引き</span></td>
-      <td class="note">book_products にCD ASIN 398K件・Keepa stats 69K件取得済み。listings が7件のみ → スクレイパーがISBNなしCDをスキップ中。CDカテゴリ用の取得改修が必要</td>
-      <td><span class="badge near">🔜 近い</span></td>
-    </tr>
-    <tr>
-      <td>🟥 楽天（CDカテゴリ）</td>
-      <td><span class="genre">CD</span></td>
-      <td><span class="badge api">公式API</span> <span class="badge jan">JAN</span></td>
-      <td class="note">楽天APIは稼働中だが cd_rank 判定ジョブが未実装。判定ロジック追加のみで完結</td>
-      <td><span class="badge near">🔜 近い</span></td>
-    </tr>
-    <tr>
-      <td>🟣 メルカリ・ヤフオク<br><span class="note">売り相場DB</span></td>
-      <td><span class="genre">全ジャンル</span></td>
-      <td><span class="badge jan">自社スクレイピング</span></td>
-      <td class="note"><b>✅ 2026-06-10 両方稼働開始</b>。メルカリ（モモ・東京SOCKS5別IP）＋ヤフオク（リンゴ）ともに収集・照合・集計・昇格が自動化。データは日々蓄積し相場精度が向上する。<b>残＝yahoo_soldをポータル足切りに統合</b>（channel='yahoo_sold'を BEST_PROFIT_SQL の smp_y に追加）</td>
-      <td><span class="badge ok">✅両方稼働中</span></td>
     </tr>
     <tr>
       <td>📌 ジモティ</td>
@@ -442,6 +435,11 @@
       <td>eBay（仕入れ側）</td>
       <td><span class="genre">本</span><span class="genre">ゲーム</span></td>
       <td class="note">USD＋国際送料＋円安で黒字率 本0% / ゲーム1.2%。出品（輸出販売）側はGO</td>
+    </tr>
+    <tr>
+      <td>オークファンAPI</td>
+      <td><span class="genre">全般</span></td>
+      <td class="note">JAN検索不可・レスポンスにASIN/JAN無し・メルカリ非対応・全件1,290万円で非現実的。→自社スクレイピングで代替</td>
     </tr>
   </tbody>
 </table>
