@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>サイト拡大・稼働ロードマップ 2026-06-10</title>
+<style>
+  body { font-family: "Hiragino Kaku Gothic Pro", sans-serif; margin: 24px; background: #f8f9fa; color: #222; font-size: 13px; }
+  h1 { font-size: 18px; margin-bottom: 2px; }
+  .sub { font-size: 11px; color: #888; margin-bottom: 20px; }
+  h2 { font-size: 14px; margin: 24px 0 8px; padding: 5px 10px; border-radius: 5px; }
+  .sec-ringo  { background: #fff0f0; border-left: 4px solid #e55; color: #c00; }
+  .sec-momo   { background: #fff4ec; border-left: 4px solid #f90; color: #a60; }
+  .sec-expand { background: #fffbeb; border-left: 4px solid #d97706; color: #92400e; }
+  .sec-tasks  { background: #f0f9ff; border-left: 4px solid #0ea5e9; color: #0c4a6e; }
+  .sec-done   { background: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; }
+  .sec-now    { background: #ecfdf5; border-left: 4px solid #10b981; color: #065f46; }
+
+  table { border-collapse: collapse; width: 100%; background: #fff; margin-bottom: 4px; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px #0001; }
+  th { background: #374151; color: #fff; padding: 7px 10px; text-align: left; font-size: 12px; }
+  td { padding: 6px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: top; line-height: 1.5; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafafa; }
+
+  .badge { display: inline-block; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: bold; white-space: nowrap; }
+  .isbn  { background: #dbeafe; color: #1e40af; }
+  .llm   { background: #fce7f3; color: #9d174d; }
+  .jan   { background: #d1fae5; color: #065f46; }
+  .api   { background: #ede9fe; color: #5b21b6; }
+  .ok    { background: #d1fae5; color: #065f46; }
+  .ng    { background: #fee2e2; color: #991b1b; }
+  .near  { background: #fde68a; color: #78350f; }
+  .check { background: #e0e7ff; color: #3730a3; }
+  .warn  { background: #fee2e2; color: #991b1b; }
+
+  .genre { display: inline-block; margin: 1px; padding: 1px 5px; border-radius: 3px; font-size: 11px; background: #e5e7eb; color: #374151; }
+  .note  { font-size: 11px; color: #666; }
+</style>
+</head>
+<body>
+
+<h1>📊 サイト拡大・稼働ロードマップ</h1>
+<p class="sub">2026-06-10 更新 ｜ 識別経路：<span class="badge isbn">ISBN/JAN</span>=機械判定（buy_judgement→/buy-judge） ／ <span class="badge llm">LLM画像</span>=AI判定（*_llm_match→/ai-judge） ※2経路は混在禁止</p>
+<p style="background:#fff3cd;border:1px solid #ffc107;padding:8px 12px;border-radius:6px;margin:8px 0;font-size:0.9em;">
+  ★<b>マシン担当ルール（恒久）</b>：<b>🍑モモ = ISBN/JAN方式のみ</b>（scraper keyword検索→listings→buy_judgement→/buy-judge）／
+  <b>🍎リンゴ = LLM画像識別方式のみ</b>（カテゴリ巡回→image_url保存→*_llm_match→/ai-judge）。
+  同一サイトを両方式で扱う場合も必ず別マシン担当。新サイト追加時も厳守。
+</p>
+
+<!-- ===== 本日の作業 ===== -->
+<h2 class="sec-now">✅ 完了作業（2026-06-09）</h2>
+<table>
+  <thead><tr><th>作業</th><th>内容</th><th>状態</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>① LLM判定ワーカー修復</td>
+      <td class="note">
+        メルカリ/ヤフオクのAI判定ワーカーがDBエラー（<code>InFailedSqlTransaction</code>）で停止していた問題を修正。<br>
+        <b>原因</b>：照合エンジン match2 がSQL失敗時に <b>rollbackせず例外を握り潰し</b> → trgmタイムアウトでトランザクション汚染 → 後続クエリが連鎖死しバッチごとクラッシュ。<br>
+        <b>修正</b>：①match2の2クエリで rollback＋エラー出力（握り潰し解消）／②各itemを try/except で囲み1件失敗でもバッチ継続。
+      </td>
+      <td><span class="badge ok">✅完了</span></td>
+    </tr>
+    <tr>
+      <td>② メルカリSOLD相場DB<br><span class="note">モモ稼働開始</span></td>
+      <td class="note">
+        オークファンAPI却下（JAN検索不可・全件1,290万円）の代替として、メルカリ「売り切れ」＝実成約価格を自前スクレイピングしてDB化。<code>sold_listings</code>テーブル新設・LLM不要（ISBN抽出＋match2）・巻/年ゲートで誤マッチ0。<b>モモで東京Mullvad SOCKS5別IP（¥0）にて本番稼働開始</b>。180件収集・28 ASIN相場化。
+      </td>
+      <td><span class="badge ok">✅モモ稼働中</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="sec-now">🚧 本日の作業（2026-06-10）</h2>
+<table>
+  <thead><tr><th>作業</th><th>内容</th><th>状態</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>① LLM待ち分の照合<br><span class="note">マッチ率向上</span></td>
+      <td class="note">
+        <code>mercari_sold_match.py --llm-verify</code>：<code>status='pending_llm'</code>（タイトル類似スコア閾値0.92未満・候補はあり）の行を <code>verify_match（qwen2.5:14b）</code> で再照合 → <code>matched</code>/<code>no_match</code> に確定。<br>
+        <b>仕組み</b>：候補上位6件に対し「同じ作品か？」をLLMに判定させ、巻違い・年違いを弾く。Ollama（GPU）必須のためリンゴ専用。<br>
+        <b>launchd</b>：<code>mercari-sold-llm-verify</code>（2時間毎・リンゴ）自動実行。ヤフオク落札版にも同じ <code>--llm-verify</code> 実装済み。
+      </td>
+      <td><span class="badge ok">✅完了・launchd登録済み</span></td>
+    </tr>
+    <tr>
+      <td>② mercari_sold→mercari昇格<br><span class="note">実売値を足切りに反映</span></td>
+      <td class="note">
+        <code>mercari_sold_match.py --promote</code>：<code>sell_market_price(channel='mercari_sold')</code>（実成約価格の中央値）を <code>channel='mercari'</code>（本番チャネル）へ UPSERT で昇格。<br>
+        <b>なぜ必要か</b>：ポータルの足切り計算（BEST_PROFIT_SQL）は <code>channel='mercari'</code> を参照するため、昇格前は実売値が判定に使われていなかった。昇格後は「実際に売れた価格」をベースに利益判定が走る。<br>
+        <b>即時実行済み</b>：610→<b>638件</b>に更新。モモの <code>mercari_sold_match_runner.sh</code> 末尾に <code>--promote</code> を追加し <b>30分毎に自動昇格</b>（データが増えるたびに相場が自動更新される）。
+      </td>
+      <td><span class="badge ok">✅完了・自動昇格済み</span></td>
+    </tr>
+    <tr>
+      <td>③ ヤフオク落札相場 横展開<br><span class="note">リンゴで新規稼働</span></td>
+      <td class="note">
+        メルカリSOLD相場DBのヤフオク版を構築。<br>
+        <b>クローラ</b>（<code>yahoo_sold_continuous.py</code>）：<code>istatus=close</code>+<code>p=isbn</code> で落札済みISBN入り出品を巡回 → <code>sold_listings(platform='yahoo_auctions')</code> に蓄積。初回実行で <b>95件収集確認</b>。ISBN一致率≈45%（タイトルにISBNが埋め込まれている件数の割合）。<br>
+        <b>照合+集計</b>（<code>yahoo_sold_match.py</code>）：ISBN逆引き＋match2タイトル類似で照合 → <code>sell_market_price(channel='yahoo_sold')</code> へ中央値集計。<code>--llm-verify</code>も実装。<br>
+        <b>launchd（リンゴ）</b>：<code>yahoo-sold-continuous</code>（KeepAlive常駐）＋ <code>yahoo-sold-match</code>（30分毎）登録済み。<br>
+        <b>データが増えると</b>：ASIN単位で落札価格の中央値が自動更新 → 将来ポータルの足切りにも統合可能。
+      </td>
+      <td><span class="badge ok">✅完了・リンゴ稼働中</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ===== リンゴ ===== -->
+<h2 class="sec-ringo">🍎 リンゴ（メインMac mini）</h2>
+<table>
+  <thead><tr><th>仕入れサイト</th><th>ジャンル</th><th>識別方式</th><th>概要</th><th>状態</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>🟧 もったいない本舗</td>
+      <td><span class="genre">本</span><span class="genre">DVD</span></td>
+      <td><span class="badge isbn">ISBN/JAN</span></td>
+      <td class="note">サイトマップ全件巡回（178万件・24h・1.5秒間隔）</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🟥 楽天市場</td>
+      <td><span class="genre">本</span><span class="genre">DVD</span></td>
+      <td><span class="badge api">公式API</span> <span class="badge isbn">JAN</span></td>
+      <td class="note">楽天WebサービスAPI（IchibaItem/Search）</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🟦 VALUE BOOKS</td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge isbn">ISBN</span></td>
+      <td class="note">ISBN検索・60秒間隔・24h daemon</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🛒 ネットオフ</td>
+      <td><span class="genre">本</span><span class="genre">CD</span><span class="genre">DVD</span><span class="genre">ゲーム</span></td>
+      <td><span class="badge jan">JAN/ISBN</span></td>
+      <td class="note">カテゴリページ差分クローラ（1日3回 6/12/18時）</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🛒 Yahoo!ショッピング<br><span class="note">10店舗日替わり</span></td>
+      <td><span class="genre">本</span><span class="genre">CD</span><span class="genre">DVD</span><span class="genre">ゲーム</span></td>
+      <td><span class="badge api">公式API</span> <span class="badge jan">JAN</span></td>
+      <td class="note">itemSearch v3（コア2店毎日＋8店日替わりローテ）</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🟪 AbeBooks</td>
+      <td><span class="genre">本（海外・高額）</span></td>
+      <td><span class="badge isbn">ISBN</span></td>
+      <td class="note">Playwright自動操作（朝6時・30秒間隔・1日2,400件）</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🟫 ThriftBooks</td>
+      <td><span class="genre">本（海外・洋書）</span></td>
+      <td><span class="badge isbn">ISBN</span></td>
+      <td class="note">Playwright自動操作（朝6時・2秒×並列3・1日10,000件）</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🏭 NETSEA（問屋）</td>
+      <td><span class="genre">問屋新品</span></td>
+      <td><span class="badge isbn">ISBN/JAN</span></td>
+      <td class="note">NETSEA公式サイト巡回</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🟣 メルカリ（LLM）</td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge llm">LLM画像識別</span></td>
+      <td class="note">本カテゴリ新着→コード無し出品をqwen2.5vl:7b識別→照合→買い判定</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🟧 ヤフオク（LLM）</td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge llm">LLM画像識別</span></td>
+      <td class="note">本カテゴリ新着→LLM識別→入札上限価格算出</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>💰 ヤフオク <b>落札相場</b><br><span class="note">※仕入れでなく売値相場収集</span></td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge jan">ISBN/タイトル照合</span></td>
+      <td class="note">落札済み(<code>istatus=close</code>+<code>p=isbn</code>)を巡回→<code>sold_listings(platform='yahoo_auctions')</code>に蓄積→<code>sell_market_price(channel='yahoo_sold')</code>へ中央値集計。<b>2026-06-10 リンゴで稼働開始</b>。初回95件収集確認。continuous(KeepAlive)＋match(30分毎)。LLM verify（--llm-verify）対応済み</td>
+      <td><span class="badge ok">✅稼働中（収集開始）</span></td>
+    </tr>
+    <tr>
+      <td>🟪 Yahoo!フリマ（ISBN）</td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge isbn">ISBN</span></td>
+      <td class="note">⚠️ <b>2026-06-10 モモへ移管済み</b>。リンゴではbootout済み。</td>
+      <td><span class="badge" style="background:#888;color:#fff;">📦移管済み</span></td>
+    </tr>
+    <tr>
+      <td>🟪 Yahoo!フリマ（LLM）</td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge llm">LLM画像識別</span></td>
+      <td class="note">本カテゴリ新着→コード無し出品をqwen2.5vl:7b識別→固定価格で買い判定。noisbn-continuous+llm-worker launchd稼働中</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ===== モモ ===== -->
+<h2 class="sec-momo">🍑 モモ（2代目Mac mini・VPN別IP）</h2>
+<table>
+  <thead><tr><th>仕入れサイト</th><th>ジャンル</th><th>識別方式</th><th>概要</th><th>状態</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>🎮 駿河屋（ゲーム）</td>
+      <td><span class="genre">ゲーム</span></td>
+      <td><span class="badge jan">JAN逆引き</span></td>
+      <td class="note">自社JAN→駿河屋検索（誤マッチゼロ・連続・14日ローテ）<b>2026-06-10 リンゴから移管完了</b></td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🎬 駿河屋（DVD）</td>
+      <td><span class="genre">DVD</span></td>
+      <td><span class="badge jan">JAN逆引き</span></td>
+      <td class="note">DVD JAN(45/49始まり 49万件)→駿河屋検索・14日ローテ・<b>2026-06-10 新規稼働</b></td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🎵 駿河屋（CD）</td>
+      <td><span class="genre">CD</span></td>
+      <td><span class="badge jan">JAN逆引き</span></td>
+      <td class="note">CD JAN(現在115件・仕入増で自動拡大)→駿河屋検索・14日ローテ・<b>2026-06-10 新規稼働</b></td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🟧 ブックオフ</td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge isbn">ISBN</span></td>
+      <td class="note">Phase1（深夜1〜7時・sitemap）＋ Phase2（VPN固定IP・24h・並列2・waf_blocks=0）</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🟣 メルカリ（ISBN）</td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge isbn">ISBN</span></td>
+      <td class="note">keyword=ISBN×新着順・24h連続・90秒に1件</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🟧 ヤフオク（ISBN）</td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge isbn">ISBN</span></td>
+      <td class="note">検索条件6種ローテ・24h連続・ページ間6.5秒・1周ごと30分休止</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>🟪 Yahoo!フリマ（ISBN）</td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge isbn">ISBN</span></td>
+      <td class="note">keyword=ISBN×新着順・24h連続・httpx。<b>2026-06-10 リンゴから移管・モモで稼働開始</b>（com.ssinvestor.arbitrage.yahoo-flea-continuous）</td>
+      <td><span class="badge ok">✅稼働中</span></td>
+    </tr>
+    <tr>
+      <td>💰 メルカリ <b>売り切れ相場</b><br><span class="note">※仕入れでなく売値相場収集</span></td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge jan">ISBN/タイトル照合</span></td>
+      <td class="note">売り切れ(実成約価格)を収集→<code>sell_market_price(channel='mercari')</code>へ中央値集計（昇格済）。<b>★出口IPは東京Mullvad SOCKS5（146.70.138.x）＝出品中ISBN(大阪194.x)と別IPで分離（¥0）★</b>。continuous(KeepAlive)＋match(30分毎・昇格込み)。LLM not required・巻/年ゲートで誤マッチ0。<b>638 ASIN の売値相場が足切りに反映済み</b></td>
+      <td><span class="badge ok">✅稼働中・昇格済み</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ===== 残タスク ===== -->
+<h2 class="sec-tasks">🔧 残タスク（実装待ち）</h2>
+<table>
+  <thead><tr><th>タスク</th><th>内容</th><th>前提条件</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>売却検知→自動取下げdaemon</td>
+      <td class="note">MFN売却後に他販路の在庫を自動取下げ</td>
+      <td class="note">即着手可</td>
+    </tr>
+    <tr>
+      <td>pg_trgm GIN索引適用</td>
+      <td class="note">照合クエリ高速化（228件110分→数分）</td>
+      <td class="note">6/18 Keepa365スプリント完了後</td>
+    </tr>
+    <tr>
+      <td><s>メルカリ・ヤフオク 売り相場DB</s></td>
+      <td class="note"><b>✅ 2026-06-10 完了</b>：①LLM verify（pending_llm再照合・2h毎自動）②mercari_sold→mercari昇格（638 ASIN・30分毎自動）③ヤフオクSOLD横展開（リンゴ稼働中）。データは蓄積し続け相場が育っていく。残＝yahoo_sold → 将来ポータル足切りへの統合（/spec更新は別途まとめて実施）</td>
+      <td class="note"><span class="badge ok">✅完了</span></td>
+    </tr>
+    <tr>
+      <td>P6 他3販路出品エンジン</td>
+      <td class="note">メルカリShops・ヤフオクストア・Yahoo!ショッピングへの自動出品</td>
+      <td class="note">各販路審査通過後</td>
+    </tr>
+    <tr>
+      <td>P7-4 売上・原価・変動費接続</td>
+      <td class="note">PLページに実売上・原価を自動反映</td>
+      <td class="note">P6 soldログ整備後</td>
+    </tr>
+    <tr>
+      <td>クリックポスト住所全自動CSV</td>
+      <td class="note">北川さんの手作業をゼロに</td>
+      <td class="note">SP-API PII制限ロール承認後</td>
+    </tr>
+    <tr>
+      <td>ジャンルページ廃止統合</td>
+      <td class="note">/books・/games等を/buy-judge・/ai-judgeに一本化</td>
+      <td class="note">全サイト拡大完了後（最後）</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ===== 拡大候補 ===== -->
+<h2 class="sec-expand">🔜 拡大候補</h2>
+<table>
+  <thead><tr><th>仕入れサイト</th><th>ジャンル</th><th>識別方式（案）</th><th>メモ</th><th>優先度</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>🟣 メルカリ（LLM横展開）</td>
+      <td><span class="genre">CD</span><span class="genre">DVD</span><span class="genre">ゲーム</span></td>
+      <td><span class="badge llm">LLM画像識別</span></td>
+      <td class="note">本カテゴリは稼働中。各カテゴリ新着への横展開。ゲームはJAN非記載多く難度高め</td>
+      <td><span class="badge near">🔜 近い</span></td>
+    </tr>
+    <tr>
+      <td>🟧 ヤフオク（LLM横展開）</td>
+      <td><span class="genre">CD</span><span class="genre">DVD</span><span class="genre">ゲーム</span></td>
+      <td><span class="badge llm">LLM画像識別</span></td>
+      <td class="note">本カテゴリは稼働中。入札制ゆえ中古相場から入札上限を逆算する方式を流用</td>
+      <td><span class="badge near">🔜 近い</span></td>
+    </tr>
+    <tr>
+      <td>🟪 Yahoo!フリマ（LLM）</td>
+      <td><span class="genre">本</span></td>
+      <td><span class="badge llm">LLM画像識別</span></td>
+      <td class="note"><b>本カテゴリは2026-06-09 リンゴで稼働開始済み</b>（noisbn-continuous+llm-worker）。CD/DVD/ゲームへの横展開は別タスク。固定価格なので入札上限計算不要=メルカリより判定シンプル</td>
+      <td><span class="badge ok">✅稼働中（本のみ）</span></td>
+    </tr>
+    <!-- 🗑️ 駿河屋 CD/DVD/ゲーム LLM方式 → 削除済み (2026-06-10)
+         削除理由:
+           ① JAN逆引きでほぼカバー可能（DVD 96.7%・ゲーム 71.2%・CDは仕入増加で自動拡大）
+           ② CD JAN 0.0% は「ブックオフ/もったいないのCD取込充実」が先決で、
+              JAN数が増えれば suruga_cd_reverse.py が自動的に逆引きを増やす
+           ③ 駿河屋はCloudflare保護が強くカテゴリ巡回（LLM素材収集）自体が困難
+           ④ JAN逆引きは誤マッチゼロ・LLMより確実でコスト低い
+         → LLM方式を追加するメリットが薄い。JAN逆引き3本（ゲーム/DVD/CD）で運用継続。
+    -->
+    <tr>
+      <td>🟧 ブックオフ / もったいない（CDカテゴリ）</td>
+      <td><span class="genre">CD</span></td>
+      <td><span class="badge jan">JAN逆引き</span></td>
+      <td class="note">book_products にCD ASIN 398K件・Keepa stats 69K件取得済み。listings が7件のみ → スクレイパーがISBNなしCDをスキップ中。CDカテゴリ用の取得改修が必要</td>
+      <td><span class="badge near">🔜 近い</span></td>
+    </tr>
+    <tr>
+      <td>🟥 楽天（CDカテゴリ）</td>
+      <td><span class="genre">CD</span></td>
+      <td><span class="badge api">公式API</span> <span class="badge jan">JAN</span></td>
+      <td class="note">楽天APIは稼働中だが cd_rank 判定ジョブが未実装。判定ロジック追加のみで完結</td>
+      <td><span class="badge near">🔜 近い</span></td>
+    </tr>
+    <tr>
+      <td>🟣 メルカリ・ヤフオク<br><span class="note">売り相場DB</span></td>
+      <td><span class="genre">全ジャンル</span></td>
+      <td><span class="badge jan">自社スクレイピング</span></td>
+      <td class="note"><b>✅ 2026-06-10 両方稼働開始</b>。メルカリ（モモ・東京SOCKS5別IP）＋ヤフオク（リンゴ）ともに収集・照合・集計・昇格が自動化。データは日々蓄積し相場精度が向上する。<b>残＝yahoo_soldをポータル足切りに統合</b>（channel='yahoo_sold'を BEST_PROFIT_SQL の smp_y に追加）</td>
+      <td><span class="badge ok">✅両方稼働中</span></td>
+    </tr>
+    <tr>
+      <td>📌 ジモティ</td>
+      <td><span class="genre">本</span><span class="genre">ゲーム</span><span class="genre">CD</span><span class="genre">DVD</span></td>
+      <td><span class="badge llm">LLM画像識別</span></td>
+      <td class="note">まとめ売り・引っ越し処分品が相場より大幅安で出やすい。コード無し写真出品主体。1投稿=複数商品のまとめ識別と「取りに行き必須」フィルタが技術課題</td>
+      <td><span class="badge check">🔍 要調査</span></td>
+    </tr>
+    <tr>
+      <td>🇨🇳 アリババ（1688 / Alibaba）</td>
+      <td><span class="genre">問屋新品</span><span class="genre">雑貨</span></td>
+      <td><span class="badge jan">JAN/EAN</span> <span class="badge llm">LLM画像</span></td>
+      <td class="note">NETSEAより安い中国直接卸。最低ロット・関税・リードタイム2〜4週が課題。まず雑貨・ゲーム周辺機器で小ロット検証が現実的</td>
+      <td><span class="badge check">🔍 要調査</span></td>
+    </tr>
+    <tr>
+      <td>🎮 ハードオフ / セカンドストリート</td>
+      <td><span class="genre">ゲーム</span><span class="genre">CD</span><span class="genre">DVD</span></td>
+      <td><span class="badge jan">JAN逆引き</span></td>
+      <td class="note">実店舗型リサイクルチェーン。JAN検索可否・WAF・価格優位性が未検証</td>
+      <td><span class="badge check">🔍 要調査</span></td>
+    </tr>
+    <tr>
+      <td>🛒 ラクマ / PayPayフリマ</td>
+      <td><span class="genre">本</span><span class="genre">CD</span><span class="genre">DVD</span></td>
+      <td><span class="badge isbn">ISBN</span> <span class="badge llm">LLM</span></td>
+      <td class="note">メルカリ・ヤフオクフリマと同方式で実装可能。出品数・価格帯・スクレイピング可否が未検証</td>
+      <td><span class="badge check">🔍 要調査</span></td>
+    </tr>
+    <tr>
+      <td>🎮 ゲオ（LLM）</td>
+      <td><span class="genre">ゲーム</span></td>
+      <td><span class="badge llm">LLM画像識別</span></td>
+      <td class="note">JAN検索は技術的に成立済みだが中古1000件検証で利益0件・AkamaiWAFブロック実績あり。LLMで識別精度向上しても利益構造が変わらない点が懸念</td>
+      <td><span class="badge warn">⚠️ 要検証</span></td>
+    </tr>
+    <tr>
+      <td>📚 古本市場 / 万代書店</td>
+      <td><span class="genre">本</span><span class="genre">ゲーム</span><span class="genre">CD</span></td>
+      <td><span class="badge jan">JAN逆引き</span></td>
+      <td class="note">地方リサイクルチェーン。ECサイトのJAN検索可否・在庫量・価格優位性が未検証</td>
+      <td><span class="badge check">🔍 要調査</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ===== 撤退済み ===== -->
+<h2 class="sec-done">⛔ 撤退済み・NO-GO確定</h2>
+<table>
+  <thead><tr><th>サイト</th><th>ジャンル</th><th>理由</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>日本の古本屋 (jimbou)</td>
+      <td><span class="genre">本</span></td>
+      <td class="note">IPブロック（接続遮断）で取得不可</td>
+    </tr>
+    <tr>
+      <td>紀伊國屋書店</td>
+      <td><span class="genre">本</span></td>
+      <td class="note">314万件取得したがAmazonマッチ率7%・ISBN取得率1%で採算合わず。全件削除済み</td>
+    </tr>
+    <tr>
+      <td>ゲオ（JAN検索方式）</td>
+      <td><span class="genre">ゲーム</span></td>
+      <td class="note">中古1000件検証で利益≥¥500が0件 ＋ Akamai WAF（142件でIPブロック）</td>
+    </tr>
+    <tr>
+      <td>ヤフオク / Yahoo!フリマ（ゲーム・JAN）</td>
+      <td><span class="genre">ゲーム</span></td>
+      <td class="note">識別は成立したが即決価格での利益0件。ゲームはJAN非記載多く識別率も低い</td>
+    </tr>
+    <tr>
+      <td>eBay（仕入れ側）</td>
+      <td><span class="genre">本</span><span class="genre">ゲーム</span></td>
+      <td class="note">USD＋国際送料＋円安で黒字率 本0% / ゲーム1.2%。出品（輸出販売）側はGO</td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="font-size:11px;color:#aaa;margin-top:12px;">
+  旧ファイル：稼働状況一覧_20260609.html ／ メルカリAIバイヤー_統合ロードマップ_20260607.html を統合
+</p>
+</body>
+</html>
