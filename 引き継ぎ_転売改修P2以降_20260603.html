@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>引き継ぎ資料：転売事業 大規模改修 P2以降（最終更新 2026-06-04）</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", sans-serif; background: #f8f9fa; color: #1a1a2e; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 32px 40px; }
+  .header h1 { font-size: 26px; font-weight: 800; }
+  .header .meta { font-size: 13px; color: #94a3b8; margin-top: 6px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+  .section { background: white; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 24px; overflow: hidden; }
+  .section-header { padding: 16px 20px; font-weight: 700; font-size: 16px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 8px; }
+  .section-body { padding: 20px; }
+  .completed { background: #f0fdf4; border-color: #86efac; }
+  .completed .section-header { background: #dcfce7; color: #166534; }
+  .pending { background: #fffbeb; border-color: #fcd34d; }
+  .pending .section-header { background: #fef9c3; color: #92400e; }
+  .waiting { background: #eff6ff; border-color: #93c5fd; }
+  .waiting .section-header { background: #dbeafe; color: #1e40af; }
+  .big { background: #fdf4ff; border-color: #d8b4fe; }
+  .big .section-header { background: #f3e8ff; color: #7e22ce; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f1f5f9; padding: 8px 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #e2e8f0; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 700; }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-yellow { background: #fef9c3; color: #92400e; }
+  .badge-blue { background: #dbeafe; color: #1e40af; }
+  .badge-purple { background: #f3e8ff; color: #7e22ce; }
+  .badge-red { background: #fee2e2; color: #991b1b; }
+  code { background: #f1f5f9; padding: 1px 5px; border-radius: 4px; font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; }
+  .formula { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 16px; font-family: monospace; font-size: 13px; margin: 8px 0; }
+  .warn { background: #fff7ed; border-left: 4px solid #f97316; padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; margin: 8px 0; }
+  .note { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; margin: 8px 0; }
+  .danger { background: #fef2f2; border-left: 4px solid #ef4444; padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; margin: 8px 0; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; }
+  .card h3 { font-size: 13px; color: #64748b; margin-bottom: 4px; }
+  .card .value { font-size: 20px; font-weight: 800; color: #1e293b; }
+  .card .sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; font-size: 13px; line-height: 1.6; }
+  h4 { font-size: 14px; font-weight: 700; margin: 12px 0 6px; }
+  p { font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
+  .roadmap-step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9; }
+  .roadmap-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .step-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; }
+  .step-done { background: #dcfce7; color: #166534; }
+  .step-next { background: #fef9c3; color: #92400e; }
+  .step-wait { background: #dbeafe; color: #1e40af; }
+  .step-later { background: #f3e8ff; color: #7e22ce; }
+  .step-content { flex: 1; }
+  .step-title { font-weight: 700; font-size: 14px; }
+  .step-desc { font-size: 12px; color: #64748b; margin-top: 2px; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📋 引き継ぎ資料：転売事業 大規模改修 P2以降</h1>
+  <div class="meta">最終更新: 2026-06-10 夕（★CDパイプライン構築＋ヤフオク落札相場→足切り統合＋ヤフオク/メルカリSOLD相場スクレイパー設置。以下前回まで：★メルカリShops再再申請提出完了(GPS位置情報付き写真4枚・3回目)。以下前回まで：★判定ページ(/buy-judge・/ai-judge)をジャンルページUIに完全統一(★購入/チェック/検討中の左3列・取得日時/ランク/利益率/最終利益[計算内訳]/eBay輸出利益の各列・出品ページ→サイト名リンク)＋独占チャンス(Amazon在庫切れ)を経路別に判定ページへ統合(ISBN経路16件→/buy-judge・LLM経路→/ai-judge現0件)＋OOS判定をトークン競合なしのsource=db方式で96件判定(6/18スプリント完了後にlive正式判定が自動再開)＋pipeline-checkスキルv1.19新方式化で誤検知一掃＝最上部の専用セクション参照。以下前回まで：★eBay受取設定 開通＝Payoneer登記書類 承認完了で入金導線OK＝出品公開が可能に(ただしAPI出品はセラーOAuthトークン取得が次の前提)／★Yahoo!ショッピング 2回目も落選＝落選理由の照会メールを返信送付済(電話開通を明記)／★03plus電話 開通＝ハガキ認証完了でヤフオク再申請が可能に／前回6-08＝P6注文反映＋P7 PL自動計上を実装＝<strong>/orders を「売れたもの＋PL確定エディタ」に刷新（売価/手数料/送料/仕入を微調整→確定で薄黄＝PL反映・確定後も編集可）・販売台帳sale新設(migration0054)・PLは確定行のみ集計＋販路別/ジャンル別配線・点5 購入リスト自動「売却済み」化・30分おき自動取り込み常駐・在庫に仕入先リンク</strong>＝上の専用セクション参照。<strong>新規注文通知(自社発送メール拾い→Chatwork)は最初のMFN売却メール待ちで保留</strong>／以下は前回まで：★メルカリShops出店審査＝<strong>6/4棄却→6/5再申請→6/9再差し戻し(GPS Exifなし)→★2026-06-10 GPS位置情報ON写真4枚で再再申請提出完了・審査結果メール待ち</strong>＝下の専用セクション参照。⚠️古物商許可証は旧本店「西新橋」住所のまま提出＝許可番号一致で提出は可だが本店移転に伴う公安委員会への変更届出が別途必要／★FBA代行 第一弾の在庫がFBA倉庫に到着＝メール上は「受領中」(在庫化前)・出品反映チェックは在庫化完了後／★P8 eBay連携＝Step0完了(仕入れNO-GO/出品GO・ゲーム有望)・Step1トークン取得+Payoneer受取準備OK・<strong>eBayの支払い/受取設定＝🟢2026-06-06 受取設定の登録まで完了→Payoneer審査待ちのみ。突破口=出品(List it)を完成させると壊れたモーダルでなくフルページ正規ウィザードが出る(ユーザー発案)→電話認証→Yes,sign inでPayoneer(103989459)連携→プロフィール同期→Mastercard登録→登録送信(onboard-success)→KYC提出完了(本人確認/免許証/事業主情報など承認済・残り「企業向け営業許可証=登記事項証明書」のみ審査中)。★2026-06-09 登記事項証明書を「コピーのスキャンに見える」として6/8却下→原本を鮮明に撮り直して再提出(0:55)→Payoneer承認完了(07:21)＝受取設定 有効化。Payoneer『情報を承認しました／eBayから支払いを受け取れます』＋eBay『Payoneer has verified your information. You're all set!』＋Payoneer『eBayアカウントの接続が完了しました』の3通受領＝入金導線 開通＝出品公開が可能に。Paymentsの真っ白(ficapp整合性不一致)は別問題で残存だが出品フロー経由で回避済。★ただしAPI経由でポータルから出品するには「セラーOAuthトークン(出品用)」の取得が別途必要＝下記P8/技術メモ参照</strong>・/games/booksにeBay列統合デプロイ済・候補スキャンは次ターミナル継続(下の「🔀 次ターミナル引き継ぎ」参照)／★ヤフオクストア(1101100)=2026-06-07当日落選(理由非公開・電話不通疑い・問い合わせ送付済み)／Yahoo!ショッピング(1101691)=★2026-06-09 07:33 2回目の出店審査も落選(理由非公開の定型文・運用ガイドライン参照のみ)→落選理由の照会メールをストア契約サポート(ml-ycommerce-store-help@lycorp.co.jp)へ返信送付済(電話開通を明記)。心当たり＝①電話不通(申請6/6時点で03plus未開通＝最有力・現在は開通)②古物商許可証が旧本店『西新橋』住所のまま(本店移転の公安委員会変更届出 未了)。方針＝照会回答を待って是正→再申請／★2026-06-09 03plus電話(03-6821-4385)ハガキ認証完了＝開通(落選の最有力原因=電話不通が解消)→ヤフオクストア再申請が実行可能に／★販路拡大候補=API公開モール/自社EC 調査追加／★P6＝設計＋プライスターUI実調査＋画面ワイヤー5枚 完了／★P7 PL管理＝設計確定(先行実装はP6/P4承認待ち)／P3検証・問い合わせ状況） ／ 設計書: ~/Desktop/転売事業_全サイトアービトラージ移行_設計書_20260603.html ／ 別添ワイヤー: ~/Desktop/pricetar_ui_capture/P6_画面ワイヤー_20260604.html・~/Desktop/P7_損益管理PL_設計ワイヤー_20260604.html ／ 関連メモリ: project_allsite_arbitrage_migration_20260603・project_p6_inventory_sync_design_20260604・project_pricetar_ui_research_20260604・project_aucfan_p3_verification_20260603</div>
+</div>
+
+<div class="container">
+
+  <!-- ============ 2026-06-10 CDパイプライン構築 + ヤフオクSOLD相場足切り統合 ============ -->
+  <div class="section big">
+    <div class="section-header">🎵 2026-06-10 ★CDパイプライン構築 + ヤフオク/メルカリSOLD相場スクレイパー設置 + 足切り統合★</div>
+    <div class="section-body">
+      <p><b>関連ロードマップ</b>：<code>~/Desktop/サイト拡大_稼働ロードマップ_20260609.html</code>（全面更新済）。</p>
+
+      <h4>① is_cd補完 — CD JAN 115件→274K件へ拡大（実行中） <span class="badge badge-yellow">⏳実行中</span></h4>
+      <p>
+        <b>根本原因判明</b>：book_productsのis_cd=TRUEにはJANが115件しかなく（Keepaがfillしていない）、CDの全パイプラインがほぼ空振りだった。
+        一方、もったいない本舗のCDリスティングは<b>289,347件・全件JAN有</b>で既に取得済み。
+        isbn_13との照合で272,653件がマッチするが、is_cdフラグがFALSEのままだった。
+      </p>
+      <p>
+        <code>apps/scraper/scripts/backfill_cd_is_cd_flag.py</code>を<b>バッチ1000件ずつ・lock_timeout=4s・リトライ付き</b>に改修（全件一括UPDATEはKeepa365スプリントとデッドロック多発のため分割方式に変更）。
+        <code>dict_row</code>でr[0]がKeyError:0になるバグも修正済み。現在バックグラウンド実行中（PID 74433）。完了後は268K件のis_cd=TRUEが補完され、駿河屋CD・楽天CDが自動的に本格稼働。
+      </p>
+
+      <h4>② 楽天CD runner 新規実装 → モモlaunchd登録済み <span class="badge badge-green">✅完了</span></h4>
+      <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;width:100%;margin:8px 0;">
+        <tr style="background:#f3f4f6;"><th>ファイル</th><th>内容</th><th>状態</th></tr>
+        <tr><td><code>apps/scraper/ebay_arbitrage_scraper/rakuten/client.py</code></td><td><code>search_by_jan()</code>メソッド追加（genreId指定なし・全ジャンル検索）</td><td>✅</td></tr>
+        <tr><td><code>apps/scraper/ebay_arbitrage_scraper/rakuten/cd_runner.py</code></td><td>is_cd=TRUE JAN順でローテ・日次30,000 JAN・楽天全ジャンル検索</td><td>✅</td></tr>
+        <tr><td><code>scripts/rakuten_cd_runner.sh</code></td><td>モモ用runner（DATABASE_URL/RAKUTEN_*環境変数設定済）</td><td>✅</td></tr>
+        <tr><td><code>scripts/rakuten_book_runner_momo.sh</code></td><td>モモ用 楽天本runner（リンゴはbak停止中）</td><td>✅</td></tr>
+        <tr><td><code>launchd/momo/com.ssinvestor.arbitrage.rakuten-book.plist</code></td><td>毎日6:00（楽天本）</td><td>✅</td></tr>
+        <tr><td><code>launchd/momo/com.ssinvestor.arbitrage.rakuten-cd.plist</code></td><td>毎日6:30（楽天CD）</td><td>✅</td></tr>
+      </table>
+      <p><b>楽天本のリンゴ→モモ移管完了</b>（リンゴは<code>rakuten.plist.bak_20260530</code>で停止済み）。is_cd補完完了後に楽天CDが274K JAN規模で本格稼働。</p>
+
+      <h4>③ ヤフオク落札相場 → ポータル足切り統合 <span class="badge badge-green">✅完了・デプロイ済み</span></h4>
+      <p>
+        別ターミナルで<code>sell_market_price(channel='yahoo_sold')</code>へ落札済み実成約価格を蓄積するスクレイパーを設置完了。
+        このターミナルでポータルの足切り・表示に統合してデプロイ済み（HTTP 200確認）。
+      </p>
+      <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;width:100%;margin:8px 0;">
+        <tr style="background:#f3f4f6;"><th>ファイル</th><th>変更内容</th></tr>
+        <tr>
+          <td><code>apps/web/src/lib/book-queries.ts</code></td>
+          <td>
+            ① <code>BEST_PROFIT_SQL</code>に<code>smp_ys.market_price_jpy</code>（channel='yahoo_sold'）を追加（足切りに反映）<br>
+            ② profitableCTEのJOINに<code>smp_ys</code>追加<br>
+            ③ <code>attachSellMarketPrices()</code>でyahoo_soldを取得。yahoo_auctionsとの最大値を採用して表示
+          </td>
+        </tr>
+        <tr>
+          <td><code>apps/web/src/lib/game-queries.ts</code></td>
+          <td>① <code>BEST_PROFIT_SQL</code>に<code>smp_ys</code>追加 ② baseJoinsのJOINに<code>smp_ys</code>追加</td>
+        </tr>
+      </table>
+      <p>
+        <b>動作：</b>GREATESTはNULLを無視するため、yahoo_soldのデータが無い商品は今まで通り動く。
+        データがある商品は「ヤフオク落札相場での利益」も足切りに加算され、Amazon赤字でも黒字になれば自動浮上。
+        <code>attachSellMarketPrices</code>では実成約価格(yahoo_sold)と出品中相場(yahoo_auctions)の最大値を<code>yahoo_market_price_jpy</code>に反映。
+      </p>
+
+      <h4>④ ヤフオク/メルカリSOLD相場スクレイパー（別ターミナルで設置） <span class="badge badge-green">✅稼働中</span></h4>
+      <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;width:100%;margin:8px 0;">
+        <tr style="background:#f3f4f6;"><th>スクレイパー</th><th>収集先</th><th>DB</th><th>マシン</th><th>状態</th></tr>
+        <tr>
+          <td><code>mercari_sold_continuous.py</code></td>
+          <td>メルカリ売り切れ（実成約価格）</td>
+          <td><code>sold_listings(platform='mercari')</code>→<code>sell_market_price(channel='mercari')</code></td>
+          <td>🍑モモ（東京Mullvad SOCKS5・別IP）</td>
+          <td>✅launchd KeepAlive稼働中</td>
+        </tr>
+        <tr>
+          <td><code>mercari_sold_match.py</code></td>
+          <td>ISBN逆引き+match2照合→相場集計・昇格</td>
+          <td><code>sell_market_price(channel='mercari')</code>→638 ASIN反映済み</td>
+          <td>🍑モモ</td>
+          <td>✅launchd 30分毎稼働中</td>
+        </tr>
+        <tr>
+          <td><code>yahoo_sold_continuous.py</code></td>
+          <td>ヤフオク落札済み（istatus=close）</td>
+          <td><code>sold_listings(platform='yahoo_auctions')</code></td>
+          <td>🍑モモ（東京Mullvad SOCKS5・2026-06-10移管）</td>
+          <td>✅launchd KeepAlive稼働中</td>
+        </tr>
+        <tr>
+          <td><code>yahoo_sold_match.py</code></td>
+          <td>ISBN照合→<code>sell_market_price(channel='yahoo_sold')</code></td>
+          <td>30分毎集計。ポータル足切りに自動連動</td>
+          <td>🍎リンゴ</td>
+          <td>✅launchd 30分毎稼働中</td>
+        </tr>
+      </table>
+      <p><b>IP分離設計</b>：メルカリSOLD収集・<b>ヤフオクSOLD収集（2026-06-10移管）</b>はともに東京Mullvad SOCKS5（<code>socks5://jp-tyo-wg-socks5-201.relays.mullvad.net:1080</code>・出口146.70.138.x）経由。出品中ISBN収集は大阪IPの既定トンネル（194.114.136.25）と分離。<b>launchd名：</b><code>com.ssinvestor.arbitrage.yahoo-sold-continuous</code>（モモ・KeepAlive）／<code>com.ssinvestor.arbitrage.yahoo-sold-match</code>（リンゴ・30分毎）／<code>com.ssinvestor.arbitrage.mercari-sold-llm-verify</code>（リンゴ・2時間毎）。誤マッチ防止ゲート：巻/年一致チェック（★巻違い誤マッチ除去）・core_sim≥0.92・ISBN抽出優先。</p>
+
+      <h4>④-補足 ブックオフPhase2 SOCKS5並列化（2026-06-10実装） <span class="badge badge-green">✅稼働中</span></h4>
+      <p>残516K件のISBN補完を加速するため、既存VPNインスタンス（大阪194.x）に加えてSOCKS5東京2号機を追加し<b>2重並列化</b>を実現。</p>
+      <ul>
+        <li><b>既存</b>：<code>bookoff_vpn_runner.sh</code> → モモ launchd <code>com.ssinvestor.arbitrage.bookoff-vpn</code>（VPN大阪・24h・並列2）</li>
+        <li><b>追加</b>：<code>scripts/bookoff_socks5_runner.sh</code> → モモ launchd <code>com.ssinvestor.arbitrage.bookoff-socks5</code>（KeepAlive・SOCKS5東京 <code>jp-tyo-wg-socks5-202</code>・出口146.70.201.3・並列2）</li>
+        <li><b>修正</b>：<code>ebay_arbitrage_scraper/bookoff/client_v2.py</code> に <code>BookoffDiscontinuedError</code> クラス追加（404=廃番確定→再試行不要）＋ <code>BOOKOFF_PHASE2_PROXY</code> env var でSOCKS5注入</li>
+      </ul>
+      <p>2インスタンス同時稼働で処理速度2倍・残516K件を約7日で消化見込み。</p>
+
+      <h4>⑤ ロードマップHTML全面更新 <span class="badge badge-green">✅完了</span></h4>
+      <p><code>~/Desktop/サイト拡大_稼働ロードマップ_20260609.html</code>を全面リライト。リンゴ/モモ全launchd一覧・残タスク優先順・拡大候補・撤退済みを整合状態に更新。</p>
+
+      <div class="note">
+        <b>残タスク（優先順）</b>：
+        ① is_cd補完 完了待ち（バックグラウンド実行中）→ 完了後に駿河屋CD・楽天CDが274K JAN規模で本格稼働 /
+        ② ブックオフ CDカテゴリ追加（WAFで確認困難・要再検証） /
+        ③ ヤフオク落札相場データ蓄積が増えれば足切りに自動反映 /
+        ④ pg_trgm GIN索引（6/18 Keepa365スプリント完了後に適用）→ LLM照合・SOLD相場照合が数倍高速化。
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 2026-06-09 夜 判定ページUI統一 + 独占チャンス経路別統合 ============ -->
+  <div class="section big">
+    <div class="section-header">🧩 2026-06-09(夜) ★判定ページ(/buy-judge・/ai-judge)をジャンルページUIに統一 + 独占チャンスを経路別に判定ページへ統合★</div>
+    <div class="section-body">
+      <p><b>関連メモリ</b>：<code>project_oos_chance_judge_integration_20260609</code>。<b>主要ファイル</b>：<code>apps/web/src/components/judge/{JudgeTable,JudgeListView,badges,JudgeFilters}.tsx</code>／<code>app/{buy-judge,ai-judge}/page.tsx</code>／<code>lib/{buy-judge-queries,ai-judge-queries}.ts</code>／<code>lib/buy-advisor/{keepa-stats,queries}.ts</code>／<code>app/api/oos-ai-batch/route.ts</code>。スキル：<code>~/.claude/skills/pipeline-check/{run-check.sh,SKILL.md}</code>。</p>
+
+      <h4>① 判定ページUIをジャンルページ(BookProductsListView)に統一 <span class="badge badge-green">✅完了</span></h4>
+      <ul>
+        <li><b>操作系を移植</b>：左側に <b>★購入 / チェック / 検討中</b> の3列(ジャンルと同配置)。★購入=購入リスト(purchase_orders)へasin+仕入値+仕入先で登録/解除(同一API)。チェック/検討中/チェック済み非表示(localStorage)/検討中のみ/一括操作/ページング(100件)。</li>
+        <li><b>並べ替え</b>(利益順/新着順/ランク順)・<b>利益フィルター(¥以上)</b>・<b>BSR上限フィルター</b>。</li>
+        <li><b>列をジャンルと同形に</b>：タイトル幅縮小(280→160px)／<b>取得日時</b>列(最左・MM/DD HH:MM・listings.fetched_at)／<b>利益率</b>列／<b>最終利益</b>=計算内訳表示(売価−仕入−Amazon手数料15%−成約¥80−自社送料¥185)／<b>ランク</b>(売れ筋順位)独立列／<b>eBay輸出利益</b>列(eec.est_profit_jpy)。</li>
+        <li><b>「出品ページ→」をサイト名リンクに</b>(ブックオフ/メルカリ/楽天等)。独占チャンス行はバッジは🎯のまま、リンク名だけ実際の仕入元にする <code>sourcePlatform</code> を新設。</li>
+      </ul>
+
+      <h4>② 独占チャンス(Amazon在庫切れ=唯一の出品者)を判定ページに統合 <span class="badge badge-green">✅完了</span></h4>
+      <div class="note">
+        <b>★重要な構造的発見</b>：独占チャンスはAI(ai_buy_advice=Claude+Keepa)にかけると <b>buyがほぼ0件</b>（仕入在庫/売値が未確認のため"conditional(要確認)"止まり）。よって判定ページは <b>conditionalを表示</b>するのが正解。現分布=skip347/conditional16/trap2/buy0/未判定59。
+      </div>
+      <ul>
+        <li><b>★経路別に判定・表示(ユーザー指摘で修正)</b>：独占チャンスは「ミラー(同じ集合)」でなく <b>ISBN経路とLLM経路で別集合</b>。<code>book_oos_active_mv</code>はISBN照合在庫のみ／LLM写真照合(*_llm_match)は隔離テーブルで別。<br>
+          ・<b>ISBN経路→/buy-judge</b>：<code>getOosChanceRows</code>=ai_buy_advice最新verdict(buy/conditional)×book_oos_active_mv。現16件。販路チップ「🎯独占チャンス(N)」。<br>
+          ・<b>LLM経路→/ai-judge</b>：<code>getOosChanceLlmRows</code>=mercari/yahoo写真照合でmatched_asinが在庫切れ かつ ai_buy_advice buy/conditional。現0件(LLM経路OOSは5件・判定済3件は全skip・2件stats365待ち)。</li>
+        <li><b>★根本修正</b>：<code>getOosAsinsNeedingAdvice</code>(buy-advisor/queries.ts)のactive CTEを「book_summary_mv active <b>OR</b> *_llm_match verified」に拡張＝従来LLMのみのOOS ASINはai_buy_adviceに一度もかかっていなかった→今後は両経路ともClaude判定される。</li>
+        <li>表示は両ページ共通：platform=<code>oos_chance</code>(badge"🎯独占チャンス")。チップ選択時は買い/薄利圏トグルに関係なく全件。<b>想定利益は出さない</b>(利益/利益率/最終利益=「—」)＝ユーザー指示。最安仕入先(在庫ある最安出品優先・無ければ集計MVでサイト名フォールバック)＋AI推定売値(Amazon列)＋⚠️AI要確認＋理由。</li>
+      </ul>
+
+      <h4>③ 独占チャンス判定をトークン競合なしで前進＝<code>source=db</code> <span class="badge badge-green">✅実装+96件判定</span></h4>
+      <div class="warn">
+        OOS判定のlive Keepa取得は <b>365スプリント</b>(下記④)とトークンを奪い合い、残高60k未満ガードで常時停止していた。対策＝<code>/api/oos-ai-batch?source=db</code> を新設し、<b>365スプリントがbook_productsに保存済みのstats365(sales_drops_365等)からKeepaStatsを組み立てて判定</b>(<code>buildKeepaStatsFromDb</code>・トークン非消費)。これで96件判定済み。<b>★6/18のスプリント完了後は通常のlive判定(毎日5:30・oos-ai-batch)が自動再開＝残り+最新分を正式判定★</b>。
+      </div>
+
+      <h4>④ パイプライン点検スキルを新方式に更新(v1.19.0) <span class="badge badge-green">✅完了</span></h4>
+      <ul>
+        <li><code>pipeline-check</code>スキル(run-check.sh+SKILL.md)が旧式で誤検知していた(🔴2/🟡3)→新方式対応で全誤検知を解消(🟡2のみ=真の警告)。</li>
+        <li>変更点：Keepa主役を <b>continuous_bulk→365-fleetスプリント</b>(keepa_catalog_365_sprint.py)に変更／旧continuous系3本(continuous-bulk/high-profit-reverify/oos-reverify)+refresh-watchdogの意図的休止を正常扱い(~6/18・完走で再enable予定)／<code>yahoo_auctions_continuous</code>のモモ移管を反映／新daemon9本(all-restrictions/allsite-isbn-judge/game・dvd-buy-judge/netsea-buy-judge-sync/coverage-audit/sale-ledger-seed/keepa-365-fleet/keepa-local-join)を監視対象に追加。関連メモリ <code>project_keepa_365_sprint_speedup_20260609</code>。</li>
+      </ul>
+
+      <div class="note"><b>動作確認</b>：/buy-judge・/ai-judge 全HTTP200・tsc0・next build成功。「チェック済みを隠す」はbook_checked(asin)が全ページ共有のため、他画面でチェック済みの同一ASINは独占チャンスでも隠れる(=仕様。外せば全件表示)。</div>
+    </div>
+  </div>
+
+  <!-- ============ 2026-06-09 全販路「仕入れ判定」統合 ============ -->
+  <div class="section big">
+    <div class="section-header">🧩 2026-06-09 ★全販路「仕入れ判定」統合 — 売値バグ根治・全ジャンル化・許可1ジョブ化・相場列★</div>
+    <div class="section-body">
+      <p><b>関連メモリ</b>：<code>project_allsite_genre_integration_20260609</code> / <code>feedback_isbn_judge_liar_price_guards_20260609</code>。引き継ぎ詳細＝<code>docs/HANDOFF_allsite_integration_20260608.md</code> / <code>docs/ROADMAP_site_and_genre_expansion_20260609.md</code>。</p>
+
+      <h4>✅ 実装済み（2026-06-09）</h4>
+      <table>
+        <tr><th>項目</th><th>内容</th><th>ファイル</th></tr>
+        <tr><td><span class="badge badge-green">完了</span> 売値バグ修正</td><td>新刊×言い値collapse/新品価格上限/薄需要×高売値→要確認降格。買い 3,352→現883。海城過去問→skip。</td><td><code>poc_mercari_llm/allsite_isbn_judge.py</code></td></tr>
+        <tr><td><span class="badge badge-green">完了</span> 全ジャンル統合</td><td>問屋NETSEA(68buy・需要bsrゲート)・ゲーム(駿河屋38buy)・DVD(もったいない/楽天)。<b>部分品[説明書のみ等]skip＋言い値→要確認</b>。CDはデータ無で保留(ロードマップ)。</td><td><code>media_buy_judge.py</code> / <code>netsea_buy_judge_sync.py</code></td></tr>
+        <tr><td><span class="badge badge-green">完了</span> AI許可バッジ</td><td>写真AI識別ASINもAmazon出品許可チェック対象に。verified 100%被覆。</td><td><code>check_all_restrictions.py</code></td></tr>
+        <tr><td><span class="badge badge-green">完了</span> 許可チェック1ジョブ統合</td><td>buy_judgement∪*_llm_matchの全ASINを1ジョブで(10分)。旧5ジョブ(candidate/game/cd-dvd/netsea/llm-match)は<code>_disabled_restrictions_merged_20260609/</code>へ退避。</td><td><code>scripts/check_all_restrictions.py</code></td></tr>
+        <tr><td><span class="badge badge-green">完了</span> 網羅性監査</td><td>販路×ジャンルの取りこぼし検知(12時間)。現状取りこぼし0。</td><td><code>coverage_audit.py</code></td></tr>
+        <tr><td><span class="badge badge-green">完了</span> 相場列＋UI整理</td><td>/buy-judge・/ai-judgeに ヤフオク/メルカリ/eBay相場列(eBay486件live・他はオークファン待ち)。Amazon列=金額表示・精算額列追加・横幅圧縮。駿河屋/NETSEAをPLATFORM_LABEL登録(フィルタ修正)。</td><td><code>apps/web/src/lib/{buy,ai}-judge-queries.ts</code> / <code>components/judge/JudgeTable.tsx</code></td></tr>
+      </table>
+
+      <div class="warn"><b>★次タスク（次のターミナルが着手）★</b>：<b>/buy-judge・/ai-judge を ジャンルページの共通部品 <code>BookProductsListView</code> 仕様に統一</b>。移植する機能＝①並べ替え(利益/新着/ランク順) ②チェック・検討中ボタン(<code>book_checks</code> DB保存) ③チェック済み非表示 ④検討中のみフィルタ ⑤精算額 ⑥ページング。データ源は <code>buy_judgement</code>(機械判定)・<code>*_llm_match</code>(写真AI)。ジャンルページ(<code>/games</code>等)の <code>BookProductsListView.tsx</code> と <code>game-queries.ts</code> のフィルタ/ソート実装を参照。</div>
+
+      <div class="note"><b>長期タスク</b>：上記統一の完了後、重複する<b>ジャンルページ(/games,/books,/cd-dvd等)を段階廃止</b>し全販路ページに一本化。許可チェックも統合済みなので二重取得は解消済み。</div>
+
+      <h4>⏳ データ整備待ち（別系統）</h4>
+      <ul>
+        <li><b>CD仕入れ判定</b>：CDはKeepa中古価格が無く(39万中1件)・在庫もほぼ未取得。①CD中古価格のKeepa取得 ②CD仕入先スクレイピング が必要。→ロードマップ。</li>
+        <li><b>ヤフオク/メルカリ相場列</b>：<code>sell_market_price</code>が受け皿。オークファンAPI(面談2026-06-09)投入で即反映。eBayは稼働中。</li>
+        <li><b>他サイト拡大</b>(ゲーム/DVD/本)：<code>new-scraping-site</code>スキルの5段階で追加。</li>
+        <li><b>部分品検出の横展開</b>：<code>media_buy_judge.PARTIAL_RE</code>(説明書のみ/欠品等)を本(<code>allsite_isbn_judge</code>)・AI識別(<code>*_llm_match</code>)にも適用し、誤マッチ偽利益を全ジャンルで防ぐ。</li>
+      </ul>
+
+      <h4>✅ 動作確認チェックリスト（ポータルで確認）</h4>
+      <ul>
+        <li><b>/buy-judge</b>：販路フィルタに「駿河屋(38)」「NETSEA(問屋)(68)」が出る／クリックで案件一覧</li>
+        <li><b>「🟠薄利圏」+「駿河屋」</b>：言い値ガードで降格した高額ゲーム候補が見える</li>
+        <li><b>相場列</b>：eBay相場(米)に金額＋リンク／ヤフオク・メルカリは「連携待ち」</li>
+        <li><b>Amazon列が金額表示</b>(番号でない)＋精算額列＋横スクロール不要</li>
+        <li><b>検索「海城」「説明書のみ」「まな板」</b>が買いに出ない(正しく見送り/要確認)</li>
+        <li><b>/ai-judge</b>：各行に🔒/✅の出品許可バッジ</li>
+      </ul>
+
+      <h4>🤖 自動処理と頻度（2026-06-09ユーザー指示で更新）</h4>
+      <table>
+        <tr><th>処理</th><th>頻度</th><th>役割</th></tr>
+        <tr><td>統合 許可チェック (all-restrictions)</td><td>10分</td><td>buy_judgement∪AI識別の全ASINの出品許可</td></tr>
+        <tr><td>本判定 (allsite-isbn-judge)</td><td>30分</td><td>全販路の本を新ロジック判定</td></tr>
+        <tr><td>ゲーム判定 (game-buy-judge)</td><td>30分</td><td>駿河屋ゲーム(media_buy_judge --genre game)</td></tr>
+        <tr><td>DVD判定 (dvd-buy-judge)</td><td>30分</td><td>もったいない/楽天DVD(--genre dvd)</td></tr>
+        <tr><td>問屋NETSEA同期 (netsea-buy-judge-sync)</td><td>30分</td><td>NETSEA利益マップ(需要bsrゲート込)</td></tr>
+        <tr><td>網羅性監査 (coverage-audit)</td><td>12時間</td><td>取りこぼし検知</td></tr>
+      </table>
+
+      <div class="danger"><b>恒久ルール</b>：①ISBN/JAN機械判定(buy_judgement→/buy-judge)とAI写真判定(*_llm_match→/ai-judge)を絶対に混ぜない。②全サイト・全ジャンルを漏れなく判定に含める。③/ai-judgeのUIを/buy-judgeに常時一致。</div>
+    </div>
+  </div>
+
+  <!-- 2026-06-07/08 P6注文反映＋P7 PL自動計上 実装＋新規注文通知(保留) -->
+  <div class="section completed">
+    <div class="section-header">🧾 2026-06-07〜08 ★P6注文反映＋P7 PL自動計上を実装＝販売台帳(sale)方式★</div>
+    <div class="section-body">
+      <div class="ok" style="background:#dcfce7;border-left:4px solid #16a34a;padding:12px 16px;border-radius:8px;margin-bottom:12px">
+        <strong>初のFBA注文（ジャン・ルーシュ ASIN4864051429 / Pending）が「注文」に出ない</strong>という指摘を起点に、P6注文まわりとP7 PLを大幅に実装・デプロイ済（portal-web再起動・全HTTP200・E2E検証済）。
+      </div>
+      <p><strong>① 注文一覧（/orders）を刷新＝「売れたもの」＋PL確定エディタ</strong>（<code>components/SalesView.tsx</code>）：</p>
+      <ul>
+        <li><strong>全販路表示</strong>＝自社発送(MFN)＋FBA。FBA・確認中(Pending)・発送済はグレー網掛け＋チェック無効（Amazonが発送＝作業不要）。「発送」列に FBA/自社 バッジ。<code>orders.py fetch_orders_for_list</code> 新設（各注文に fulfillment / actionable 付与）。</li>
+        <li><strong>金額をインライン手編集</strong>＝売価／送料入金／Amazon手数料／ポイント／送料(自社¥185 or FBA代行¥143)／仕入／仕入送料 → 粗利ライブ計算 → <strong>保存</strong>。FBA行の送料欄は「代行手数料」表示。</li>
+        <li><strong>「確定」ボタン</strong>＝押すと<strong>背景が薄い黄色</strong>になり<strong>PL(損益)に反映</strong>。1行ずつ＋一括(選択を確定)の両対応。<strong>確定後も編集可</strong>（確定＝PL反映でロックではない）・「確定解除」でPLから外す。</li>
+        <li><strong>「Amazonから取り込む」</strong>（手動seed）＋<strong>30分おき自動取り込み常駐</strong>（launchd <code>com.ssinvestor.arbitrage.sale-ledger-seed</code> / runner <code>scripts/sale_ledger_seed_runner.sh</code>）。Pending注文は売価NULLのまま→確定(Unshipped/Shipped)後の取り込みで売価＋Amazon手数料概算が自動充填。<strong>編集/確定済みの行は上書きしない</strong>。</li>
+        <li>自社発送(MFN)の未発送はクリックポストCSVも同画面で出力可（既存 /api/orders/export 流用）。</li>
+      </ul>
+      <p><strong>② 在庫一覧（/inventory）に仕入れ先リンク</strong>＝商品名下に「仕入: 〇〇 🔗」（<code>getInventory</code> lateralに source_platform/url 追加）。</p>
+      <p><strong>③ P7 PL自動計上を本接続＝販売台帳 sale 方式</strong>（点4 完了）：</p>
+      <ul>
+        <li><strong>migration 0054_sale_ledger.sql</strong>＝<code>sale</code>テーブル新設（1注文×商品=1行・一意(order_id,COALESCE(sku,asin,''))）。編集列＝sold_price/shipping_in/points/amazon_fee/ship_cost/cogs/cogs_ship＋confirmed/edited。</li>
+        <li><strong>scripts/sale_ledger.py</strong>（seed）＝getOrders全販路＋ItemPrice売価＋手数料概算(get_fees_estimate)＋仕入は購入リスト紐付け→冪等UPSERT。</li>
+        <li><strong>lib/sale-queries.ts</strong>＝getSales/getConfirmedSaleAgg/getConfirmedSaleByDimension/updateSale(粗利再計算＋購入リスト逆反映)/confirmSales/unconfirmSale。<strong>注文一覧の数字を正としてpurchase_ordersへ金額逆反映</strong>。</li>
+        <li><strong>pl-queries.ts getPlSummary を確定sale集計に差し替え</strong>（売上/原価/手数料/送料）＋<strong>販路別・ジャンル別タブをsale台帳に配線</strong>（getPlBreakdown＝固定費を売上比按分・PlView BreakdownTable）。<strong>PLは確定(confirmed)行のみ集計</strong>（未確定=仮は対象外）。税抜は÷1.1。</li>
+        <li>手数料の仮値＝getMyFeesEstimate概算→将来Finances API実額のハイブリッド（Financeロール承認状況は要確認）。</li>
+      </ul>
+      <p><strong>④ 点5＝購入リストの自動「売却済み」化（完了）</strong>＝sale確定時に紐付くpurchase_orders.status='sold'＋sold_at（売却日）。確定解除で'listed'＋sold_atクリアに戻す（canceledは触らない）。E2E検証済（PO115で確認→復元済）。</p>
+      <div class="note" style="margin-top:10px">
+        <strong>用語注意</strong>：注文一覧の「粗利」＝<strong>純利益</strong>（売価−手数料−送料−仕入−仕入送料）。PLの「売上総利益(粗利)」＝<strong>売上−原価のみ</strong>。両者は「売上総利益−手数料−送料＝純利益」で整合（定義違い）。
+      </div>
+      <div class="warn" style="margin-top:12px">
+        <strong>⏳ 残・保留＝新規注文通知（自社発送メール拾い → Chatwork）※最初のMFN売却メール待ち</strong><br>
+        メールに頼らずポータルで新規注文を検知し<strong>発送遅れを防ぐ</strong>通知。方針＝<strong>ハイブリッド確定</strong>：
+        <ul style="margin:6px 0">
+          <li><strong>自社発送(MFN)＝メール拾い</strong>。セラーセントラル通知設定で「注文確定通知(商品を出荷してください)」が<strong>support@ss-in.net</strong>宛＝監視Gmail(MCP)に届くことを確認済。これをGmail(MCP)で検知→Chatwork通知＋クリックポストCSV誘導。</li>
+          <li><strong>FBA＝API検知</strong>。FBAは<strong>“売れました”メールが存在しない</strong>（出荷通知は別アドレス aoiviok@ymobile.ne.jp 宛で監視外）→ポータルがAmazon APIで検知（作業不要なので情報通知のみ）。発送遅れリスクは自社発送(MFN)だけなのでメール拾いで十分カバー。</li>
+        </ul>
+        <strong>実装トリガー＝最初のMFN（自社発送）が売れて「出荷してください」メールが support@ss-in.net に届いたタイミング</strong>でChatwork通知を作り込む（宛先ルーム・北川さん追加要否はその時決定）。<br>
+        <strong>セラーセントラルの宿題</strong>：①「注文通知 &gt; フルフィルメント by Amazon 出荷通知」の宛先に support@ss-in.net を追加（現在ymobile宛のみ）／②「出品者の連絡先」「緊急通知」の<strong>未確認(未認証)を認証で解消</strong>。
+      </div>
+      <div class="note" style="margin-top:8px">関連メモリ＝<code>project_p6_order_notify_email_scheme_20260607</code>（実装詳細・E2E結果・残タスクを集約）。</div>
+    </div>
+  </div>
+
+  <!-- 2026-06-06 おもちゃKeepaビルド進行中＋完了後の保留作業01/02 -->
+  <div class="section pending">
+    <div class="section-header">🧸 2026-06-06 おもちゃKeepaビルド進行中 → 完了後に保留作業01/02を実行（ユーザー指示）</div>
+    <div class="section-body">
+      <div class="warn">
+        <strong>★現在の状態★</strong>　おもちゃ・ホビーのKeepaマスターを構築中（runner=<code>scripts/keepa_toy_build_runner.sh</code>／本体=<code>scripts/keepa_toy_build.py</code>／ログ=<code>/tmp/keepa_toy_build.log</code>）。<br>
+        進捗（6/6 19:00時点）= <strong>218,100 / 1,616,562件（約13%）</strong>・速度≈1,460件/分。残り約140万件 → <strong>完了見込み 約16〜24時間＝およそ1日（6/7昼ごろ）</strong>。トークン引き当てがfloor接近で礼譲スリープすると多少落ちる。<br>
+        中間測定（14万件時点）の照合可否＝国内JAN 45.8%🟢＋海外EAN 25.8%＝何らかのバーコード72.6%／無し27.4%は自動仕入れ対象外。全件完了後に最終再測定する。
+      </div>
+      <div class="note">
+        <strong>★おもちゃビルド完了（6/7 18:05）→ 01（②offers駆け込み）実装完了＆本番起動（6/8）★</strong>
+        <ul>
+          <li><strong>01＝②offers駆け込みリフレッシュ → ✅実装完了・稼働開始（6/8・ユーザー選択=案B）：</strong>在庫あり=実出品価格(offers=20)＋1年データ(stats=365)／在庫なし=1年データのみ、をDB永続保存。<br>
+            <strong>成果物：</strong>①migration 0055（book_productsに <code>sales_drops_365</code>/<code>avg_used_365_jpy</code>/<code>avg_new_365_jpy</code>/<code>stats365_last_fetched_at</code> 追加）②共通parser <code>parse_stats_365</code>（TS keepa-stats.tsと同抽出）③駆け込みスプリント <code>scripts/keepa_catalog_365_sprint.py</code> ＋ runner <code>scripts/keepa_catalog_365_sprint_runner.sh</code>（Phase1在庫あり→Phase2在庫なし・RESUME・flock・Chatwork通知）④日次2ジョブ（<code>keepa_offers_initial_bulk.py</code>/<code>keepa_offers_refresh_profitable.py</code>）も <code>stats=30→365</code>化＋365保存＝今後も自動更新。<br>
+            <strong>性能の肝：</strong>巨大listingsへのEXISTSを毎バッチやると50〜80秒/batchで激遅→在庫あり78万件を作業テーブル <code>s365_work_instock</code> に1回書出し（3.5分）→以降キーセットでSELECT 17ms。<br>
+            <strong>運用：</strong>停止=<code>touch /tmp/keepa_catalog_365_sprint_stop</code>／再開=runner再起動でRESUME／ログ=<code>/tmp/keepa_catalog_365_sprint.log</code>。<strong>完走見込み4〜5日（6/18のKeepa格安移行前に間に合う）。完了でChatwork🎉通知。</strong></li>
+          <li><strong>02＝死蔵ISBNスキップリスト → ❌中止（6/7ユーザー判断）：</strong>現在ローカルLLMで全件紐付けを構築中のため不要に。</li>
+        </ul>
+      </div>
+      <div class="note">
+        <strong>紐付け状況＝健全（おもちゃビルドの影響なし）：</strong>紐付け済 2,502,085／未紐付け 8,763（0.35%）。新着は <code>local_join</code> daemon（API不要）が数分で消化。逆引きdaemonはfloor 200まで優先的にトークンを使う設計でおもちゃビルドより優先度上。daemon3系統（local_join／reverse_lookup_incremental／suruga_game_reverse）とも稼働中。関連メモリ <code>project_keepa_toys_next_plan</code>。
+      </div>
+    </div>
+  </div>
+
+  <!-- 並行作業 -->
+  <div class="section big">
+    <div class="section-header">⚠️ 並行作業の状況（衝突回避・最重要）</div>
+    <div class="section-body">
+      <div class="danger">
+        <strong>★ オークファン相場連携(P3)は「別ターミナル」が担当中 ★</strong><br>
+        フェーズ0検証＋実証完了（プロPlus登録済）。<strong>JAN/ISBN照合は高精度（誤マッチ0）だがCSVにJAN列が無い</strong>＝数万SKU一括取得は不可、規約も自動取得・自社DB蓄積に抵触リスク。<br>
+        <strong>正規ルートを2本問い合わせ送信済み・返信待ち：①法人API ②オークファンMCPサーバー（Claude直結・最有力）。</strong>料金次第で API / MCP / データ納品(自社JANリスト) から選択予定。詳細はメモリ <code>project_aucfan_p3_verification_20260603</code>。<br>
+        <strong>このP2以降ターミナル＝次は P6(出品/在庫同期)設計を担当。オークファン関連のファイル/DB/メモリには触れない。</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2026-06-05 全販路アービトラージ化: eBayゲート統合+源非依存受け皿 -->
+  <div class="section completed">
+    <div class="section-header">🌐 2026-06-05 ★全販路アービトラージ化 着手＝利益案件の足切りを全販路化（eBay統合＋ヤフオク/メルカリ受け皿）★</div>
+    <div class="section-body">
+      <div class="note" style="background:#dcfce7;border-color:#16a34a">
+        <strong>★ユーザー方針確定＝「どこか1販路でも黒字なら利益案件として一覧に上げる」。</strong> 従来の<strong>一方向Amazonアービトラージ</strong>(足切り＝Amazon利益のみ)から、<strong>Amazon/ヤフオク/メルカリ/eBayの全販路</strong>で最大利益が黒字なら案件化する方式へ転換。詳細メモリ＝<code>project_allsite_arbitrage_gate_ebay_20260605</code>。
+      </div>
+
+      <h4>① 確定した全体設計（認識合わせ済み）</h4>
+      <ul>
+        <li><strong>売り場4販路</strong>＝Amazon / ヤフオク / メルカリ / eBay の各相場(手取り)。<strong>仕入れ</strong>＝既存12サイト(bookoff/valuebooks/mottainai/rakuten/abebooks/netoff/thriftbooks/kinokuniya/yahoo_shopping/<strong>mercari/yahoo_auctions/yahoo_flea</strong>)。※メルカリ・ヤフオクは2026-05-26〜既に仕入れ候補。</li>
+        <li><strong>eBay仕入れは見送り</strong>(Step0でNO-GO)。eBayは「売る場所(輸出)＋相場参考」に集中。</li>
+        <li><strong>相場定義の不統一を許容</strong>(Amazon＝現在出品最安／ヤフオク・メルカリ＝落札・ソールド相場／eBay＝米国現在出品最安)。「売り相場」と「仕入れ価格」は別データ(同じメルカリでも仕入れ＝現在出品スクレイプ、売り＝落札/ソールド)。</li>
+      </ul>
+
+      <h4>② 実装＝足切りを全販路最大に拡張（デプロイ済・HTTP200）</h4>
+      <ul>
+        <li>足切りを <code>EST_PROFIT_SQL(Amazonのみ) ≥ minProfit</code> → <code>BEST_PROFIT_SQL = GREATEST(Amazon, eBay輸出, ヤフオク売り, メルカリ売り) ≥ minProfit</code> に拡張。<strong>GREATESTはNULL無視</strong>＝データが無い販路は除外され<strong>既存案件は1件も消えない純粋な足し算</strong>。<code>book-queries.ts</code>・<code>game-queries.ts</code>(profitable CTE/baseJoins・足切り・ORDER BYを<code>best_profit</code>基準に)。</li>
+        <li>最良販路＝<code>attachSellMarketPrices()</code>(attachEbayDataの後)で全4販路の最大を<code>best_sell_platform</code>に総合再確定。</li>
+        <li><strong>実測(ゲーム・利益≥¥0)＝旧Amazonのみ317件→新438件(+121＝Amazon赤字だがeBay黒字で新規浮上)。</strong></li>
+      </ul>
+
+      <h4>③ ★ヤフオク/メルカリの「データが入れば自動で走る」＝源非依存の受け皿テーブル新設</h4>
+      <ul>
+        <li><strong>migration 0044 <code>sell_market_price(asin, channel, market_price_jpy, source, sample_size, updated_at)</code> PK(asin,channel)</strong> 適用済。channel＝<code>'yahoo_auctions'</code>｜<code>'mercari'</code>。</li>
+        <li><strong>オークファンAPI/MCP/スクレイプ/ソールド履歴のどの源でも、このテーブルにUPSERTするだけで足切りも表示も自動連動</strong>(足切り＝BEST_PROFIT_SQLに <code>smp_y/smp_m</code> LEFT JOIN済・表示＝<code>attachSellMarketPrices</code>で各販路利益＋best再計算)。ヤフオク/メルカリ売り利益＝<code>round(相場×0.90[手数料10%]) − 自社送料¥185 − 仕入値 − 仕入送料</code>(¥80成約料はAmazonのみ)。</li>
+        <li><strong>実証済</strong>＝Amazon赤字(−¥553)のゲームにメルカリ相場¥7,200をINSERT→best+¥5,255で黒字案件に自動浮上(テスト後削除)。</li>
+        <li>★<strong>投入側(オークファンP3＝別ターミナル担当)は今後「<code>sell_market_price</code>へUPSERTするだけ」＝これが正式な受け口。</strong>従来の「<code>platforms.aucfan</code>配線済」はDB実態がスタブ(book_summary_mvにaucfan無し)だったため、この受け皿に置き換え。</li>
+      </ul>
+
+      <h4>④ 本(book)のeBay候補スキャン実施</h4>
+      <ul>
+        <li>eBay候補は従来 <code>genre=game</code> の928件のみ→ <strong>本を <code>GENRE=book ORDER=margin LIMIT=600</code>(国内黒字順＝/books表示母集団)でスキャン実施済</strong>＝<strong>600件中 eBayヒット33(5.5%)・黒字26(全て≥¥2,000)</strong>。本は「<strong>ヒット率は低いが、ヒットすれば利益が大きい</strong>」(ゲーム90%と対照)＝越境需要のある画集/限定BOX/専門書/公式設定資料/DVD付に偏る。トップ＝松本大洋プレミアムBOX +¥17,328／スタジオジブリの美術 +¥13,683／気功革命DVD +¥12,546。残＝全ゲーム＋本の継続拡張(無料枠5000/日・RECHECK_DAYS=7で既確認skip)。</li>
+      </ul>
+
+      <h4>⑤ CD・DVDページ新設（古本/ゲームと同じUI）</h4>
+      <ul>
+        <li><strong>ナビに「💿 CD・DVD」追加＋ページ <code>/cd-dvd</code> 新設</strong>(layout.tsx＋cd-dvd/page.tsx)。古本/ゲームと同じ <code>BookProductsListView</code> UI。<code>getCdDvdProducts()</code>＝<code>getBookProductsWithSummary()</code> を<strong>genre切替で再利用</strong>(<code>genreCfg.predicate='(bp.is_cd OR bp.is_dvd)'・excludeB0=false</code>＝CD/DVDはB0系ASIN主流のためISBN系のB0除外を外す)。仕入れ(全サイト最安・<code>book_buy_agg_mv</code>)・売価(Amazon)・相場(ヤフオク/メルカリ/eBay)・出品制限まで本と同じ口で動く。</li>
+        <li><strong>データ実測＝売価＋仕入れが揃うCD/DVDは33,780件、利益案件は¥1,000以上で66件・¥0以上で192件</strong>(Keepa取得30日以内が対象＝<strong>DVD Keepa構築(別ターミナル)が進むほど自動で増える</strong>)。is_cd=39.8万/is_dvd=59.4万件マスタ有り。</li>
+      </ul>
+
+      <h4>⑥ eBay相場の「裏付けリンク」（相場が合っているか確認できる導線）</h4>
+      <ul>
+        <li>ユーザー要望＝eBay相場(米国売値$)が本当に正しいか確認したい。<strong>eBay相場セル(PC表・スマホカード両方)を <code>&lt;a target=_blank&gt;</code> でリンク化</strong>。リンク先＝<strong>Browse APIが見つけた最安item の実ページURL(<code>itemWebUrl</code>)</strong>＝クリックで実際の出品ページが開き相場を裏取りできる。保存＝<strong>migration 0045 で <code>ebay_export_candidate.ebay_lowest_url</code> 列追加</strong>＋<code>ebay_export_scan.py</code> が最安itemのURLを保存。</li>
+        <li>未取得行(再スキャン前)は <strong>ISBN/JAN検索URL(米国eBay・Buy It Now・安い順)にフォールバック</strong>(<code>ebayVerifyUrl()</code>)。★eBay APIは<code>gtin</code>厳密一致だがWeb検索<code>_nkw</code>はキーワード検索＝直リンク(itemWebUrl)の方が裏付けとして確実。<strong>全候補のURLバックフィル＝<code>scripts/ebay_backfill_urls.py</code></strong>(gtin逆引きで最安itemWebUrlのみUPDATE・価格再計算なし・LIMIT/GENRE/停止対応)で既存ヒット行に直リンク一括付与。</li>
+      </ul>
+
+      <h4>⑦ eBay相場の「薄さ」警告（過大評価の見抜き方）★ユーザー指摘から追加</h4>
+      <div class="warn">
+        <strong>★乖離の判断指針</strong>：eBay相場は「<strong>現在の最安出品の言い値</strong>」かつ <code>ebay_offer_count</code>(出品数)が少ないと<strong>1件の言い値で過大評価</strong>される。実例＝Switch2(Pokémon LEGENDS Z-A・B0FNC43RBM)＝米国eBayに<strong>1件だけ</strong>($950.60≈¥152,051)で「+¥33,854」と過大表示。一方ユーザーの日本向け検索(お届け先:日本・JPY)では中古¥97,611/新品¥777,684＝<strong>別プール</strong>(米国市場USDと日本向け検索は商品集合も通貨も違うので一致しないのは正常)。<br>
+        <strong>対策＝出品数≤2の行に「⚠ 薄い相場(参考外)」マーク</strong>(PC表/スマホ両方)を表示し信頼度を可視化(<strong>除外はせず</strong>案件としては従来通り表示)。<strong>判断＝「出品数少×高額×新発売」が重なる商品はeBay相場が最も当てにならない(言い値)／出品数が複数ある安価品は信頼できる。</strong>
+      </div>
+
+      <div class="danger">
+        <strong>★落とし穴(事故)＝genre切替の $1 型推論バグ</strong>：<code>getBookProductsWithSummary</code> を <code>genreCfg</code> でCD/DVD化した際、CD/DVD述語で <code>$1</code>(category)を参照しないと <strong>node-postgres拡張プロトコルで「could not determine data type of parameter $1」</strong>→クエリ失敗→ページが空(「データ取得が遅延」バナー)になる事故。<code>($1::text IS NULL OR TRUE)</code>(常時TRUEのno-op)で <code>$1</code> を明示cast参照し回避。<strong>psqlのPREPAREは型明示で通るため手動SQLテストでは気づけない</strong>。また<code>&lt;br&gt;</code>(JSXは<code>&lt;br/&gt;</code>必須)でspecビルドが落ちポータルが一時停止→修正で復旧。</div>
+
+      <h4>⑧ AI仕入判定(🤔買い?)を「Amazon前提」→「全販路で検証」に変更 ★ユーザー指摘から</h4>
+      <ul>
+        <li>旧AI査定は<strong>Amazon販売前提(しかも旧FBA手数料)</strong>で、Amazon赤字なら一律「見送り」になっていた(例:マリオパーティ10 amiiboセット=Amazon中古¥4,292・楽天仕入¥5,444で逆ザヤ→見送り。だが<strong>eBay輸出は+¥17,458の黒字</strong>)。→<strong>全販路(Amazon自社発送/ヤフオク/メルカリ/eBay輸出)で「いずれか1販路でも黒字なら買える」判定</strong>に変更。</li>
+        <li>実装＝<code>buy-advisor/queries.ts</code>(<code>loadAdviceContext</code>に各販路の想定粗利<code>sell_scenarios</code>を算出＝eBay候補・売り相場をJOIN)・<code>types.ts</code>(sell_scenarios追加)・<code>claude.ts</code>(システムプロンプト全販路化＝<strong>FBA手数料撤去・自社発送¥185・最良販路で価格差判断・eBay出品数≤2は薄い相場として過大評価を疑いconditional止まり・Amazon drops365=0でも他販路で明確黒字ならconditional可</strong>＋各販路シナリオ提示＋tool schemaに<code>best_sell_channel</code>)。</li>
+        <li>★<strong>既存判定は24hキャッシュ→新ロジックで見るには「再評価」ボタンで再実行が必要。</strong></li>
+      </ul>
+      <div class="note">追加変更ファイル＝<code>buy-advisor/queries.ts・types.ts・claude.ts</code>(AI査定全販路化)・<code>BookProductsListView.tsx</code>(薄い相場⚠マーク)・<code>scripts/ebay_backfill_urls.py</code>(URLバックフィル・新規)。eBay裏付けURLは全ヒット行(ゲーム823/本33)にバックフィル済(100%)。tsc0・全ページHTTP200。</div>
+
+      <div class="note">変更ファイル＝<code>book-queries.ts</code>(BEST_PROFIT_SQL/SELL_MKT_PROFIT_SQL/profitable CTE joins/attachEbayData best合流/attachSellMarketPrices新設/genreCfg追加/getCdDvdProducts/ebay_lowest_url)・<code>game-queries.ts</code>(同型)・<code>cd-dvd/page.tsx</code>(新規)・<code>layout.tsx</code>(ナビ)・<code>BookProductsListView.tsx</code>(eBay相場リンク化・ebayVerifyUrl)・<code>scripts/ebay_export_scan.py</code>(URL保存)・<code>db/migrations/0044_sell_market_price.sql</code>・<code>0045_ebay_export_candidate_url.sql</code>・<code>spec/page.tsx</code>。tsc0エラー・/cd-dvd /books /games /netsea /spec 全HTTP200。/spec＋メモリ更新済。</div>
+    </div>
+  </div>
+
+  <!-- 2026-06-05 今できること／待ち 総括 -->
+  <div class="section big">
+    <div class="section-header">📊 現状の総括（2026-06-05時点）＝「今できること」と「外部待ち」の切り分け</div>
+    <div class="section-body">
+      <div class="note" style="background:#f3e8ff;border-color:#d8b4fe">
+        <strong>★全販路アービトラージの土台は出し切った。</strong>残りは大きく ①<strong>eBay候補の拡張（＝種類を増やす・半自動化）</strong> ②<strong>外部承認待ち</strong> ③<strong>承認に依存せず先行できる小〜中タスク数件</strong>。ユーザー認識「あとはスクレイピングと種類を増やすだけ」は概ね正しいが、③に非スクレイピングの着手可能項目がある。
+      </div>
+
+      <h4>✅ 今できること（外部承認に依存しない）</h4>
+      <table>
+        <tr><th>項目</th><th>内容</th><th>価値</th></tr>
+        <tr><td><strong>① eBay候補スキャンの自動化＋拡張</strong> <span class="badge badge-green">✅実施済 2026-06-05</span></td><td><strong>launchd日次(毎日05:30)化済</strong>＝ゲーム600+本600+CD/DVD日替わり交互600=約1,800call/日。runner+plist+多重起動ガード。スクリプトのunpack落ちバグも修正。</td><td>完了(CD/DVDはKeepa構築が進むほど候補増)</td></tr>
+        <tr><td><strong>② eBay輸出 黒字フィルタUI(Step2b)</strong> <span class="badge badge-green">✅実施済 2026-06-05</span></td><td>/books・/games・/cd-dvd に「🌐 eBay輸出黒字のみ」チップ＋「eBay輸出利益順」ソートを<strong>サーバ側実装・デプロイ済(全HTTP200)</strong>。</td><td>完了</td></tr>
+        <tr><td><strong>③ 国際送料の商品別精緻化</strong> <span class="badge badge-green">✅実施済 2026-06-05</span></td><td><code>weight_g</code>＋梱包150gを重量帯(≤100g¥1000〜超¥5500)に当て、null時ジャンル既定で<strong>送料を商品別に出し分け済</strong>。既存¥1800分は日次再スキャンで順次更新。</td><td>完了(実送料は要確認・概算)</td></tr>
+        <tr><td><strong>④ P7 損益(PL)管理の先行実装</strong> <span class="badge badge-green">✅実施済 2026-06-05</span></td><td>固定費マスタ(<code>fixed_cost</code>)＋月次PL枠組みを<strong>実装・デプロイ済(全HTTP200)</strong>。migration 0046・<code>/pl</code>・<code>/pl/fixed-costs</code>・API・nav「📊損益」追加。固定費=実値／売上・原価・変動費はP6後に本接続(当面0表示)。</td><td>完了(P6後に売上接続のみ残)</td></tr>
+        <tr><td><strong>⑤ メルカリ売り相場の暫定投入</strong> <span class="badge badge-green">✅実施済 2026-06-05</span></td><td>メルカリ出品価格の中央値を <code>sell_market_price(source=mercari_listing_proxy)</code> へ<strong>投入済(482 asin・厚み2件以上)</strong>＋日次launchd(06:00)。本相場(オークファン)が入った行は上書きしない優先ロジック付き。これでメルカリ販路がgate/表示/AI査定で点灯。</td><td>完了(精度は粗・本相場待ち)</td></tr>
+      </table>
+
+      <h4>⏳ 外部待ち（今は動けない・先方/ユーザー作業）</h4>
+      <table>
+        <tr><th>項目</th><th>待ち内容</th></tr>
+        <tr><td>ヤフオク/メルカリ 売り相場(本来)</td><td><strong>オークファンP3=別ターミナル担当</strong>(法人API/MCP/データ納品の返信待ち)。受け皿 <code>sell_market_price</code> は完成済＝データが入れば全自動連動</td></tr>
+        <tr><td>eBay 出品(Sell API/Step3)</td><td><strong>🎉 2026-06-09 eBay初のAPI出品ライブ達成！</strong> 受取設定 承認＝入金導線 開通の後、<strong>Sell Inventory APIで出品まで全通し成功</strong>＝<code>listingId 358657679404</code>(内視鏡アトラス・PO66・$106・ACTIVE・<code>ebay.com/itm/358657679404</code>)。完了内訳＝(1)セラーOAuth取得(RuName <code>TAKAYUKI_SATSUM-TAKAYUKI-arbitr-brbic</code>・refresh_token を Secret Manager <code>ebay-seller-refresh-token-prod</code>に保存・548日有効) (2)アカウント設定 全API完了＝Business Policyオプトイン＋在庫ロケーション <code>AKITA_WAREHOUSE</code>(秋田倉庫)＋支払<code>260276131024</code>/返品<code>260276132024</code>/配送<code>260276564024</code>(★米国外発送のサービスコード＝<code>StandardShippingFromOutsideUS</code>・定額$18) (3)出品エンジン＝<code>apps/scraper/ebay_arbitrage_scraper/ebay/oauth.py・listing_publish.py</code>＋CLI <code>scripts/ebay_oauth.py・ebay_list_to.py</code>(<code>--publish</code>既定はステージングのみ＝公開直前で確認・<code>--withdraw</code>で取下げ)。★書籍カテゴリ必須アスペクト＝Type/Author/Publication Name(著者データ無→暫定"Various")・画像はAmazon書影流用(本番は実物写真推奨)。<strong>✅当初プラン②ポータル連携も完了(同日デプロイ済)＝/listing の出品候補行に「eBay出品/取下げ」ボタン＋公開状態バッジ(🟢公開中/⚪非公開/未出品)。状態は既存 channel_listing(channel='ebay')に保存(新テーブル不要)。実装＝Python JSONラッパー <code>scripts/ebay_listing_api.py</code>＋APIルート <code>app/api/ebay-listing/publish|withdraw</code>＋<code>runEbayListingApi</code>＋getListableCandidatesにeBay状態JOIN＋ListingView.tsxにボタン/バッジ。oauth.pyにSecret Managerフォールバック追加(Web起動でenv無しでも認証可)。tsc0/build成功/HTTP200。残＝著者補完(現Various)・英語タイトル自動化・売却検知→自動withdraw。テスト出品は取り下げ済</strong></td></tr>
+        <tr><td>メルカリShops 出店</td><td><span class="badge badge-green">✅3回目提出完了</span> <strong>★2026-06-10 GPS位置情報付き写真4枚で再再申請提出済み→審査結果メール待ち</strong>。通過でP6メルカリ接続</td></tr>
+        <tr><td>Yahoo!ショッピング/ヤフオクストア</td><td><strong>★2026-06-06 ショッピング再申請 完了(受付番号1101691)</strong>＝納税証明書(その3)をしっかり添付し前回の落選原因(銀行PDF)を解消。<strong>★2026-06-07 ヤフオク(オークション)も申請完了(受付番号1101100)</strong>。ID紐づき＝ログイン/ショッピング用=<code>dolcetext3</code>／ヤフオク(オークションストア)用=<code>yzmeq74210</code>(LINEヤフーの2ID必須仕様)。6/3に2件同時申込→ヤフオクはフォーム未入力で保留だったのを6/7に完成提出。代表電話は固定電話必須対応で<strong>03plus新規取得 03-6821-4385</strong>(旧050plusは解約済+新規受付終了)。<strong>審査結果待ち＝ショッピング2〜5営業日/ヤフオク2週間程度</strong>。</td></tr>
+        <tr><td>P6 多販路同時出品＋在庫同期</td><td>Amazon実装済。他3販路は<strong>販路アカウント承認待ち</strong>。承認後に出品/売却検知/取下げdaemon</td></tr>
+        <tr><td>P6 PII(買い手住所)全自動CSV</td><td>SP-API制限ロール「消費者直送」<strong>承認待ち</strong>（ロールが選択肢に出ず・2026-06-06 既存ケース返信＋新ケース送信済）</td></tr>
+        <tr><td>P7 本実装</td><td>売上実値はP6(販売実績)＋P4(販路)が前提</td></tr>
+      </table>
+      <div class="warn">
+        <strong>★①〜⑤すべて実施済（2026-06-05）。</strong>残る前進は基本的に<strong>外部待ち</strong>（オークファンP3面談6/9・eBay受取設定=Payoneer登記書類の審査承認待ち・メルカリShops審査結果・Yahoo再申請）。承認に依存せず今できる次の小タスク候補＝(a)eBay相場の薄さ可視化の精緻化、(b)P7のCSV出力/グラフ追加、(c)CD/DVD Keepa構築の進捗に合わせたeBayカバレッジ確認。本実装の本丸（P6 多販路出品＋在庫同期＝オーバーセル防止／P7売上接続）は販路アカウント承認が前提。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2026-06-05 次ターミナル作業指示 ①〜⑤ -->
+  <div class="section pending">
+    <div class="section-header">🛠 次ターミナルへの作業指示（①〜⑤ 実装仕様・2026-06-05 ユーザー指示で全件委譲）</div>
+    <div class="section-body">
+      <div class="danger">
+        <strong>★ユーザー指示＝下記①〜⑤を「別ターミナルで全部やる」。本ターミナルは仕様化のみ・未実装。</strong> 関連メモリ＝<code>project_allsite_arbitrage_gate_ebay_20260605</code>。<strong>共通ルール（厳守）</strong>＝(a)デプロイは <code>stop→build→kickstart</code>（<code>Bootstrap failed:5</code>は一時的→<code>bootout</code>後6秒待ち→<code>bootstrap</code>→15秒待ちで復帰）(b)動作確認は <code>/usr/bin/curl http://[::1]:3000/...</code>（IPv6・フルパス）(c)JSXは <code>&lt;br/&gt;</code> 必須（<code>&lt;br&gt;</code>でビルド落ち）(d)<strong>変更したら /spec＋メモリ 両方更新</strong>(e)GitHub全面禁止(f)eBay Browse API無料枠=5000call/日・認証は Secret Manager <code>ebay-app-id-prod</code>/<code>ebay-cert-id-prod</code> を <code>EBAY_CLIENT_ID/SECRET</code> に。DB_URLは本書「技術メモ」。
+      </div>
+
+      <h4>① eBay候補スキャンの自動化（launchd日次）＋CD/DVD・全ゲーム・本へ拡張 <span class="badge badge-green">✅実施済 2026-06-05</span></h4>
+      <ul>
+        <li><strong style="color:#15803d">【2026-06-05 実施済】</strong><code>scripts/ebay_export_scan_runner.sh</code>＋launchd <code>com.ssinvestor.arbitrage.ebay-export-scan</code>（毎日05:30・keepa-dvd 04:30と回避）。creds=Secret Manager <code>ebay-app-id-prod</code>/<code>ebay-cert-id-prod</code>→<code>EBAY_CLIENT_ID/SECRET</code>。毎日 ゲーム600＋本600＋CD/DVD日替わり交互600（<code>ORDER=margin</code>）＝約1,800call/日（無料枠5000内）・<code>RECHECK_DAYS=7</code>で約1週間一巡。pgrep多重起動ガード＋停止フラグ自動除去付き。<strong>★スクリプトのバグ修正</strong>＝<code>ebay_lowest()</code>が204/エラー時に2値・成功時3値を返しunpack落ちする不具合を3値統一で修正。小規模実行で疎通OK。停止＝<code>/tmp/ebay_export_scan_stop</code>。</li>
+        <li><strong>目的</strong>：<code>ebay_export_candidate</code> を常時最新化＋カバレッジ拡大（＝eBay相場/輸出利益列を埋め続ける）。スクリプトは完成済＝<code>apps/scraper/scripts/ebay_export_scan.py</code>（env <code>GENRE</code>(game|book|cd|dvd)/<code>ORDER</code>(margin=国内黒字順=表示母集団に重なる/rank=人気順)/<code>LIMIT</code>/<code>SHIP_JPY</code>/<code>RECHECK_DAYS</code>(既定7・既確認skip)、停止 <code>/tmp/ebay_export_scan_stop</code>、最安itemの <code>itemWebUrl</code> も保存する）。</li>
+        <li><strong>やること</strong>：(1)他scraperと同形式の<strong>runner.sh</strong>を作成＝creds/DB_URL export→GENRE別に <code>uv run python scripts/ebay_export_scan.py</code>。(2)<strong>launchd plist</strong>で日次起動（<code>AbandonProcessGroup=true</code>必須・ログ /tmp）。(3)<strong>日替わりローテ</strong>推奨＝1日の合計call数を5000未満に抑える（例：毎日 game(margin,600)+book(margin,600)、cd/dvdは曜日で交互600ずつ＝1日約1800call）。<code>RECHECK_DAYS=7</code>で1週間で一巡。</li>
+        <li><strong>注意</strong>：<code>ORDER=margin</code>を主に使う（/games・/booksの表示行＝国内黒字を埋めるため）。CD/DVDはKeepa構築（別ターミナル）が進むほど候補が増える。国際送料は現状一律¥1800（③で精緻化）。Browse=アプリ認証（ユーザートークン不要）。</li>
+        <li><strong>検証</strong>：<code>SELECT genre,count(*),count(*) FILTER(WHERE est_profit_jpy&gt;=500) FROM ebay_export_candidate GROUP BY genre;</code> が増える／ /games・/books のeBay列が埋まる。</li>
+      </ul>
+
+      <h4>② eBay輸出 黒字フィルタ＋並び替えUI（Step2b） <span class="badge badge-green">✅実施済 2026-06-05</span></h4>
+      <ul>
+        <li><strong style="color:#15803d">【2026-06-05 実施済】</strong>/books・/games・/cd-dvd に「<strong>🌐 eBay輸出黒字のみ</strong>」チップ（<code>?ebayProfit=1</code>）＋ソート「<strong>eBay輸出利益順</strong>」（<code>?sort=ebay</code>）を追加しデプロイ済（全HTTP200）。<code>book-queries.ts</code>/<code>game-queries.ts</code> に filter <code>ebayProfitableOnly</code>（<code>ebay_export_profit&gt;0</code>）＋sort"ebay"をサーバ側で実装（件数・ページング整合）。<code>BookProductsListView.tsx</code> にチップ/選択肢/prop <code>serverEbayProfitableOnly</code>。booksはeBay絞り込み時に独占チャンス（eBayデータ無し）を出さない。</li>
+        <li><strong>目的</strong>：/games・/books で「<strong>eBay輸出が黒字の商品だけ</strong>」を絞り込み＋eBay利益で並び替え（現状はeBay列が表示されるだけで埋もれる）。</li>
+        <li><strong>やること</strong>：(1)<code>book-queries.ts</code> <code>getBookProductsWithSummary</code> と <code>game-queries.ts</code> <code>getGameProducts</code> に filter <code>ebayProfitableOnly</code> を追加＝profitable CTE/baseWhere に <code>AND eec.est_profit_jpy &gt;= $minProfit</code>（eec は既にJOIN済）。(2)sort に <code>"ebay"</code> を追加＝<code>ORDER BY eec.est_profit_jpy DESC NULLS LAST</code>。(3)<code>/games/page.tsx・/books/page.tsx・/cd-dvd/page.tsx</code> でクエリ <code>?ebayProfit=1</code>・<code>?sort=ebay</code> を読む。(4)<code>BookProductsListView.tsx</code> のフィルタ行に「eBay輸出黒字のみ」チップ＋ソート選択肢「eBay利益順」を追加。</li>
+        <li><strong>任意</strong>：薄い相場除けで「出品数≥3のみ」サブ条件も（<code>eec.ebay_offer_count&gt;=3</code>）。</li>
+        <li><strong>注意</strong>：フィルタ/ソートはサーバ側で（ページング・件数と整合）。CD/DVDも同口（getBookProductsWithSummary経由）。<strong>検証</strong>＝絞り込み時にeBay黒字行のみ・件数整合・HTTP200。</li>
+      </ul>
+
+      <h4>③ 国際送料の商品別精緻化（eBay輸出利益の精度↑） <span class="badge badge-green">✅実施済 2026-06-05</span></h4>
+      <ul>
+        <li><strong style="color:#15803d">【2026-06-05 実施済】</strong><code>ebay_export_scan.py</code> に <code>weight_g</code> を追加し、梱包+150gして重量帯（≤100g¥1000/≤250¥1500/≤500¥2000/≤1000¥2800/≤2000¥4000/超¥5500）で送料を商品別算出。<code>weight_g</code> null時はジャンル既定（ゲーム1500/本2200/CD1500/DVD2000）。<code>intl_ship_jpy</code> 列に実値保存。保守側（重め）に倒して過大評価を防止。weight_g充足率59%。再スキャンで送料が¥1500〜2800に出し分けされることを確認。既存¥1800分は日次再スキャン（RECHECK7）で順次更新。実送料は日本郵便 国際eパケット要確認（概算）。</li>
+        <li><strong>目的</strong>：現状 <code>ebay_export_scan.py</code> の <code>SHIP_JPY</code> が一律¥1800＝薄い相場と相まって利益過大評価に寄る。<strong>重量(<code>book_products.weight_g</code>)・ジャンル別に出し分け</strong>。</li>
+        <li><strong>やること</strong>：scanの候補取得SQLに <code>bp.weight_g</code> を足し、利益計算前に送料を算出＝例：小型包装物/eパケット相当の重量帯テーブル（〜100g/〜250g/〜500g/〜1kg/〜2kg）で円建て概算。<code>weight_g</code> null時はジャンル既定（ゲーム¥1500/本¥2200/CD¥1500/DVD¥2000等）。<code>intl_ship_jpy</code> 列に実値保存（既存）。利益＝round(usd×fx×0.87)−<strong>その商品の送料</strong>−国内仕入−¥260。</li>
+        <li><strong>注意</strong>：保守側（重め）に倒して過大評価を防ぐ。適用には再スキャン（<code>RECHECK_DAYS=0</code>）必要。実送料はeBay/配送業者の最新表を要確認（CN22/追跡付きの実費）。</li>
+      </ul>
+
+      <h4>④ P7 損益(PL)管理 先行実装（販路承認に依存しない） <span class="badge badge-green">✅実施済 2026-06-05</span></h4>
+      <ul>
+        <li><strong style="color:#15803d">【2026-06-05 実施済】</strong>P7-1/P7-2を先行実装しデプロイ済（全HTTP200）。<strong>(1)migration 0046</strong>＝<code>fixed_cost</code>＋<code>fixed_cost_monthly</code>(UNIQUE(fixed_cost_id,year_month))適用済。<strong>(2)<code>/pl/fixed-costs</code></strong>＝固定費マスタ入力（月選択・繰り返し/追加/削除・「この内容で当月を更新」UPSERT・当月固定費計）。<strong>(3)<code>/pl</code></strong>＝月次PL（税抜/税込トグル＝税抜デフォルト・KPI4枚・全社/販路別/ジャンル別タブ・全社PL表）。<strong>固定費だけ実値・売上/原価/変動費はP6待ちで0表示（注記あり）＝営業利益は当面▲固定費</strong>（仕様どおり）。<strong>(4)API</strong>＝<code>/api/pl/fixed-costs</code>(GET/POST/PATCH/DELETE)＋<code>/api/pl/fixed-costs/monthly</code>(月次UPSERT)。<strong>(5)nav</strong>＝「📊 損益」追加。lib＝<code>apps/web/src/lib/pl-queries.ts</code>。動作確認＝固定費追加→当月確定（Keepa €459→¥74,300＋プライスター¥5,280＝計¥79,580）→PL表示（税込¥79,580/税抜¥72,345）→削除（cascade）まで疎通OK。<strong>残＝P6 sold ログ実装後に売上・原価・変動費を <code>getPlSummary</code> の0埋め部分に接続＋ジャンル別固定費の配賦方式確定。</strong></li>
+        <li><strong>目的</strong>：毎月の損益を自動集計。<strong>設計は本書「🧾 P7」セクションに確定済</strong>（粒度＝全社月次＋販路別＋ジャンル別／発生主義／税抜・税込トグル）。固定費マスタ＋月次PLの2画面。</li>
+        <li><strong>やること（P7-1/P7-2＝依存なしで着手可）</strong>：(1)migration＝<code>fixed_cost</code>(name/category/amount/currency/fx_rate_source/recurring/billing_day/allocation/effective_from/to)＋<code>fixed_cost_monthly</code>(fixed_cost_id/year_month/amount_jpy)。(2)<code>/pl/fixed-costs</code>＝固定費入力（月選択・項目別・「繰り返し」=毎月自動計上）。(3)<code>/pl</code>＝月次PL（全社/販路別/ジャンル別タブ＋税抜税込トグル・KPI＋PL表＋グラフ）。当面は固定費=実値・売上=P6待ちで0表示（任意でP7-3 Amazon売上をSP-API暫定流し込み）。(4)ナビに「📊 損益」追加（layout.tsx）。</li>
+        <li><strong>注意</strong>：Next.jsは独自版＝<code>apps/web/AGENTS.md</code>指示通り <code>node_modules/next/dist/docs/</code> を読んでから書く。売上・原価・変動費は新テーブル不要＝P6 <code>listing_unit</code>(sold_at/sold_channel)⋈<code>purchase_orders</code>＋P5計算でMV化（P6本実装後）。プライスター「その他経費(繰り返し)」「売上分析」が原型（<code>~/Desktop/pricetar_ui_capture/</code>・<code>~/Desktop/P7_損益管理PL_設計ワイヤー_20260604.html</code>）。</li>
+      </ul>
+
+      <h4>⑤ メルカリ売り相場の暫定投入（オークファンを待たず点灯・精度は粗） <span class="badge badge-green">✅実施済 2026-06-05</span></h4>
+      <ul>
+        <li><strong style="color:#15803d">【2026-06-05 実施済】</strong><code>scripts/mercari_sell_proxy.py</code>＋launchd <code>com.ssinvestor.arbitrage.mercari-sell-proxy</code>（毎日06:00）。<code>listings</code>（mercari在庫あり）を asin別 <code>percentile_cont(0.5)</code> 中央値→ <code>sell_market_price(channel='mercari', source='mercari_listing_proxy', sample_size=件数)</code> にUPSERT。<strong>★優先ロジック</strong>＝ON CONFLICT 時 <code>WHERE source='mercari_listing_proxy' OR source IS NULL</code> でオークファン本相場が入った行は上書きしない。厚み <code>MIN_SAMPLE=2</code> 未満（出品1件）は投入せず。<strong>初回482 asin投入</strong>（mercari在庫あり8728中・残は出品1件で薄い）。これで足切り（<code>smp_m</code>）・表示・AI査定にメルカリ販路が連動して点灯。ヤフオクは不可（オークファン待ち）。</li>
+        <li><strong>目的</strong>：受け皿 <code>sell_market_price</code> は完成済。オークファン(P3)を待たず、<strong>メルカリの現在出品価格を"暫定の売り相場"として投入</strong>→メルカリ販路が gate/表示/AI査定で今すぐ点灯。<strong>★メルカリはフリマ＝出品価格≒売値なので近似可。ヤフオクは落札≠現在価格なのでこの方式は使わない（オークファン待ち）。</strong></li>
+        <li><strong>やること</strong>：スクリプト（or 定期SQL）で、各asinの <code>listings</code>(platform='mercari', in_stock=true, price_jpy&gt;0) から<strong>中央値（推奨）</strong>を計算し <code>sell_market_price(asin,'mercari',中央値,source='mercari_listing_proxy',sample_size=件数)</code> に UPSERT。<code>book_summary_mv</code> は min/max しか無いので<strong>中央値は <code>listings</code> から直接</strong>（<code>percentile_cont(0.5)</code>）。件数が極少(1〜2)は薄いので投入しないか sample_size を持たせUIで注意。launchdで定期更新可。</li>
+        <li><strong>注意</strong>：あくまで<strong>暫定・粗い相場</strong>＝<code>source</code>で明示し、オークファンの本相場が来たら上書き/優先する運用に。メルカリを仕入れにも使う商品は「メルカリ買い→メルカリ売り」が同値で無意味＝gateは全販路最大で判断するので問題は出ない（他販路仕入との差で黒字が出る）。<strong>検証</strong>＝投入後 /books・/games・/cd-dvd のメルカリ相場列が埋まり、AI査定(再評価)でメルカリ販路が候補に入る。</li>
+      </ul>
+
+      <div class="note">
+        <strong>変更時の必須後処理</strong>：各タスク完了で <code>/spec</code> に変更履歴追記＋メモリ <code>project_allsite_arbitrage_gate_ebay_20260605</code>（または新規）更新＋本引き継ぎ書の該当項目を「実施済」に更新。<strong>テーブル追加は migration 連番（現在最新=0045）</strong>・1ファイルずつ autocommit 適用（並列禁止）。<strong>主要ファイル</strong>＝<code>apps/web/src/lib/book-queries.ts・game-queries.ts</code>／<code>components/BookProductsListView.tsx</code>／<code>app/{books,games,cd-dvd}/page.tsx</code>／<code>app/layout.tsx</code>／<code>lib/buy-advisor/*</code>／<code>apps/scraper/scripts/ebay_export_scan.py・ebay_backfill_urls.py</code>。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2026-06-04 日中 P6実装・初出品 完了 -->
+  <div class="section completed">
+    <div class="section-header">🚀 2026-06-04（日中）★P6 出品エンジン実装＋初の本番出品＋クリックポストCSV 完了★</div>
+    <div class="section-body">
+      <div class="note" style="background:#dcfce7;border-color:#16a34a">
+        <strong>★ P6が「設計」から「稼働」へ。Amazon出品を実装し、初の本番出品が成立（バイボックス獲得）。多販路ポータルUIとクリックポストCSV出力まで実装・デプロイ済み。</strong>
+        詳細メモリ＝<code>project_p6_amazon_listing_impl_20260604</code>。
+      </div>
+
+      <h4>① Amazon出品エンジン（SP-API putListings）</h4>
+      <ul>
+        <li><code>apps/scraper/ebay_arbitrage_scraper/amazon/listing_publish.py</code>＝putListingsItem実装。<strong>requirements=LISTING_OFFER_ONLY</strong>（既存ASINにオファー追加）／merchant_suggested_asin＋condition_type＋fulfillment_availability（DEFAULT=自社発送MFN）＋purchasable_offer（JPY整数円）＋中古condition_note。productType自動取得（本=ABIS_BOOK）。<strong>認証は listing_restriction.py 流用＝LWAトークンのみ・SigV4不要</strong>。</li>
+        <li>安全策＝<strong>mode=VALIDATION_PREVIEW</strong>（公開せず検証）→OK後に本番公開。<code>scripts/list_to_amazon.py</code>（CLI）＋<code>scripts/listing_core.py</code>（共通ロジック）＋<code>scripts/listing_api.py</code>（Web用JSON入口）。</li>
+        <li><strong>在庫4テーブル（migration 0040）適用済</strong>＝listing_master / listing_unit / channel_listing / sync_event_log。<code>purchase_orders.sku</code> がそのままAmazon merchant SKUに使える。</li>
+      </ul>
+
+      <h4>② ★初の本番出品が成立（バイボックス獲得）</h4>
+      <ul>
+        <li>商品＝<strong>「AI ビジネスの基礎と倫理的課題」</strong>（ASIN 4896392841 / SKU XX-9784896392845-001 / 中古-ほぼ新品 / <strong>¥1,198 送料無料</strong>）。</li>
+        <li>SP-API実測＝<strong>status: BUYABLE</strong>・オファー有効・<strong>バイボックス（カートに入れる）獲得</strong>・「まるごとストアが販売発送」表示。</li>
+        <li>つまずき＆解決＝出品直後は <code>DISCOVERABLE</code>止まりで購入不可だった。原因＝出品に自動割当された無効な「移行された配送パターン」。<strong>有効な配送テンプレート「秋田倉庫配送パターン」（発送元=秋田倉庫〒018-2504・日本郵便・クリックポスト優先・全地域送料¥0=送料無料）を作成しデフォルト化→オファー再送信</strong>で BUYABLE 化。<span class="badge badge-purple">教訓：MFN出品は有効な配送テンプレが無いと購入可にならない</span></li>
+      </ul>
+
+      <h4>③ 多販路ポータルUI（プライスター風オレンジ・ワイヤー準拠）デプロイ済み（全HTTP200）</h4>
+      <table>
+        <tr><th>ページ</th><th>内容</th></tr>
+        <tr><td><code>/listing</code> 出品フロー</td><td>購入リストから自動取り込み（到着済・未出品・許可OK）＋販路チェック（Amazon有効/他承認待ち）＋状態選択＋販路別出品価格・暫定粗利＋各販路の実ページ/一覧リンク（↗）＋<strong>20秒リアルタイム自動更新・新着順</strong>＋ASIN直接出品（自宅本）</td></tr>
+        <tr><td><code>/inventory</code> 在庫一覧</td><td>数量・販路別出品状態・best販路・粗利・Amazon等リンク（↗）</td></tr>
+        <tr><td><code>/orders</code> 注文＋CSV</td><td>未発送注文一覧＋選択＋<strong>クリックポストCSV出力</strong></td></tr>
+        <tr><td><code>/settings/channels</code> 販路接続</td><td>4カード（Amazon接続中/他3販路 承認待ち・公開鍵）</td></tr>
+        <tr><td><code>/sync/log</code> 同期ログ</td><td>sync_event_log（出品・売却検知・取下げ・冪等skip）</td></tr>
+      </table>
+      <div class="note">部品＝<code>components/p6/P6Nav.tsx・ui.tsx</code>（オレンジ専用ナビ＋ChannelChip/ChannelLink/StatusBadge）。既存ポータル（/books等）は不変。実処理は検証済みPythonをexecFile spawnで呼ぶ（TS二重実装なし）。</div>
+
+      <h4>④ クリックポストCSV出力機能（指示書準拠）</h4>
+      <ul>
+        <li><code>ebay_arbitrage_scraper/clickpost.py</code>＝CSV生成エンジン（住所4行分割[全角20幅]・郵便番号7桁正規化・内容品固定語[本/ゲームソフト]・敬称・<strong>Shift-JIS(CP932)・40件分割</strong>・RFC4180・バリデーション/警告）。サンプル住所でテスト済。</li>
+        <li><code>amazon/orders.py</code>（getOrders未発送MFN＋RDTで住所PII）＋<code>scripts/orders_api.py</code>（JSON入口）＋migration 0041 <code>clickpost_export</code>（二重出力防止）＋<code>/api/orders/list・/export</code>＋<code>components/OrdersView.tsx</code>。差出人はクリックポスト登録の秋田倉庫が自動適用＝CSVに含めない。アップロード/支払¥185/印刷/投函は北川さん手作業（クリックポストにAPI無し）。</li>
+      </ul>
+
+      <div class="warn">
+        <strong>★PII（買い手住所）取得は制限ロール審査中＝CSV全自動化の最後の関門</strong><br>
+        getOrdersは疎通OKだが、<strong>買い手の氏名・住所（PII）はRDTで取得できない＝アプリに制限ロール「消費者直送（Direct-to-Consumer Shipping）」未付与</strong>（標準5ロールのみ・開発者コンソールのロール一覧に出ない）。<br>
+        <strong>対応＝SP-APIサポートケースで「消費者直送」ロール付与を申請・送信済み（2026-06-04・回答2営業日）</strong>。APIセクション=出品者出荷／App ID amzn1.sp.solution.c0c6b9f2-de1f-4f86-ad89-865c97438b6e／getOrders,getOrderAddress／RequestId e20159ab-…。<strong>承認後＝アプリ再認可で新リフレッシュトークン取得→Secret Manager <code>amazon-sp-api-refresh-token-prod</code> 更新→/orders で住所まで全自動CSV化</strong>。注文レポート取込フォールバックは今回見送り（API全自動方針）。<br><br>
+        <strong>★2026-06-06 続報＝CASE 20462062701 にAmazonサポート（Stacy）から返信</strong>：「消費者直送ロールはまだ付与されていない。デベロッパー登録フォームを再提出してロールを選択し直せ（アプリ＆サービス→アプリを開発→Your Developer Profile→Data Access→Roles）」。<strong>だが実機で詰み</strong>＝ソリューションプロバイダーポータル（新SPP）→<code>arbitrage-portal-prod</code>「アプリの編集」→ロール一覧に出るのは出品者5ロール（財務会計／販売パートナーのインサイト／価格／在庫と注文の追跡［「配送ラベル作成に必要な情報は含まれません」明記］／商品の出品）のみで<strong>「消費者直送」が選択肢に表示されない</strong>＝メールが認めた状態そのもの。手順通り再提出が不可能。<br>
+        <strong>→ 対応：①既存ケースに引用返信（日英併記・利用目的＝MFNクリックポスト配送ラベル作成のため購入者氏名住所取得・Seller/App ID記載）で「ロールが選択肢に出ない、選択可能にするか直接付与を」と依頼・送信済み。②同内容で新規ケースも作成・送信済み（2026-06-06）。</strong> 2〜3営業日返信無ければセラーセントラル「サポートを受ける」で再度新ケース（番号20462062701添付）。<br>
+        <strong>★現場メモ</strong>：<code>arbitrage-portal-prod</code> のステータス「下書き」は<strong>プライベート自社専用アプリでは正常</strong>（セルフオーソライズで稼働中・実出品も動作）。アクションのプルダウンに出る<strong>「承認」は押さない</strong>（＝アプリ一般公開手続き・他社利用向け／押しても消費者直送ロールは増えず、稼働中の本番アプリを不要な審査にかけるリスクのみ）。「保存して終了」「アプリを削除」も触らない。<strong>ロール付与はAmazon側の対応待ち</strong>。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2026-06-04 完了作業 -->
+  <div class="section completed">
+    <div class="section-header">✅ 2026-06-04（未明）完了した作業</div>
+    <div class="section-body">
+      <div class="roadmap-step">
+        <div class="step-num step-done">1</div>
+        <div class="step-content">
+          <div class="step-title">パイプライン健全性チェック（本日DB操作の影響確認）</div>
+          <div class="step-desc">pipeline-checkで全daemon/MV/ポータルを判定 → 🟢 本日のbp_one index・NETSEA backfill・DB保険の悪影響なし。bp_one index <code>idx_bp_isbn_keepa_desc</code> 有効(indisvalid=t・107MB)確認。出品許可バッチ3種(本/ゲーム/NETSEA)も毎時稼働・ポータルバッジ反映を実証（「止まっている」は誤認＝launchctlのPID<code>-</code>は待機中の意）。</div>
+        </div>
+      </div>
+      <div class="roadmap-step">
+        <div class="step-num step-done">2</div>
+        <div class="step-content">
+          <div class="step-title">NETSEA phase2 二重起動の修正＋多重起動ガード追加</div>
+          <div class="step-desc">
+            手動<code>python -m</code>起動の古いプロセス(PID9604/9605)が<strong>22時間ハング</strong>し、21:30定時起動と二重稼働 → Keepaトークン二重消費（FLOOR50000割れの常時待機）。<br>
+            対応: 古いorphanをkill ＋ <code>netsea_phase2_scan.py</code>に<strong>fcntlファイルロック</strong>(<code>/tmp/netsea_phase2_scan.lock</code>)を追加 → launchd起動でも手動起動でも2本目は即「起動中止」。メルカリ二重起動事故と同型の再発防止。
+          </div>
+        </div>
+      </div>
+      <div class="roadmap-step">
+        <div class="step-num step-done">3</div>
+        <div class="step-content">
+          <div class="step-title">★ P5 売却先別利益を ゲーム/NETSEA にも展開（本→全3ページ完了）</div>
+          <div class="step-desc">
+            本のみだった <code>computeSellChannelProfits()</code> を<strong>export化</strong>し、<code>game-queries.ts</code>・<code>netsea-queries.ts</code>から再利用。<br>
+            ・ゲーム: ヤフオク相場←<code>platforms.aucfan?.median</code>、メルカリ相場(Phase3)を本と同型で配線（仕入送料=駿河屋¥440）<br>
+            ・NETSEA: 新品卸=Amazon売り前提のため相場null→<code>best_sell_platform=amazon</code>（型一貫性のため amazon/best を充填）<br>
+            → <strong>3ページ全てP5配線済</strong>＝オークファン相場連携(P3)後に全ページで「どこで売れば最大利益か」が自動稼働。
+          </div>
+        </div>
+      </div>
+      <div class="roadmap-step">
+        <div class="step-num step-done">4</div>
+        <div class="step-content">
+          <div class="step-title">D nit対応（レビュー指摘の軽微クリーンアップ・本番影響なし）</div>
+          <div class="step-desc">
+            <strong>D-①</strong> 検証用スクリプト4本(<code>netsea_recon/toy_profit/shop_scan/resume_keepa.py</code>・launchd未登録)の<code>est_profit()</code>から旧FBA式(<code>FBA_FEE=461</code>＋代行費)を撤去→自社送料¥185に統一（将来の誤用防止）。<br>
+            <strong>D-②</strong> NETSEA利益の<strong>丸め順序統一</strong>: 表示式(TS)をゲートSQL <code>ROUND(sell*0.85-80-185-70-生effective_buy_inc)</code> と<strong>完全一致</strong>に。旧来の「sell×0.85と卸値を別々に2回丸め」による利益フィルタ判定と表示の<strong>境界±1円ズレを解消</strong>（卸値が税込×個数=非整数のとき発生）。
+          </div>
+        </div>
+      </div>
+      <div class="note">
+        全てデプロイ済み: tsc 0エラー／ /books /games /netsea /spec 全HTTP200／ /spec に2026-06-04パラグラフ追記／ メモリ更新済（project_netsea_crawling_system_20260602・project_allsite_arbitrage_migration_20260603）。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2026-06-03 完了作業（履歴） -->
+  <div class="section completed">
+    <div class="section-header">✅ 2026-06-03 完了作業（履歴）</div>
+    <div class="section-body">
+      <ul>
+        <li><strong>ポータル表記変更</strong>: 「FBA最終利益」→「最終利益」／相場列(ヤフオク・メルカリ)追加／全サイト横並び表示(安い順)。スマホカードにも相場列追加。</li>
+        <li><strong>利益計算 自社発送化</strong>(本/ゲーム/NETSEA 3ファイル): FBA配送+代行 → 自社送料¥185固定。改善幅 本+¥276/ゲーム+¥474。NETSEAは<code>ni.profit</code>にFBA代行費混入のため直接再計算方式に変更。<strong>Python側(profit.py/phase2_scan.py)も自社発送化＋DB全2,669行バックフィル→ <code>is_profitable</code> 118→198件</strong>。</li>
+        <li><strong>P5 売却先別利益判定 土台</strong>(本/booksのみ): <code>computeSellChannelProfits()</code>追加。→ 2026-06-04にゲーム/NETSEAへ展開完了（上記）。</li>
+        <li><strong>keepa-local-join 二重起動ガード</strong>(<code>pgrep</code>) ／ <strong>DB保険</strong>(idle_in_transaction=120s・lock_timeout=30s・58分ブロック再発防止) ／ <strong>bp_one高速化index</strong>(<code>idx_bp_isbn_keepa_desc</code>・107MB・is_valid='t'有効化) ／ <strong>/spec更新</strong>。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 現在の状態 -->
+  <div class="section">
+    <div class="section-header">📊 現在の状態（2026-06-04 未明）</div>
+    <div class="section-body">
+      <div class="grid3">
+        <div class="card"><h3>ポータル /books</h3><div class="value">✅ 正常</div><div class="sub">HTTP200・自社発送計算・P5配線済</div></div>
+        <div class="card"><h3>ポータル /games</h3><div class="value">✅ 正常</div><div class="sub">駿河屋リンク・P5配線済</div></div>
+        <div class="card"><h3>ポータル /netsea</h3><div class="value">✅ 正常</div><div class="sub">直接計算・丸め統一・P5配線済</div></div>
+        <div class="card"><h3>NETSEA phase2</h3><div class="value">✅ 正常</div><div class="sub">二重起動ガード追加・1本稼働</div></div>
+        <div class="card"><h3>bp_one インデックス</h3><div class="value">✅ 完了</div><div class="sub">有効(indisvalid=t)・107MB</div></div>
+        <div class="card"><h3>keepa-local-join</h3><div class="value">✅ 稼働中</div><div class="sub">二重起動ガード付き</div></div>
+      </div>
+      <div class="note" style="margin-top:16px">
+        <strong>★ 2026-06-03の「NETSEA残存懸念」(is_profitable旧FBA判定)は解決済み</strong>: Python側スキャナの計算式を自社発送化し、既存DB <code>netsea_items.profit</code> を全2,669行バックフィルUPDATE → 利益≥¥500の <code>is_profitable</code> が 118→198件に回復。新規スキャンも自社発送式で計算される。
+      </div>
+    </div>
+  </div>
+
+  <!-- 利益計算式 -->
+  <div class="section">
+    <div class="section-header">💴 現行の利益計算式（自社発送方式・全ページ共通）</div>
+    <div class="section-body">
+      <div class="grid2">
+        <div>
+          <h4>📚 本 / 🎮 ゲーム</h4>
+          <div class="formula">最終利益 = round(売価 × 0.85) − ¥80 − ¥185 − 仕入送料 − 仕入値</div>
+          <ul>
+            <li>売価 = 中古/BuyBox/新品最安 の最安値</li>
+            <li>仕入送料: ブックオフ/VB/もったいない=¥0、楽天/日本の古本屋=¥500、AbeBooks=¥3,500、駿河屋=¥440</li>
+          </ul>
+        </div>
+        <div>
+          <h4>🏪 NETSEA</h4>
+          <div class="formula">最終利益 = round(売価 × 0.85 − ¥80 − ¥185 − ¥70 − effective_buy_inc)</div>
+          <ul>
+            <li>★全体を1回ROUND（2026-06-04 ゲートSQLと丸め統一）。effective_buy_incは生値(非整数)を使用</li>
+            <li>effective_buy_inc = unit_count補正済み仕入値（Python計算）／ ¥70 = NETSEA仕入送料</li>
+          </ul>
+        </div>
+      </div>
+      <h4 style="margin-top:14px">🔭 P5 売却先別利益（相場連携後に各販路で算出・全3ページ実装済）</h4>
+      <div class="formula">
+        Amazon = 上記の最終利益（確定）<br>
+        ヤフオク = round(落札相場 × 0.90) − ¥185 − 仕入値 − 仕入送料　※¥80成約料はAmazonメディアのみ非課金<br>
+        メルカリ = round(フリマ相場 × 0.90) − ¥185 − 仕入値 − 仕入送料<br>
+        best_sell_platform = 非null利益の最大（相場連携前はAmazonのみ）
+      </div>
+    </div>
+  </div>
+
+  <!-- ロードマップ -->
+  <div class="section pending">
+    <div class="section-header">🗺️ ロードマップ P2以降（最新ステータス）</div>
+    <div class="section-body">
+
+      <div class="roadmap-step">
+        <div class="step-num step-done">P2</div>
+        <div class="step-content">
+          <div class="step-title">全サイト表示 ＋ 相場列UI</div>
+          <div class="step-desc"><span class="badge badge-green">完了</span> 全サイト横並び表示・ヤフオク/メルカリ相場列(PC表＋スマホカード)追加済。相場が入れば即表示。</div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-num step-wait">P3</div>
+        <div class="step-content">
+          <div class="step-title">オークファン相場連携 <span class="badge badge-blue">別ターミナル担当</span></div>
+          <div class="step-desc">
+            プロPlus登録済・フェーズ0検証＋CSV実証完了。<strong>JAN/ISBN検索の照合は高精度（本2/2・ゲーム6/6で誤マッチ0／偽コードは0件）</strong>だが、<strong>ダウンロードCSVにJAN/ISBN列が無い（一般・プロ専用ツール両方で確認・列はタイトル/価格/日付/URL/内部商品IDのみ）</strong>＝「5,000件×N回」で大量に抜いても自社SKUにJAN紐付け不可（タイトル照合＝誤マッチ）。規約も複製/商用/自動取得を禁止。<br>
+            代替調査の結論: <strong>ヤフオクWeb APIは2020年に提供終了・メルカリは相場の公式API無し</strong>→正規ルートはオークファンに集約。<strong>問い合わせ2本送信済み（①法人API ②MCPサーバー）→★API/MCP面談が確定（2026-06-09(火) 14:30〜15:30・Google Meet <code>meet.google.com/sdt-yhdm-zrg</code>・先方=株式会社オークファン 高橋美穂さん／Timerex確定済・カレンダー登録済）。面談後に議事録→方針決定。</strong>選択肢=①MCPサーバー(Claude直結で最有力)／②データ納品(自社JANリストを渡すとJAN紐付け済で納品＝照合問題が解決)／③フルAPI。<span class="badge badge-yellow">MCP資料請求フォーム自体は「準備中」で送信不可・開通待ち</span>。準備資料＝<code>~/Desktop/オークファン面談準備_20260604.html</code>。<br>
+            <strong>★このターミナルは触らない。受け口は実装済（<code>yahoo_market_price_jpy←platforms.aucfan.median</code>配線済・相場が入ればP5が自動稼働）。</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-num step-wait">P4</div>
+        <div class="step-content">
+          <div class="step-title">多販路アカウント整備（ユーザー主導）</div>
+          <div class="step-desc"><span class="badge badge-green">Yahoo再申請完了</span> <strong>★2026-06-06: Yahoo!ショッピングストアを再申請＝受付番号 1101691</strong>（前回6/4の1101097は住所確認書類の不備＝銀行PDFで落選→今回<strong>納税証明書をしっかり添付し解消</strong>）。<strong>★2026-06-07: ヤフオク(オークション)も申請完了＝受付番号 1101100</strong>（ID紐づき＝ログイン/ショッピング用 dolcetext3／ヤフオク用 yzmeq74210・2ID必須仕様）。代表電話は固定電話必須対応で<strong>03plus新規取得 03-6821-4385</strong>。審査結果待ち＝ショッピング2〜5営業日/ヤフオク2週間程度。詳細は下の「📨 Yahoo審査落ち詳細」セクションの📌現在の状況を参照。<br>→ 稼働販路は <strong>Amazon（出品制限で一部のみ・gating解除進行中）＋メルカリ</strong>。Yahoo通過で拡大。<br><span class="badge badge-green">メルカリShops 再再申請提出完了(3回目)</span> <strong>★2026-06-10: メルカリShops＝GPS位置情報(Exif)付き写真4枚で再再申請提出完了・審査結果メール待ち。</strong>（6/4棄却→6/5再申請→6/9再差し戻し(GPS Exifなし)→6/10位置情報ON撮影で再再申請）。詳細は下の「📨 メルカリShops 審査差し戻し詳細」セクション参照。Amazonは既存。</div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-num step-done">P5</div>
+        <div class="step-content">
+          <div class="step-title">売却先別利益判定</div>
+          <div class="step-desc"><span class="badge badge-green">実装完了(2026-06-04)</span> 本/ゲーム/NETSEA 全3ページに <code>computeSellChannelProfits()</code> 配線済。相場連携(P3)後に「どこで売れば最大利益か」が全ページで稼働。画面表示(best販路バッジ・各販路利益列)の作り込みは相場が入ってから。</div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-num step-next">P6</div>
+        <div class="step-content">
+          <div class="step-title">⭐ 多販路同時出品＋在庫同期エンジン</div>
+          <div class="step-desc"><span class="badge badge-green">★Amazon実装・初出品済み(2026-06-04)</span> 設計→稼働へ。SP-API出品エンジン＋在庫4テーブル＋多販路ポータル5画面（出品/在庫/注文/販路接続/同期ログ）＋クリックポストCSV出力 を実装・デプロイ。<strong>初の本番出品「AIビジネス…」¥1,198がBUYABLE＝バイボックス獲得</strong>。上の「日中完了」セクション参照。<strong>残り＝①PII制限ロール承認待ち(CSV住所自動化) ②メルカリ/ヤフオク/Yショ承認後の他3販路出品＋売却検知daemon</strong>。</div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-num step-later">P7</div>
+        <div class="step-content">
+          <div class="step-title">🧾 販売実績PL管理（損益管理）<span class="badge badge-green">設計確定（2026-06-04）</span></div>
+          <div class="step-desc">毎月の損益(PL)を自動集計・可視化。<strong>方針確定＝粒度:全社月次＋販路別＋ジャンル別／会計:発生主義(売れた月)／税:税抜・税込両方切替</strong>。固定費マスタ＋月次PLの2画面。下の専用セクション参照。<strong>固定費マスタ＋PL枠組みは今すぐ実装可だが、ユーザー判断でP6/P4承認待ちに保留。</strong></div>
+        </div>
+      </div>
+
+      <div class="roadmap-step">
+        <div class="step-num step-next">P8</div>
+        <div class="step-content">
+          <div class="step-title">🛒 eBay越境輸出販売 <span class="badge badge-green">Step0検証完了(2026-06-05)</span></div>
+          <div class="step-desc"><strong>★Step0実測＝仕入れNO-GO・出品(輸出)GO（ゲーム優先・eBay相場取得90%）</strong>。Yahoo審査落ちで痩せた販路を、Amazon国内制限と無関係の<strong>海外市場</strong>で補う本命。<strong>ユーザー指示＝eBayセラーアカウント整備から着手</strong>。全7段階(Step0検証✅→Step1アカウント整備→Step2輸出黒字候補リスト→Step3 Sell API出品エンジン→Step4 P6統合/在庫同期→Step5海外発送オペ→Step6 P7損益反映)。<strong>下の「🛒 P8 eBay連携」専用セクション参照。</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Yahoo審査落ち・ヤフオクAPI・ツール調査セクション -->
+  <div class="section big">
+    <div class="section-header">📨 Yahoo審査落ち詳細 ＋ ヤフオクAPI実態 ＋ EC一元管理ツール調査【2026-06-04 記録】</div>
+    <div class="section-body">
+
+      <h4>① Yahoo!ショッピングストア 審査落ち（事実関係）</h4>
+      <table>
+        <tr><th>項目</th><th>内容</th></tr>
+        <tr><td>申込（6/3受付）</td><td>Yahoo!<strong>ショッピング</strong>ストア＝審査ID <code>1101097</code> ／ Yahoo!<strong>オークション</strong>ストア＝審査ID <code>1101100</code>（2件同時申込）</td></tr>
+        <tr><td>結果（6/4 14:33）</td><td><span class="badge badge-red">ショッピング不合格</span> 差出人 <code>ml-ycommerce-store-help@lycorp.co.jp</code>。<strong>理由は一切記載なし</strong>（「運用ガイドライン確認を」のみ）。申込からほぼ1日＝<strong>形式的な足切りの公算</strong></td></tr>
+        <tr><td>1円振込</td><td>受取口座確認のため。名義「ヤフ-シヨツピングコウザユウコウセイカクニン」。<strong>返金不要</strong></td></tr>
+        <tr><td>★連動リスク</td><td>申込画面に明記＝「<strong>オークションストアのみでもショッピングストアアカウントが必須</strong>」。よって<strong>ヤフオクストア（1101100）も連動で望み薄</strong>（6/4時点でオークション結果メールは未着）</td></tr>
+        <tr><td>対応</td><td>サポートセンター宛に<strong>①不合格理由 ②再申請可否 ③オークションの扱い</strong>を問う返信メールを送信→<strong>回答受領（2026-06-04 17:00）</strong></td></tr>
+        <tr><td>★判明した落選理由</td><td><span class="badge badge-green">朗報</span> <strong>「提出された書類」または「撮影画像」の不備</strong>＝<strong>本人確認書類の問題であって、事業内容（中古/休眠/事業形態）は無関係</strong>。＝書類を正せば通る見込みが高い。<strong>（※以前の「中古主体だから落ちた」仮説は誤り・撤回）</strong></td></tr>
+        <tr><td>原因（ほぼ確定）</td><td>法人住所確認書類として<strong>「銀行から届いたインボイスの支払い書類」を提出→Yahoo指定4種に含まれず</strong>＋銀行書類はPDF＝<strong>「原本撮影必須（PDF/コピー/スキャン不可）」</strong>にも抵触の二重弾き。TRUSTDOCK社提出のためYahooも詳細は見えず（具体的指摘なし）</td></tr>
+      </table>
+      <div class="note" style="background:#f0fdf4;border-color:#86efac">
+        <strong>★ 法人の「住所確認書類」として認められるのは指定4種のみ</strong>（全て<strong>原本撮影／四隅まで鮮明／JPG・PNG・GIF・PDF不可</strong>）：<br>
+        ① <strong>納税証明書</strong>（国税/地方税・発行6ヶ月以内）＝京橋税務署/都税事務所で紙原本取得・住所記載＝<strong>最も確実</strong>／② <strong>公共料金・通信費の領収書</strong>（電気/ガス/水道 or au・docomo・SB・楽天モバイル・発行3ヶ月以内）＝銀座が実オフィスでないと公共料金が無い→<strong>法人携帯の"紙"請求書</strong>ならOK（電子明細不可）／③ <strong>社会保険料の領収書/納入告知書</strong>（厚生年金等・6ヶ月以内）／④ <strong>青色申告承認申請書＋e-Tax受信通知スクショ</strong>（6ヶ月以内）。<br>
+        <strong>公式案内</strong>：<code>https://business-ec.yahoo.co.jp/shopping/identification-form/index.html</code>
+      </div>
+      <div class="warn">
+        <strong>★ 再申請ルール（Yahoo回答）</strong>：再審査・書類再提出は<strong>不可</strong>→<strong>新規でお申し込み直す</strong>。①同ストア名は<strong>審査完了日(6/4)から2日後＝6/6以降</strong>に再指定可（それまでに他社が取ると使えない）②同じYahoo! JAPAN IDで再申込すると<strong>前回情報が自動反映</strong>（企業情報変更は利用状況「利用終了」表示後に可）③新規出店問い合わせフォーム＝<code>form-business.yahoo.co.jp</code>。TRUSTDOCKへの問い合わせ窓口は無し。<br>
+        <strong>★ユーザー要望＝次回は薩摩さんと一緒に申請（書類準備〜eKYC撮影〜フォーム入力を伴走）。</strong> 次アクション＝住所確認書類を1つ用意（納税証明書推奨）→原本を正しく撮影→6/6以降に新規申込。<strong>★Amazonは無傷・混同厳禁。</strong>
+      </div>
+
+      <div class="note" style="background:#f0fdf4;border-color:#86efac">
+        <strong>📌 現在の状況（2026-06-09更新）＝「★03plus電話(03-6821-4385)＝🟢ハガキ認証完了・開通（落選の最有力原因だった電話不通が解消） ／ ★ヤフオク(1101100)＝⚠️2026-06-07当日落選(理由非公開) → 電話開通したので再申請可能に ／ ★ショッピング(1101691)＝審査中(結果6/9〜6/12見込み)」</strong><br>
+        ・<span class="badge badge-green">✅再申請完了</span> <strong>2026-06-06 Yahoo!ショッピングストアを再申請＝受付番号 1101691</strong>（前回6/4は受付1101097）。薩摩さんと伴走で実施。<br>
+        ・<span class="badge badge-green">✅納税証明書 添付済</span> <strong>本人確認ステップで納税証明書（その3）をしっかり添付</strong>（画像＝<code>~/Desktop/個人情報/納税証明２.jpg</code>＝2枚のうち真上から撮影した歪みの少ない方を採用）。<strong>前回弾かれた銀行書類（Yahoo指定4種外＋PDF）の問題は完全解消＝今回の雪辱の核心はクリア。</strong>住所「銀座7-13-6サガミビル2F」完全一致・発行令和8年6月5日・原本撮影。<br>
+        ・<span class="badge badge-red">❌ヤフオクストア 落選（2026-06-07）</span> <strong>Yahoo!オークションストア（受付番号 1101100）＝当日中に落選（10:08フォーム完了→17:01落選通知）。</strong>落選メールに「審査基準・内容は非公開・お問い合わせ不可」と記載。<strong>★最有力原因＝03plus電話(03-6821-4385)がハガキ認証待ちで実通話不可→電話確認で繋がらなかった可能性が高い。</strong>問い合わせメールを<strong>2026-06-08送付済み</strong>（①書類不備か否か ②再申請の可否を質問。電話の件は今回は触れず）→回答待ち。<span class="badge badge-green">🟢2026-06-09 電話開通</span> <strong>その後03plusのハガキ認証が完了し電話が開通＝落選の最有力原因だった「電話不通」が解消。再申請前提条件（電話開通）をクリア＝改めてヤフオクストアを新規申込できる状態。</strong><br>
+        ・<strong>★ID紐づき（LINEヤフーの2ID必須仕様）</strong>：両サービス同時申込では「ログイン用ID（=ショッピング用）」と「オークションストア用Yahoo! JAPAN ID（フォーム項目に入力）」の2つが必要。<strong>ログイン/ショッピング用＝<code>dolcetext3</code>（スクショの <code>dol********</code> はこのセッション）／ヤフオク（オークションストア）用＝<code>yzmeq74210</code></strong>。※完了画面はログインセッション(dolcetext3)を示すだけで、ヤフオクストア本体がどのIDに紐づくかは画面では分からない＝この紐づきはユーザー認識ベース。<br>
+        ・<span class="badge badge-green">🟢代表電話=開通済（2026-06-09 ハガキ認証完了）</span> 固定電話必須要件に対応するため<strong>03plus(株式会社グラントン)で 03-6821-4385 を新規取得</strong>（初期費用7,256円税込・月額1,280円〜）。旧 050-5480-2899(050plus) は解約済＋050plusは新規受付終了。銀座=中央区23区内登記で住所要件クリア。<strong>★所在確認の簡易書留(転送不要)を銀座オフィスで受領→裏面コードでアプリ認証完了＝電話開通済。これで着信・通話が可能になり、ヤフオク審査での電話確認に対応できる状態。</strong>費用はポータルPL(/pl/fixed-costs)に固定費登録済。<br>
+        ・<span class="badge badge-green">✅中古品/古物商 申告</span> 「許可証等が必要な商品＝中古品(新古品含む)」を選択（最初「お取り扱いなし」だったのを修正）。古物商許可番号 <strong>231050001025</strong>(12桁・実物照合済／※過去メモの13桁2310500001025は誤記)／名義SSインベスター／秋田県公安委員会。プロモーションパッケージ(3%手数料)は同意しない／LINE公式(フリープラン無料)は出店必須なので同意。<br>
+        ・<strong>次アクション</strong>：①<span class="badge badge-green">✅完了</span> <strike>03plusハガキ受領→電話認証</strike> ＝2026-06-09 開通済 ②<strong>★まずショッピング(1101691)の結果を待つ（最優先・6/9〜6/12頃見込み）</strong>→通過ならP6でYahooショッピングのchannel接続 ③<strong>ヤフオクストア再申請は一旦保留＝ショッピングの結果が出てから判断</strong>（電話は開通済なので、再申請したい時はいつでも新規申込み可能）。<span class="badge badge-yellow">※ユーザー方針(2026-06-09)＝ヤフオクはショッピングの結果待ち</span>
+      </div>
+
+      <h4>② ヤフオクのAPI実態（3層・「使えない」は半分正解）</h4>
+      <table>
+        <tr><th>ルート</th><th>API</th><th>可否</th><th>制約</th></tr>
+        <tr><td>Yahoo!ショッピングストア</td><td>商品/在庫/出品API 約50本（無料・在庫同期フル機能）</td><td><span class="badge badge-red">❌</span> <strong>ストア審査通過が前提</strong>→今回落ちて使えない</td><td>本来の本命。在庫同期もできるが土台が要る</td></tr>
+        <tr><td>ヤフオク オークションストア</td><td>「競りナビ」API</td><td><span class="badge badge-red">❌</span> ショッピングストア前提→不可</td><td>—</td></tr>
+        <tr><td>ヤフオク 個人（一般会員）</td><td>個人向け出品API（OAuth/Yahoo IDログイン連携）は<strong>存在する</strong></td><td><span class="badge badge-yellow">△ 条件付</span> 直接契約はハードル高・非公開→実質ツール経由</td><td><strong>オークション形式のみ</strong>／画像・説明更新不可／落札者情報取得不可／再出品でID変動</td></tr>
+      </table>
+      <div class="warn"><strong>結論</strong>：ヤフオク個人APIは<strong>定額で並べて在庫同期したいP6とは相性が悪い</strong>（オークション形式前提）。旧オークション検索Web APIは2015年頃<strong>提供終了</strong>済。Yahooで"自動出品＋在庫同期"を本気でやるなら<strong>本筋はショッピングストア審査通過（再申請）</strong>。当面売るだけなら通常ヤフオク個人を手動 or ツールで割り切る。</div>
+
+      <h4>③ EC一元管理ツール 料金＋ヤフオク個人対応（2026-06-04 調査）</h4>
+      <table>
+        <tr><th>ツール</th><th>初期</th><th>月額</th><th>従量ほか</th><th>ヤフオク個人</th></tr>
+        <tr><td><strong>Next Engine</strong></td><td>0円</td><td><strong>¥3,000〜</strong>（受注200件込・商品登録のみなら基本のみ）</td><td>201件〜 1件¥35→¥30…／有料アプリ別／年保守¥15,000(税抜・1年後)</td><td><span class="badge badge-red">❌非対応</span> 公式明記「ヤフオクは<strong>ストアのみ・個人不可</strong>」</td></tr>
+        <tr><td><strong>TEMPOSTAR</strong></td><td>0円</td><td><strong>¥11,000(税込)〜</strong>（最低額）</td><td>商品課金(〜2,000点¥2,000等)＋受注課金(〜600件¥25/件)／30日無料</td><td><span class="badge badge-red">ほぼ❌</span> 「競りナビ」=ストア前提</td></tr>
+        <tr><td><strong>WASABI SWITCH</strong>（中古業界向け）</td><td>—</td><td><strong>¥10,000(ライト)〜¥300,000(スタンダード)</strong></td><td>商品3,000点まで、超過1点1円</td><td><span class="badge badge-green">✅対応</span> ヤフオク個人OK（御社の現実解）</td></tr>
+      </table>
+      <div class="note">
+        <strong>★Q「ポータルで操作してツール画面を触らない」の答え＝部分的に正</strong>：Next Engineは公開API（Nextengine Developer Network）があるので「自社ポータル→NE API→各モール」の3層構成は技術的に可能。だが①初期設定（接続/OAuth/マスタ/テンプレ）はツール画面で必要 ②連携アプリの自社開発工数 ③<strong>ツールは「Yahoo出品API契約の代わりの中継役」で消せない＝月額が永続コスト</strong> ④そもそもNEはヤフオクストア前提（個人不可）。WASABIはAPI開放が弱くポータル完結しにくい。<br>
+        <strong>→ だから本命は「公開APIを持つ販路（eBay/楽天/Qoo10/Shopify/Amazon）」を選び、ツールを挟まず自社ポータルに直接実装すること</strong>（次セクション参照）。
+      </div>
+    </div>
+  </div>
+
+  <!-- メルカリShops 審査差し戻し詳細 -->
+  <div class="section pending">
+    <div class="section-header">📨 メルカリShops 審査差し戻し→<span style="color:#15803d">★再再申請提出完了【2026-06-10 更新】</span></div>
+    <div class="section-body">
+      <div class="note" style="background:#f0fdf4;border-color:#86efac">
+        <strong>✅ 2026-06-10：GPS位置情報付き写真4枚で再再申請（3回目）を提出完了。</strong> 6/9差し戻し原因（GPS Exifなし）を解消＝iPhoneの位置情報ONで現地（銀座サガミビル前）を再撮影し撮影端末から直接アップ。提出写真＝IMG_3152(正面外観)/IMG_3153/IMG_3154(側面外観)/IMG_3155(入口ドア・ロゴ)の4枚。<strong>審査結果メール待ち（<code>no-reply@mercari-shops.com</code>）。</strong>
+      </div>
+      <div class="danger">
+        <strong>★2026-06-09：再審査も差し戻し（修正のお願い 第2弾）＝事業所外観写真のGPS位置情報(Exif)不足が原因。→2026-06-10に解消・再提出済み。</strong> 6/5提出分が再び差し戻し（<code>no-reply@mercari-shops.com</code>「ご登録内容の修正のお願い」）。<strong>建物（銀座サガミビル）の写り自体は問題なし</strong>。指摘は写真のメタデータ2点：<br>
+        　【該当箇所1】出店者本人がこの申請のために実際に撮影したファイルを提出すること。<br>
+        　【該当箇所2】位置情報をONにした標準カメラ/デジカメで撮影し、<strong>正確な位置情報を含むExifが記録された写真</strong>を提出すること（撮影端末からショップ管理画面にログインしてアップ推奨）。<br>
+        <strong>★原因＝提出写真にGPS Exifが無かった。</strong> 6/5提出分（ファイル名 <code>S__...</code>＝LINE経由）はExifが全消去されていた。さらに6/9に秘書が撮り直した <code>IMG_3119.JPG</code> を検証したところ、<strong>カメラ機種情報(Make/Model)はあるがGPS IFDが無い</strong>＝撮影時にiPhoneの位置情報設定がOFFだった。<br>
+        <strong>★対応済（2026-06-10）＝</strong> iPhone:設定→プライバシーとセキュリティ→位置情報サービスON→「カメラ」を「使用中のみ許可」＋「正確な位置情報」ON→標準カメラで現地（銀座サガミビル前）撮影→撮影端末からメルカリ管理画面に直接アップ完了。
+      </div>
+      <div class="note" style="background:#f0fdf4;border-color:#86efac">
+        <strong>★2026-06-05：書類3点を修正して再審査を提出済み・結果待ち（薩摩さんと伴走）。</strong>＝①事業所外観写真（銀座サガミビルは外観撮影できる実オフィスと判明→撮影してアップ）②古物商許可証画像アップ ③許認可設問で「中古品販売」を選択（カテゴリ＝古本／販売予定＝古本メイン・他DVD/CD/ゲーム機）。<br>
+        審査結果はメール（<code>support@ss-in.net</code>／<code>no-reply@mercari-shops.com</code>）に届く。通過すれば P6 多販路出品のメルカリチャネル接続へ。
+      </div>
+      <div class="warn">
+        <strong>⚠️ 残課題＝古物商許可証の住所ズレ</strong>：アップした古物商許可証の住所が<strong>旧本店「東京都港区西新橋三丁目14番8-1602号」（移転前）</strong>で、現本店「銀座7-13-6 サガミビル2F」とズレている。許可番号（第2310500001025）・会社名は一致するため<strong>メルカリ提出はこのまま進める判断（ユーザー確認済）</strong>。ただし<strong>法律上、本店移転後は公安委員会への古物商「変更届出」が別途必要</strong>（メルカリ通過とは別件・後日対応）。万一メルカリが住所ズレを指摘した場合もこの変更届で対応できる。
+      </div>
+      <div class="note" style="background:#f0fdf4;border-color:#86efac">
+        <strong>（経緯）★Yahooとは違い「再申請で通る」案件</strong>：出店審査の結果は<strong>棄却</strong>だったが、続いて届いた<strong>「ご登録内容の修正のお願い」（送信元 <code>no-reply@mercari-shops.com</code>／本文の案内元 <code>support@souzoh.zendesk.com</code>）</strong>に<strong>具体的な不備3点</strong>が明記＝門前払いではなく3点を直して再申請する案件だった。</strong>
+      </div>
+
+      <h4>① 経緯（メール2通）</h4>
+      <table>
+        <tr><th>日時</th><th>件名</th><th>内容</th></tr>
+        <tr><td>2026-06-04 11:50</td><td>出店審査の進捗状況について</td><td><span class="badge badge-red">棄却</span> 「残念ながら今回は棄却となりました。不備がある場合、修正手順を1営業日以内に別メールで案内」</td></tr>
+        <tr><td>2026-06-04 18:21</td><td>出店審査：ご登録内容の修正のお願い</td><td><span class="badge badge-yellow">修正依頼</span> 不備3点を明記（下表）。修正して再申請する案内</td></tr>
+      </table>
+
+      <h4>② 修正が必要な3点（メール原文ベース）</h4>
+      <table>
+        <tr><th>#</th><th>不備内容</th><th>対応</th><th>難易度</th></tr>
+        <tr><td>1</td><td><strong>事業所所在地の写真</strong>＝「登記簿住所もしくは本店」の<strong>建物外観</strong>を撮影した画像を提出（全体が入るように／入らなければ見上げアングルでも可）</td><td>登記簿住所＝<strong>銀座7-13-6 サガミビル2F</strong>の建物外観を撮影。実オフィスでない場合は要相談（後述）</td><td><span class="badge badge-yellow">要撮影</span></td></tr>
+        <tr><td>2</td><td><strong>古物商許可証の画像</strong>を提出</td><td><span class="badge badge-green">即対応可</span> 取得済＝<strong>第2310500001025（秋田県公安委員会）</strong>。許可証原本を撮影してアップするだけ</td><td><span class="badge badge-green">易</span></td></tr>
+        <tr><td>3</td><td><strong>「許認可についての確認」設問への回答</strong>＝販売予定商品（<strong>中古品</strong>の項目）について未回答</td><td>申請フォーム内の設問で「中古品を扱う」旨を選択・回答する</td><td><span class="badge badge-green">易</span></td></tr>
+      </table>
+
+      <div class="warn">
+        <strong>★最大の論点＝該当箇所1（事業所外観写真）</strong>：登記簿住所「銀座7-13-6 サガミビル2F」が<strong>実オフィス（外観撮影できる場所）か</strong>がカギ。撮れる場合は外観写真を撮るだけで解決。<strong>バーチャルオフィス/レンタル等で外観撮影が難しい場合</strong>は、メルカリShopsお問い合わせ窓口（<code>https://mercari-shops.com/inquiry-form</code>）に状況を添えて相談する。<br>
+        ＊参考リンク（メール記載）：法人の事業所所在地写真の撮影方法 <code>support.mercari-shops.com/hc/ja/articles/58181524029593</code>／許認可が必要な業種 <code>.../900006359103</code>／販売予定商品の申告 <code>.../47835172919577</code>
+      </div>
+
+      <h4>③ 再申請の手順（メール記載）</h4>
+      <ol style="padding-left:20px;font-size:13px;line-height:1.7">
+        <li><code>https://mercari-shops.com/signin/seller/owner</code> からログイン</li>
+        <li>「設定」→「メルカリShopsへの出店審査」</li>
+        <li>画面下部までスクロールし「修正する」</li>
+        <li>案内された3箇所まで進み内容を変更（古物商画像アップ・中古品設問回答・外観写真差し替え）</li>
+        <li>「確認して申請する」で完了</li>
+      </ol>
+      <div class="note">
+        <strong>★ユーザー要望＝申請は薩摩さんと一緒に伴走</strong>（Yahooと同様）。<strong>✅2026-06-05に①〜③すべて修正して再審査提出済み。</strong> <strong style="color:#dc2626">★2026-06-09 再差し戻し(GPS Exifなし)→</strong><strong style="color:#15803d">★2026-06-10 GPS位置情報ONで撮り直し・再再申請完了（3回目）。</strong>次アクション＝<strong>審査結果メール待ち</strong>。通過後＝P6メルカリチャネル接続。並行して＝古物商の住所変更届（公安委員会）／Yahooの納税証明書取得。
+      </div>
+    </div>
+  </div>
+
+  <!-- 販路拡大候補セクション -->
+  <div class="section big">
+    <div class="section-header">🌐 販路拡大候補（API公開モール／自社EC）【2026-06-04 調査追加】</div>
+    <div class="section-body">
+      <div class="danger">
+        <strong>★背景：Yahoo審査落ちで販路が痩せた</strong><br>
+        Yahoo!ショッピングストア審査落ち→ヤフオクストアも望み薄。稼働販路が <strong>Amazon（出品制限で一部のみ）＋メルカリ</strong> に縮小し、<strong>実質メルカリ依存</strong>のリスク。そこで「<strong>公開API（開発者API）を持ち、自社ポータルから直接たたける販路</strong>」を優先して拡大候補を洗い出した。
+      </div>
+
+      <div class="note">
+        <strong>★選定の軸＝「一元管理ツールを挟まず、自社ポータルから直接APIで出品/在庫できるか」</strong>。ヤフオク個人がダメだったのは、公開APIが無く WASABI等のツール経由かつオークション形式限定だったため。下記は<strong>いずれも公式の開発者APIが公開</strong>されており、P6の「ポータルで完結」方針と相性が良い。
+      </div>
+
+      <h4>候補比較（中古本・ゲーム前提）</h4>
+      <table>
+        <tr><th>販路</th><th>公開API</th><th>出店ハードル/費用</th><th>中古</th><th>自動化適性</th><th>所見</th></tr>
+        <tr>
+          <td><strong>eBay</strong>（越境）</td>
+          <td><span class="badge badge-green">◎ フル公開</span> Sell API / Trading API（出品・在庫 ReviseInventoryStatus・受注）</td>
+          <td>登録ハードル低・初期費用ほぼ無。手数料・国際送料・関税は要計算</td>
+          <td>◎ ConditionID=3000(中古)</td>
+          <td>◎ 直接連携可</td>
+          <td><strong>最有力①</strong>。海外市場＝Amazon国内制限と完全無関係の<strong>新市場</strong>。中古ゲーム/レトロ/日本の本は海外需要大。要対応=英語化(Translation API有)・国際発送・返品</td>
+        </tr>
+        <tr>
+          <td><strong>Qoo10</strong> Japan</td>
+          <td><span class="badge badge-green">◎</span> QSM管理画面でAPIキー発行→外部連携</td>
+          <td><span class="badge badge-green">固定費0円</span>・審査約5営業日・審査ゆるめ</td>
+          <td>◎ item_condition_type で中古対応</td>
+          <td>◎ 直接連携可</td>
+          <td><strong>最有力②</strong>。<strong>固定費0＋API＋審査早い＝低リスクで試せる</strong>。まず置いてみる販路に最適</td>
+        </tr>
+        <tr>
+          <td><strong>au PAYマーケット</strong>（旧Wowma）</td>
+          <td><span class="badge badge-green">○</span> 在庫/受注連携API（パートナー/ツール経由が主）</td>
+          <td>審査ゆるめ(後発)・出店2〜4週・CSV/APIオプション月¥11,000</td>
+          <td>◎ 中古業者向けツール実績多い</td>
+          <td>○ ツール経由寄り</td>
+          <td>審査が通りやすく中古実績あり。直接API連携は楽天/eBayより情報少なめ</td>
+        </tr>
+        <tr>
+          <td><strong>楽天市場</strong></td>
+          <td><span class="badge badge-green">◎ 強力</span> RMS（商品API/在庫API/受注API）</td>
+          <td><span class="badge badge-red">高い</span> 初期¥60,000＋月額出店料(プラン)＋各種オプション・<strong>審査厳しめ(2週〜1ヶ月)</strong></td>
+          <td>○ 古物商免許コピー必須</td>
+          <td>◎ 直接連携可</td>
+          <td>API最強級だが<strong>コスト/審査が重い</strong>。Yahooで落ちた今、楽天はより厳しい可能性→<strong>後回し</strong>。売上規模が出てから</td>
+        </tr>
+        <tr>
+          <td><strong>Shopify</strong>（自社EC）</td>
+          <td><span class="badge badge-green">◎ フル公開</span> Admin API（商品/在庫/注文）</td>
+          <td>月額$（基本$25〜程度）・<strong>出店審査ほぼ無し</strong>・自社ドメイン</td>
+          <td>◎ 自由</td>
+          <td>◎ 直接連携可</td>
+          <td>「自分の城」＝モール制限の影響を受けない<strong>保険</strong>。ただし<strong>集客は自前</strong>(SEO/SNS/広告)。在庫処分/ブランディング向け</td>
+        </tr>
+        <tr>
+          <td><strong>BASE / STORES</strong>（自社EC）</td>
+          <td><span class="badge badge-green">○</span> API有（BASE）</td>
+          <td><span class="badge badge-green">無料〜・審査ほぼ無し</span></td>
+          <td>◎</td>
+          <td>○</td>
+          <td>最も手軽な自社EC。集客はShopify同様自前で弱い。お試し/補助的</td>
+        </tr>
+      </table>
+
+      <h4>★ 推奨アプローチ（優先順）</h4>
+      <table>
+        <tr><th>順</th><th>販路</th><th>狙い</th></tr>
+        <tr><td>1</td><td><strong>eBay</strong></td><td>Amazon国内制限と無関係の<strong>新市場（海外）</strong>を開く。中古ゲーム/レトロ/日本本の高値需要。公開APIでポータル直結</td></tr>
+        <tr><td>2</td><td><strong>Qoo10</strong></td><td><strong>固定費0・審査早い</strong>で低リスクに国内モールを1本追加。APIキーでポータル直結</td></tr>
+        <tr><td>3</td><td><strong>Shopify or BASE</strong></td><td>モール制限の影響を受けない<strong>自社EC（保険）</strong>。集客は弱いので主力でなく補完</td></tr>
+        <tr><td>後</td><td><strong>au PAYマーケット / 楽天</strong></td><td>au PAY=審査ゆるめで候補。楽天=API最強だが高コスト・審査厳→売上規模が出てから</td></tr>
+      </table>
+
+      <div class="warn">
+        <strong>★重要な前提整理</strong>：①<strong>Amazonは「全面停止」ではない</strong>＝出品制限はブランド単位で<strong>gating解除が進行中</strong>（誠文堂/岩波は解除済・出品OK候補46件）。時間経過＋実績で回復見込み。②したがって「メルカリ一筋」は一時的。③<strong>自動化の本筋は「公開APIを持つ販路」を選ぶこと</strong>＝Next Engine等の月額ツールを挟まず自社ポータルから直接連携でき、P6設計と一致する。<br>
+        <strong>★未確認で要注意</strong>：eBay/Qoo10/au PAY/楽天とも、本格運用には<strong>出店/セラー登録の審査</strong>がある。Yahooが落ちた理由（中古主体？事業形態？5年休眠復帰の信用？）が分かれば、どの販路が通りやすいか読みやすくなる→<strong>サポート回答待ち</strong>。
+      </div>
+
+      <div class="note">
+        <strong>EC一元管理ツール（参考・2026-06-04調査）</strong>：Next Engine=ヤフオクは<strong>ストアのみ・個人不可</strong>／月¥3,000〜。TEMPOSTAR=月¥11,000〜。WASABI SWITCH（中古向け・ヤフオク個人対応）=月¥10,000〜。<strong>ただし上記候補(eBay/楽天/Qoo10/Shopify)は公開APIがあるので、ツールを挟まず自社ポータルに直接実装する方がP6方針と一致しコストも抑えられる</strong>（ツールは月額が永続コストの中継役）。
+      </div>
+    </div>
+  </div>
+
+  <!-- P8 eBay連携 専用セクション -->
+  <div class="section big">
+    <div class="section-header">🛒 P8 eBay連携【仕入れ側＋出品側／設計確定・Step0着手 2026-06-05】</div>
+    <div class="section-body">
+      <p>ユーザー指示（2026-06-05）＝<strong>eBayで「販売（出品）」と「仕入れ＋相場参考」の両方をやりたい</strong>。調査の結果、eBay公式API（Browse=相場取得）の連携コードは<strong>既に完成しているが①カメラを商品名で検索する方式 ②2026-05-15から停止中 ③認証名ズレ ④出品APIは未実装</strong>。これを<strong>ISBN/JANコード照合方式に作り替え</strong>、本/ゲーム/DVD/CDの仕入れ＆相場に転用し、その後にSell API（出品）をP6へ統合する。<strong>※旧・単独設計書（<code>~/Desktop/eBay連携_全体設計書_20260605.html</code>）の内容を本セクションに合体（こちらが正）。</strong></p>
+
+      <div class="note" style="background:#eff6ff;border-color:#93c5fd">
+        <strong>★方向性（ヒアリング確定 2026-06-05）</strong>：仕入れ＝<strong>両用</strong>（eBay米国USDの仕入れ候補＋売れ筋相場参考）／ 出品＝<strong>eBay米国・グローバルで海外バイヤーへ輸出販売</strong>。<br>
+        対象ジャンル＝<strong>本・ゲーム（既存マスタですぐ着手可）＋ DVD・CD（これから／先にKeepaマスタ構築が前提）</strong>。
+      </div>
+
+      <h4>① 現状の事実確認（調査 2026-06-05）</h4>
+      <table>
+        <tr><th>項目</th><th>状況</th><th>備考</th></tr>
+        <tr><td>Browse API連携コード</td><td><span class="badge badge-green">あり</span></td><td>OAuth(Client Credentials)＋Browse API。<code>ebay/client.py</code>・<code>ebay/runner.py</code></td></tr>
+        <tr><td>蓄積データ</td><td><span class="badge badge-green">5,393件</span></td><td>listings platform='ebay'。<strong>直近取得=2026-05-15で停止</strong>（自動実行launchd無し）</td></tr>
+        <tr><td>現在の検索方式</td><td><span class="badge badge-yellow">商品名キーワード</span></td><td>カメラ等を<code>watch_items</code>登録し名前検索。<strong>ISBN/JAN照合ではない＝作り替え必要</strong></td></tr>
+        <tr><td>認証名ズレ</td><td><span class="badge badge-yellow">要修正</span></td><td>コードは<code>ebay-client-id/secret</code>を読むが実在は<code>ebay-app-id-prod</code>/<code>ebay-cert-id-prod</code>（＝eBayのApp ID/Cert IDが実質のClient ID/Secret）</td></tr>
+        <tr><td>為替換算</td><td><span class="badge badge-yellow">固定155円</span></td><td><code>_to_listing_row</code>でUSD→JPYが仮置き固定。実レート未連携</td></tr>
+        <tr><td>出品(Sell)API</td><td><span class="badge badge-purple">未実装</span></td><td>今あるのは「読む」専用。「売る」は別API＋出品者OAuth認可が必要</td></tr>
+      </table>
+
+      <h4>② 仕入れ側設計＝「カメラkeyword方式」→「ISBN/JANコード逆引き方式」へ転換（核心）</h4>
+      <div class="formula">
+【現状＝カメラ向け】watch_items（手動登録商品）→ keyword「Fujifilm GA645」等で検索 → listings保存（ISBN照合なし）<br>
+【新方式＝本/ゲーム/DVD/CD】自社マスタのISBN/JANを1件ずつ → <strong>Browse APIの gtin パラメータで逆引き</strong> → ASIN紐付けでlistings保存
+      </div>
+      <ul>
+        <li>既存の<strong>駿河屋・ブックオフ等と同じ「コード逆引きdaemon」パターン</strong>で実装可。eBay Browse APIは<code>gtin</code>（ISBN/JAN/UPC/EAN）検索に対応＝<strong>誤マッチしにくい</strong>（駿河屋でJAN検索が効いた強みと同じ）。</li>
+        <li>「両用」＝<strong>仕入れ候補列</strong>（円換算＋国際送料＋関税を載せてもAmazon売値より安い案件）＋<strong>eBay相場列</strong>（ヤフオク/メルカリ相場の隣に追加）。</li>
+        <li>本・ゲーム＝既存<code>is_book</code>/<code>is_game</code>マスタで即着手可。<strong>DVD・CDはKeepaカテゴリ特定→マスタ構築が前提</strong>（ゲーム展開と同手順）。</li>
+      </ul>
+      <div class="warn">
+        <strong>★USD仕入れ特有のコストを利益式に必ず加味（入れないと黒字を過大評価）</strong>：①為替＝固定155円でなく<strong>実レート</strong>（日次取得）②<strong>国際送料</strong>（米国→日本・セラー設定値優先）③<strong>関税・消費税</strong>（書籍は概ね無税／ゲーム・CD・DVDは課税対象になり得る・要確認）。eBay/決済手数料は仕入れ側には無関係（出品側で発生）。
+      </div>
+
+      <h4>③ 出品側設計＝eBay Sell API（Browse APIとは別物）→ P6へ「eBayチャネル」追加</h4>
+      <table>
+        <tr><th></th><th>仕入れ・相場（既存）</th><th>出品・販売（新規）</th></tr>
+        <tr><td>API</td><td>Browse API</td><td>Sell API（Inventory / Account / Fulfillment）</td></tr>
+        <tr><td>認証</td><td>アプリ認証(Client Credentials)</td><td><strong>出品者本人のOAuth認可</strong>(Authorization Code grant→refresh token)＝AmazonのSP-API認可と同じ考え方</td></tr>
+        <tr><td>できること</td><td>価格を読む</td><td>出品・在庫管理・注文取得</td></tr>
+      </table>
+      <div class="formula">
+【出品フロー】① Account API：配送/返品/支払いの business policy 登録（最初1回）→ ② Inventory API：inventory_item作成 → ③ Offer作成（価格USD・数量・EBAY_US・配送ポリシー）→ ④ Publish（出品完了）→ ⑤ Fulfillment API：注文取得→在庫同期へ通知
+      </div>
+      <ul>
+        <li><strong>P6の5番目のチャネルとして追加</strong>：<code>channel_listing.channel</code> に <code>'ebay'</code> を足す（現状 amazon/mercari/yahoo_auction/yahoo_shopping）。</li>
+        <li><code>amazon/listing_publish.py</code> に並ぶ <strong><code>ebay_publish.py</code> アダプタ</strong>を新規作成（②〜④実行）。</li>
+        <li><strong>在庫同期（オーバーセル防止）にeBayを組込む</strong>＝eBayで売れたら他販路を即取下げ／他で売れたらeBayを取下げ。注文取得(⑤)→<code>sync_event_log</code>（UNIQUE制約で二重処理防止）。</li>
+      </ul>
+      <div class="risk warn">
+        <strong>★出品側の要確認</strong>：①eBay最終価格手数料 約13%前後＋決済手数料（利益計算に反映必須）②海外発送オペ（国際配送・関税・追跡／秋田倉庫からの国際郵送フロー）③セラー登録・本人確認・販売限度額(セリングリミット)の段階解放④売上USD→入金・為替・会計（輸出免税/インボイスの扱い）。
+      </div>
+
+      <h4>④ 全体ロードマップ（★出品＝輸出販売 前提・2026-06-05改訂）</h4>
+      <p>Step0の実測で<strong>仕入れはNO-GO・出品(輸出)はGO（ゲーム優先）</strong>と確定。よって旧「仕入れ逆引き」案は破棄し、<strong>eBayセラーアカウント整備を起点とする「日本メディアの越境輸出販売」ロードマップ</strong>に全面改訂。ユーザー指示（2026-06-05）＝<strong>アカウント整備から着手</strong>。</p>
+      <table>
+        <tr><th>Step</th><th>内容</th><th>依存</th><th>状態</th></tr>
+        <tr><td><strong>Step0</strong> 検証</td><td>認証疎通＋仕入れ/出品の黒字パイロット → <strong>仕入れNO-GO・出品GO</strong>判定（⑤⑥参照）</td><td>—</td><td><span class="badge badge-green">✅完了 2026-06-05</span></td></tr>
+        <tr><td><strong>Step1</strong> セラーアカウント整備 ★次着手</td><td>eBayセラー登録・本人確認・支払い受取(Payoneer/銀行)設定・セリングリミット解放・<strong>アプリOAuth認可(refresh token取得)</strong>・business policies・特商法/輸出免税。<strong>下の「Step1詳細」表参照</strong></td><td>—（ユーザー作業主体・薩摩さん伴走）</td><td><span class="badge badge-yellow">★これから</span></td></tr>
+        <tr><td><strong>Step2</strong> 輸出黒字候補リスト</td><td>gtin逆引きで「国内仕入→eBay輸出で黒字」を<strong>ゲーム優先</strong>に算出。<strong>テーブル<code>ebay_export_candidate</code>(migration 0043)＋<code>scripts/ebay_export_scan.py</code>（実為替・gtin逆引き・利益算出・upsert・env GENRE/LIMIT/SHIP_JPY/<code>ORDER=rank|margin</code>・停止<code>/tmp/ebay_export_scan_stop</code>）</strong>。利益式=round(eBay最安USD×実FX×0.87)−国際送料¥1800−国内仕入値−¥260。<br>①第1弾＝ゲーム人気順800件→eBayヒット720(90%)・黒字99(≥¥2000が53)。トップ=Switch2 +¥33,854/AC6 +¥16,249/EA FC26 +¥15,439。<br>②<strong>★/games・/books に列統合デプロイ済</strong>＝「eBay相場($)」「eBay輸出利益」列をヤフオク/メルカリ相場の隣に追加(<code>book-queries.ts</code> <code>attachEbayData()</code>＋<code>game-queries.ts</code>＋<code>BookProductsListView.tsx</code> PC表/スマホ計3箇所)・HTTP200。<span class="badge badge-red">★人気順800件は/games表示の国内黒字ゲームと重複0→列は現状ほぼ「—」</span>。<br>③<strong>★<code>ORDER=margin</code>(国内黒字順)で再スキャン実行中＝次ターミナル継続(下の引き継ぎ参照)</strong>。残=Step2bランキング/絞り込みUI＋全ゲーム+CD/DVD拡張(無料枠5000/日)</td><td>Step0（手法確立済）</td><td><span class="badge badge-green">✅統合済/拡張継続</span></td></tr>
+        <tr><td><strong>Step3</strong> Sell API出品エンジン</td><td><code>ebay_publish.py</code>＝Inventory(inventory_item)→Offer→Publish。英語タイトル/説明/カテゴリ/コンディション(USED)自動下書き。検証モード→本番公開</td><td>Step1（OAuth・policies）</td><td><span class="badge badge-blue">Step1後</span></td></tr>
+        <tr><td><strong>Step4</strong> P6統合＋在庫同期</td><td><code>channel_listing.channel</code>に<strong>'ebay'追加</strong>＋在庫同期エンジン(オーバーセル防止)にeBay組込み＋注文取得(Fulfillment API)→<code>sync_event_log</code></td><td>Step3・P6基盤</td><td><span class="badge badge-blue">Step3後</span></td></tr>
+        <tr><td><strong>Step5</strong> 海外発送オペ</td><td>秋田倉庫→<strong>国際郵送</strong>（軽量ゲーム=小型包装物/eパケット相当・追跡）／税関書類CN22／追跡番号アップロード／返品・未着(INR)対応フロー</td><td>Step4（初受注前まで）</td><td><span class="badge badge-blue">初受注前</span></td></tr>
+        <tr><td><strong>Step6</strong> P7損益反映</td><td>P7にeBay販路を追加：USD売上・<strong>実為替</strong>・eBay手数料・国際送料・<strong>輸出免税</strong>の会計処理を月次PLへ</td><td>Step4・P7</td><td><span class="badge badge-purple">後続</span></td></tr>
+      </table>
+
+      <h4>★ Step1 詳細：eBayセラーアカウント整備（出品の関門）</h4>
+      <table>
+        <tr><th>#</th><th>タスク</th><th>内容・注意</th><th>担当</th></tr>
+        <tr><td>1-1</td><td>セラーアカウントの主体<span class="badge badge-green">★判明(2026-06-05)</span></td><td>リポジトリ記録(<code>NEXT_SESSION.md</code>/<code>docs/ACCOUNTS_CHECKLIST.md</code>)で確定。<strong>eBayセラー＝<code>sstrust_9</code>（2026-05-13 Business account新規作成・会社名=合同会社SSインベスター・連絡先support@ss-in.net）</strong>。開発者アプリ＝<code>TAKAYUKI-arbitrag-PRD</code>(2026-05-14・本番キーセット疎通済)。<strong>当初から「米国向け輸出メイン」想定＝Step0のGO方向と一致</strong>。※OAuth認可はセラー(sstrust_9)がこのアプリを認可すれば成立(開発者名と一致不要)＝噛み合わせ問題なし</td><td>確認済</td></tr>
+        <tr><td>1-2</td><td>セラー登録・本人確認</td><td>eBay.comでセラー登録→eBayの本人確認(身分証)。法人なら登記情報。古物商<strong>取得済(第2310500001025)</strong></td><td>ユーザー（薩摩さん伴走）</td></tr>
+        <tr><td>1-3</td><td>支払い受取(Payouts)設定</td><td>eBay管理の支払い＝日本セラーは<strong>Payoneer または銀行口座</strong>で受取。USD入金→円転。<span class="badge badge-yellow">為替・両替手数料</span>が発生</td><td>ユーザー</td></tr>
+        <tr><td>1-4</td><td>セリングリミット解放</td><td>新規/復帰セラーは<strong>初期は少量(例:10品/$500/月)</strong>。<strong>いきなり大量出品不可</strong>→売って実績→eBayに増枠依頼で段階解放。Step2の候補リストで<strong>高単価ゲームから少数出品</strong>が相性良い</td><td>ユーザー＋運用</td></tr>
+        <tr><td>1-5</td><td>★アプリ認可<span class="badge badge-green">✅完了(2026-06-05)</span></td><td><strong>Auth'n'Auth方式でsstrust_9のユーザートークン取得・Secret Manager <code>ebay-user-token-prod</code> に保存済</strong>(有効期限2027-11-27・約18ヶ月)。<strong>Trading API <code>GetUser</code> 成功で検証済</strong>(UserID=sstrust_9・Email=support@ss-in.net)。開発者=tsatsuma／セラー=sstrust_9(別アカウントだが認可は問題なし)。このトークンでTrading APIの出品(AddFixedPriceItem)/在庫更新(ReviseInventoryStatus)/取下げ/注文取得(GetOrders)が可能。将来Sell API REST(Inventory/Account/Fulfillment)が必要になれば②OAuth(要RuName＋sell.*スコープ→refresh token)へ移行。</td><td>✅</td></tr>
+        <tr><td>1-6</td><td>Business Policies登録</td><td>Account APIで<strong>支払い/返品/配送ポリシー</strong>を登録（出品時に参照）。返品可否・国際配送方法・ハンドリング日数</td><td>薩摩さん</td></tr>
+        <tr><td>1-7</td><td>特商法・税</td><td>eBayストアの特商法相当表記／<strong>輸出免税</strong>(消費税)・インボイス<code>T4010403016497</code>の扱いを会計面で整理</td><td>ユーザー＋会計</td></tr>
+      </table>
+      <div class="note" style="background:#f0fdf4;border-color:#86efac">
+        <strong>★判明した現状（2026-06-05・記録復元＋ライブ確認）</strong>：eBayは<strong>2026-05-13に本プロジェクト用に作った</strong>もの。<u>済み</u>＝①セラーアカウント<code>sstrust_9</code>(Business)作成 ②開発者登録＋<strong>本番キーセット</strong>(Browse疎通済) ③<strong>★ライブ確認：Seller Hubにフルアクセス可＝セラー登録は完了済</strong>。Overviewが「You're all caught up!」。出品ツール稼働（下書き「Berserk Vol.13」1件）。売上0・注文0（未販売）。④<strong>★トークン取得＆GetUser検証済(2026-06-05)＝アカウント中身判明</strong>：eBayGoodStanding=true・Status=Confirmed・US site・BusinessType=Commercial・FullMarketPlaceParticipant・MaxScheduledItems5000。
+        <br><u>★残り＝出品の本当の関門（GetUserで判明）</u>：(a)<strong>PaymentMethod=NothingOnFile＋CIPBankAccountStored=false＝支払い/受取(銀行口座/Payoneer)が未設定</strong>＝<span class="badge badge-red">売る前に必須</span>(これが無いと出品/入金不可の可能性大) (b)<strong>IDVerified=false＝本人確認未</strong> (c)StoreOwner=false(Store未加入・任意) (d)配送/返品ポリシー・古物商アップロード。<u>済</u>＝⑤OAuth相当のトークン取得(1-5完了)。
+      </div>
+      <div class="warn">
+        <strong>★Step1の実質の関門＝「出品可能状態にする」</strong>：アカウントの存在は確認済。残るは<strong>本人確認・支払い受取・セリングリミット解放・OAuth認可</strong>。新規セラーは少量からなので、<strong>高単価ゲーム（EA FC26・グランツーリスモ等）を少数出品→実績→増枠</strong>が最短。OAuth認可は<code>sstrust_9</code>でログインして<code>arbitrag</code>アプリを認可するだけ（開発者名TAKAYUKIとの一致は不要）。
+      </div>
+
+      <h4>⑤ Step0 実行ログ＋結果（2026-06-05 完了）</h4>
+      <table id="ebay-step0-log">
+        <tr><th>タスク</th><th>結果</th></tr>
+        <tr><td>認証名ズレ修正＋Browse API疎通</td><td><span class="badge badge-green">✅完了</span> 本番OAuth成功（<code>ebay-app-id-prod</code>=Client ID / <code>ebay-cert-id-prod</code>=Client Secret・production・expires7200s）。コードは<code>EBAY_CLIENT_ID/SECRET</code>にこの2値を渡せば動く</td></tr>
+        <tr><td>gtin逆引きヒット率測定（本120＋ゲーム80・人気順・EBAY_US固定価格のみ）</td><td><span class="badge badge-green">✅完了</span> <strong>本27.5%（33/120）／ゲーム20.0%（16/80）</strong>。コード照合は成立（gtin=完全一致で誤マッチなし）</td></tr>
+        <tr><td>黒字案件率測定（eBay米国仕入→Amazon日本売・FX155・国際送料概算¥1800）</td><td><span class="badge badge-red">❌ほぼ0</span> <strong>本0.0%（0/120）／ゲーム1.2%（1/80＝Switch2 Proコン1件のみ）</strong></td></tr>
+        <tr><td>出品(輸出)側 黒字検証（本120＋ゲーム80）</td><td><span class="badge badge-green">✅完了</span> 本黒字率13〜17%／ゲーム11〜25%（国際送料前提で変動）。<strong>ゲームはeBay相場取得90%</strong></td></tr>
+        <tr><td>GO / NO-GO 判定</td><td><span class="badge badge-red">★仕入れ＝NO-GO</span> / <span class="badge badge-green">★出品(輸出)＝GO（ゲーム優先）</span></td></tr>
+      </table>
+      <div class="danger">
+        <strong>★ Step0 結論（2026-06-05）＝「eBayを仕入先にするのはNO-GO。出品(輸出)側にこそ価値」</strong><br>
+        ・<strong>仕入れ方向（eBay米国で買う→Amazon日本で売る）はNO-GO</strong>：コード逆引きは技術的に成立（ヒット率20〜27%・誤マッチ0）だが、<strong>USD価格＋国際送料＋円安で着地原価がAmazon日本売価を上回り、黒字案件がほぼ0</strong>（本0/120・ゲーム1/80）。過去メモ「透明小売×円安は逆ザヤ」と一致。関税未加算なのでさらに悪化方向＝結論は堅い。<br>
+        ・<strong>裏返しが朗報＝eBay米国価格はAmazon日本より総じて高い</strong>。これは「日本の本/ゲーム/CD/DVDを海外バイヤーへ<strong>出品(輸出販売)</strong>すると利幅が出やすい」ことを示す。<strong>＝ユーザーの「両方」のうち、仕入れは捨て、相場参考＋出品(Sell API)に集中するのが正</strong>。<br>
+        ・<strong>方針修正</strong>：①eBay仕入先逆引きdaemン（旧Step1）は<strong>作らない</strong>。②eBay<strong>相場参考列</strong>は安価に追加可（同じgtin逆引きを"売れ筋相場"として保存・カバレッジは人気品で約20〜27%）。③本命を<strong>出品側Sell API（旧Step4）へ前倒し</strong>。
+      </div>
+
+      <h4>⑥ 出品(輸出販売)側パイロット結果（2026-06-05）＝★GO★</h4>
+      <p>国内最安で仕入（<code>book_summary_mv</code>・ebay除く）→ eBay米国で売る。利益＝round(eBay売価USD×155×(1−手数料13%))−国際送料−国内原価。eBay売価＝そのgtinの米国固定価格<strong>最安</strong>（＝競合に合わせる保守側）。国際送料は最大変数なので2前提で測定。</p>
+      <table>
+        <tr><th>ジャンル</th><th>eBay相場取得率</th><th>黒字率（国際送料¥1500）</th><th>黒字率（国際送料¥3000）</th></tr>
+        <tr><td>📚 本</td><td>24.2%（29/120）</td><td><strong>16.7%</strong>（eBayヒット中69%）</td><td><strong>13.3%</strong>（同55%）</td></tr>
+        <tr><td>🎮 ゲーム</td><td><strong>90.0%</strong>（72/80）</td><td><strong>25.0%</strong>（ヒット中28%）</td><td><strong>11.2%</strong>（同13%）</td></tr>
+      </table>
+      <div class="note" style="background:#f0fdf4;border-color:#86efac">
+        <strong>★出品(輸出)はGO。特にゲームが有望</strong>：ゲームは<strong>eBay米国に90%が出品されている</strong>（日本ゲームは越境需要が厚い）＋軽量で国際送料が安い＋黒字案件多数。黒字例＝EA FC26 利益<strong>¥13,466</strong>(送料¥3000でも)／ゼルダTOTK ¥1,597／グランツーリスモ7 ¥2,523／ぷよテト2S ¥4,736。本もFate/GO material ¥3,365・はじめてずかん英語 ¥3,862等。<strong>仕入れ(0〜1.2%)と真逆＝eBayは「売る場所」で価値が出る</strong>と実証。
+      </div>
+      <div class="warn">
+        <strong>★パイロットの前提・未モデル（過大評価を避ける注記）</strong>：手数料13%は概算（実際14〜15%＝最終価格手数料＋国際手数料＋決済）／国際送料は本来の最大変数（軽いゲームは¥1500前後・小型包装物現実的、本・厚物は上振れ）／未計上＝eBayストア月額・返品/未着(INR)リスク・USD→JPY両替手数料・Promoted Listings。これらで実利は数%目減りするが、勝ち筋商品のマージンは厚く結論は揺らがない。カバレッジ＝eBay相場が取れる品のみ測定可（本は76%が相場なし＝競合なしで売れる可能性はあるが値付け不確実→相場ありの品から着手）。
+      </div>
+      <div class="note">
+        <strong>→ 次の本筋（出品側Step1）</strong>：①<strong>eBayセラーアカウント整備</strong>（登録・本人確認・セリングリミット解放・アプリをAuthorization Code OAuthで認可→ユーザートークン/refresh tokenをSecret Manager保存）が出品の関門。②<code>ebay_publish.py</code>（Inventory→Offer→Publish）＋P6 <code>channel_listing</code>に<strong>'ebay'チャネル追加</strong>＋在庫同期統合。③ポータルに「eBay輸出で黒字の候補リスト（ゲーム優先・gtin逆引きで算出）」を出す。
+      </div>
+    </div>
+  </div>
+
+  <!-- 次ターミナル引き継ぎ (eBay) -->
+  <div class="section big">
+    <div class="section-header">🔀 次ターミナルへの引き継ぎ（eBay・2026-06-05）</div>
+    <div class="section-body">
+      <div class="danger">
+        <strong>この引き継ぎ書（P8セクション）が正。旧単独設計書 <code>~/Desktop/eBay連携_全体設計書_20260605.html</code> は本書へ合体済。詳細メモリ＝<code>project_ebay_integration_20260605</code>・<code>feedback_ebay_integrate_by_category</code>。</strong>
+      </div>
+
+      <h4>① eBay 支払い/受取設定（＝出品開始の関門・<span style="color:#15803d">★2026-06-06 解決→Payoneer審査待ちまで前進</span>）</h4>
+      <table>
+        <tr><th>項目</th><th>状況</th></tr>
+        <tr><td>セラー/トークン</td><td>✅ <code>sstrust_9</code>・ユーザートークン取得済(Secret Manager <code>ebay-user-token-prod</code>・期限2027-11-27・GetUser検証済)</td></tr>
+        <tr><td>Payoneer(受取先)</td><td>✅ 承認済・USD/EUR/GBP受取口座 有効・必須対応なし(customer ID 103989459)。<strong>ボトルネックではない</strong></td></tr>
+        <tr><td>eBay 支払い方法/受取設定</td><td><span class="badge badge-green">🟢 2026-06-06 受取設定の登録まで完了→Payoneer審査待ち</span> <strong>★突破口＝出品(List it)を「完成」させると、壊れていたPaymentsのモーダルではなく、フルページの正規ウィザード「販売アカウントを設定する」が正常表示される(ユーザー発案の『一回出品してみる』が当たり)。</strong>そこから 電話番号認証→「Yes, sign in」で既存Payoneer(103989459/LLC SS INVESTOR)連携→プロフィール同期(内容正確)→Mastercard登録→登録情報の送信(「登録ありがとうございます」完了画面)まで全て正常完了。<br/><span class="badge badge-red">🔴 別問題として残存</span>: Paymentsページから直接開く「Add Payment Method」モーダルは依然真っ白(eBay決済アプリ<code>ficapp</code>のJS全バンドル runtime.6ae6ab75/client.6ab1ab51/144.d844f770/pages-Avs.4b0a2c3e 他chunk が Subresource Integrity(sha384)不一致で実行拒否・<code>loaderData=null</code>。キャッシュ削除/クリーンプロファイル/普段使いブラウザでも再現・プロキシ無し=eBay配信側の問題)。<strong>→ただし出品フロー経由なら回避できるので実害は解消。</strong></td></tr>
+        <tr><td>サポート連絡</td><td>✅ <strong>日本語メールフォーム(eBayホーム→カスタマーサービス→「eBayにメール」)で症状送信済(2026-06-05)</strong>。控えをsupport@ss-in.netにも送信。<span class="badge badge-green">✅返信到着(2026-06-06)</span></td></tr>
+        <tr><td>eBay返信①(2026-06-06・安岡/SR# 1-505953053302)</td><td>「画面真っ白の原因はPayoneer未連携」と診断し「Step3(Payoneer作成)から進めて」。THREAD ID 1-6GFJDUGO。<strong>→ 後述の実機調査で<span style="color:#b91c1c">この診断は誤り</span>と判明(Payoneerは作成・承認済でログインも正常)。</strong></td></tr>
+        <tr><td>eBay返信②(2026-06-06・大城)</td><td>「連携はPaymentsページでなく<strong>セラー登録フロー内の『Yes, sign in』</strong>から。eBay側で手動連携は不可」。案内記事=<a href="https://ebay.co.jp/knowledge/account03/article204">account03/article204</a>(<strong>My eBay→Selling→[Get started]→電話認証→Business→[Yes, sign in]でPayoneer連携→Visa/Masterカード→Submit</strong>)。THREAD ID 1-6GG528S7</td></tr>
+        <tr><td>★2026-06-06 実機調査の結論(矛盾の決着)</td><td><strong>「矛盾」は解消＝Payoneer未連携が原因ではない。</strong>PayoneerはLLC SS INVESTOR/承認済(customer ID 103989459)でログインも正常。問題は上記の<strong>ficapp整合性不一致でeBayの受取設定ウィジェットが描画されないこと</strong>。記事204どおりの正規導線(出品→受取設定)でも同じ空白に到達。<strong>=どの入口から行ってもeBay側の同じ壊れたウィジェットに当たる。クリック操作では突破不可。</strong></td></tr>
+      </table>
+      <div class="warn">
+        <strong>★現状＝受取設定の登録完了→Payoneer審査待ちのみ(2026-06-06)</strong>：<br/>
+        <strong>✅ 突破手順(再現可)</strong>＝My eBay→Selling→Drafts→下書き「Berserk Vol.13」をResume→必須項目(写真/説明/配送サービス＋送料/所在地)を埋める→<strong>「List it」</strong>。すると壊れたモーダルでなく<strong>フルページ正規ウィザード(ebaypayonboardingweb.ebay.com/seller-payments-onboard)</strong>が出る→①電話番号認証(SMS)②「Yes, sign in」で既存Payoneer連携(<em>OAuthのため自動クリックは弾かれる＝実クリック必須</em>)③プロフィール同期Continue④Mastercard登録(カード番号等はユーザー入力)⑤登録送信→<strong>onboard-success画面</strong>。<br/>
+        <strong>✅ Payoneer KYC=提出完了。</strong>「要確認」タブは空(確認が必要な情報なし)。履歴=本人確認/運転免許証/事業主情報/その他法的書類/プロフィール編集 すべて<strong>承認済</strong>。<strong>残り1つ＝今日アップした「企業向け営業許可証(=会社の登記事項証明書/履歴事項全部証明書・法務局発行)」が「審査中」</strong>。<br/>
+        <strong>(次の一手) Payoneerの「企業向け営業許可証」審査の承認待ち(通常数営業日)。</strong>承認されれば受取設定が完全有効化→出品(現在は下書き保存)を公開可能に。ユーザー追加操作は不要・承認/メール待ち。<br/>
+        <strong>(済) eBayへ解決報告メールの下書き作成</strong>(japancs@ebay.com/SR# 1-505953053302・大城宛・Gmail下書き=未送信)＝出品フロー経由で受取設定完了した旨＋Paymentsの真っ白(ficapp整合性不一致)は技術部門共有を依頼。<br/>
+        ⚠️<strong>カードはVisa/Master必須(JCB不可)＝Mastercard登録済</strong>。<br/>
+        ✅ 受取設定が有効化されれば <strong>Step3=Sell API出品エンジン(Trading APIトークンで AddFixedPriceItem→ReviseInventoryStatus→GetOrders)</strong> へ進める。Trading API疎通法＝<code>POST https://api.ebay.com/ws/api.dll</code>・ヘッダ<code>X-EBAY-API-IAF-TOKEN</code>に <code>ebay-user-token-prod</code>・<code>X-EBAY-API-COMPATIBILITY-LEVEL:1199</code>・<code>SITEID:0</code>。<br/>
+        <span style="color:#6b7280">※調査キャプチャ＝~/Desktop/ebay_payout_capture/ (スクショ多数)。Playwright接続＝CDP <code>http://127.0.0.1:9222</code>(専用Chrome <code>/tmp/pricetar_chrome_profile</code>・要タブ1枚以上で接続可)。Payoneer確認センター=myaccount.payoneer.com/ma/settings/fdc。</span>
+      </div>
+
+      <h4>② ★eBayゲーム候補スキャン＝次ターミナルで継続</h4>
+      <p>「国内で安く仕入れ→eBay米国で売る」黒字候補を <code>ebay_export_candidate</code> に貯めるスキャン。<strong>/games・/books の「eBay相場」「eBay輸出利益」列はこのテーブルを asin で引いて表示</strong>（列統合は実装・デプロイ済）。</p>
+      <table>
+        <tr><th>実施済</th><th>結果</th></tr>
+        <tr><td>ゲーム人気順800件(<code>ORDER=rank</code>)</td><td>eBayヒット720(90%)・黒字99</td></tr>
+        <tr><td>ゲーム国内黒字順128件(<code>ORDER=margin</code>)</td><td>eBayヒット103・黒字36（/games表示行に重なる分）</td></tr>
+        <tr><td><strong>テーブル計</strong></td><td><strong>928件・eBayヒット823・黒字(≥¥500)135・利益≥¥2000が71</strong>。トップ=Switch2 +¥33,854/薄桜鬼巡想録限定版(仕入¥717→$198)+¥24,776/マリパ10 +¥17,458</td></tr>
+      </table>
+      <div class="note">
+        <strong>継続コマンド</strong>（<code>~/projects/ebay-arbitrage/apps/scraper</code>で）：<br>
+        <code>export EBAY_CLIENT_ID=$(gcloud secrets versions access latest --secret=ebay-app-id-prod)</code><br>
+        <code>export EBAY_CLIENT_SECRET=$(gcloud secrets versions access latest --secret=ebay-cert-id-prod)</code><br>
+        <code>export DB_URL="postgresql://app:…@35.221.125.218:5432/ebay_arbitrage?sslmode=require"</code>（接続情報は本書「技術メモ」参照）<br>
+        <code>GENRE=game ORDER=margin LIMIT=600 uv run python scripts/ebay_export_scan.py</code> ←/games表示対象を埋める<br>
+        ・<strong>GENRE=book / cd / dvd</strong> も同様に回せる（is_cd=398,104・is_dvd=565,023件マスタ有り）。<br>
+        ・★<strong>eBay Browse API 無料枠=5,000 calls/日</strong>。1回のLIMITは数百〜800程度に抑え日を分ける。<code>RECHECK_DAYS=7</code>で既確認分は自動スキップ。停止=<code>touch /tmp/ebay_export_scan_stop</code>。認証はBrowse=アプリ認証(ユーザートークン不要)。
+      </div>
+      <div class="warn">
+        <strong>残タスク（次ターミナル）</strong>：(a)上記スキャンを <strong>/games表示ゲーム全体＋books＋CD/DVD</strong> に広げて列を埋める／(b)<strong>Step2b＝eBay輸出利益での並び替え・絞り込みUI</strong>（現状は列表示のみ。「eBay輸出が黒字の商品だけ」を見るフィルタが欲しい）／(c)国際送料の商品別精緻化（現状一律¥1800）／(d)実為替は <code>open.er-api.com</code> から取得(fallback155)。<br>
+        変更時は<strong>/spec＋メモリも更新</strong>（恒久ルール）。ポータルdeployは stop→build→kickstart 厳守（本書「技術メモ」）。
+      </div>
+    </div>
+  </div>
+
+  <!-- P6 専用セクション -->
+  <div class="section big">
+    <div class="section-header">⭐ P6 多販路同時出品＋在庫同期エンジン【設計フェーズ完了 2026-06-04】</div>
+    <div class="section-body">
+      <p>ユーザーと<strong>会話ベースで設計3点（成果物#2 API調査・#1 テーブル設計・#3 アーキテクチャ）を確定</strong>。<strong>実装は販路アカウント承認後</strong>。UI/画面設計は<strong>別ターミナルへ引き継ぎ</strong>。詳細メモリ: <code>project_p6_inventory_sync_design_20260604</code>。</p>
+
+      <h4>★ ユーザー確定事項（2026-06-04）</h4>
+      <table>
+        <tr><th>項目</th><th>確定内容</th></tr>
+        <tr><td>対象4販路</td><td>Amazon / ヤフオク / Yahoo!ショッピング / メルカリ に同時出品（＝プライスターの多販路版。プライスターはUI/UXの参考）</td></tr>
+        <tr><td>束ねる単位</td><td><strong>ASIN単位</strong>。複数買いは問屋(NETSEA等)新品仕入れ＝全部新品 or 全部中古で揃う→<strong>コンディション混在なし</strong></td></tr>
+        <tr><td>在庫の持ち方</td><td><strong>在庫数(quantity)管理型</strong>。購入リストは同一商品も1品ずつ別行＝物理1点。1点売れたら数量を減らす(取下げない)、<strong>0で初めて全販路取下げ</strong></td></tr>
+        <tr><td>★売却検知</td><td><strong>メール検知を採用（ユーザー発案）</strong>。Webhookなしのヤフオク/Yahooも売れればメールが届く→既存Gmail取込パイプラインで拾う。メール書式は承認後に実物確定</td></tr>
+        <tr><td>¥80成約料</td><td><strong>残す（現行どおり）</strong>＝Amazonメディア出品時に固定加算</td></tr>
+        <tr><td>古物商</td><td><strong>取得済み</strong>（多販路中古出品の法的要件クリア）</td></tr>
+        <tr><td>販路アカウント</td><td>メルカリShops/ヤフオクストア/Yahooショッピング=<strong>承認待ち</strong>・Amazon=既存</td></tr>
+        <tr><td>最終ゴール</td><td>購入リスト(/purchases)と紐付け→購入から直接出品（購入→出品を1動線化）</td></tr>
+      </table>
+
+      <div class="danger">
+        <strong>核心難所＝在庫同期（オーバーセル防止）</strong><br>
+        1点を4販路に同時出品 → 1販路で売れたら残り販路の数量を減らす／0なら取り下げる。調査の結論は「<strong>気づくのが難所・消すのは容易</strong>」（取下げAPIは4販路完備／"売れた"の検知が販路で割れる）。<strong>自社DBを在庫の正(SSOT)</strong>とし、運用でオーバーセル窓を最小化する。
+      </div>
+
+      <h4>成果物#2：4販路API調査結果（在庫同期適合度）</h4>
+      <table>
+        <tr><th>販路</th><th>出品</th><th>在庫更新/取下げ</th><th>★売却通知</th><th>申請・注意</th></tr>
+        <tr><td>Amazon SP-API</td><td>◎</td><td>◎ patch数量0（反映0〜15分ラグ）</td><td><span class="badge badge-green">◎通知あり</span> ORDER_CHANGE(SQS/EventBridge)</td><td>プロ出品＋制限付きロール(PII)アーキレビュー・自己認可</td></tr>
+        <tr><td>メルカリShops</td><td>◎</td><td>◎ stockQuantity0/削除</td><td><span class="badge badge-green">◎Webhook</span> order_created リアルタイム</td><td>ソウゾウ社API連携申請(管理画面)・Bearer＋User-Agent</td></tr>
+        <tr><td>ヤフオクストア</td><td>○(固定価格)</td><td>○ 在庫0化</td><td><span class="badge badge-yellow">△Webhook無</span> 落札一覧ポーリング~5分</td><td>ストア出店。<strong>オークション形式は数量概念なし→固定価格出品で統一</strong></td></tr>
+        <tr><td>Yahooショッピング</td><td>○(登録→反映2段)</td><td>◎ setStock(stock_close即取下げ・1000件一括)</td><td><span class="badge badge-yellow">△Webhook無</span> orderListポーリング</td><td>ビジネスID紐付け＋注文API申請。<strong>注文系トークン12h失効→公開鍵登録(無人運用必須)</strong></td></tr>
+      </table>
+      <div class="note">
+        <strong>結論</strong>: 「在庫取下げ」は4販路すべてAPI完備。割れるのは「売れた検知」＝通知あり(Amazon/メルカリ) vs 通知なし(ヤフオク/Yahoo)。→<strong>全販路をメール検知で統一＋API照合＋APIポーリングを保険</strong>にするのが既存資産(Gmail取込/launchd/Cloudflareトンネル)に最も素直。Amazon/メルカリのWebhook・通知は将来の高速化オプション。
+      </div>
+
+      <h4>成果物#1：在庫同期テーブル設計（4テーブル）</h4>
+      <table>
+        <tr><th>テーブル</th><th>役割</th><th>主な列</th></tr>
+        <tr><td><code>listing_master</code></td><td>出品マスタ＝<strong>在庫の正</strong></td><td>asin / jan_isbn / title / condition(new|used) / <strong>quantity_available</strong> / status(draft|active|sold_out|suspended) / best_sell_channel(P5連携)</td></tr>
+        <tr><td><code>listing_unit</code></td><td>物理在庫ユニット（1品=1行）</td><td>listing_master_id / <strong>purchase_order_id(既存購入リスト1行=物理1点)</strong> / unit_status(in_stock|sold) / sold_channel / sold_order_ref / sold_at　※quantity_available=in_stock件数</td></tr>
+        <tr><td><code>channel_listing</code></td><td>販路別出品マッピング（取下げ相手のID引き先）</td><td>listing_master_id / channel(amazon|mercari|yahoo_auction|yahoo_shopping) / external_listing_id / listing_status(active|taken_down|error|pending) / listed_quantity / sell_price_jpy / last_synced_at / last_error</td></tr>
+        <tr><td><code>sync_event_log</code></td><td>同期ログ・<strong>冪等</strong></td><td>event_type(sale_detected|stock_update|takedown|relist|error) / channel / listing_master_id / external_order_id / detection_source(webhook|notification|email|polling) / result　★<strong>UNIQUE(channel,external_order_id)で二重処理防止</strong></td></tr>
+      </table>
+
+      <h4>成果物#3：アーキテクチャ＋オーバーセル防止フロー</h4>
+      <div class="formula">
+ポータル(/purchases) → 出品エンジン(listing_master/unit作成→4販路同時出品→channel_listingにID保存)<br>
+　　　　　　　　　　　↓ 売れる<br>
+在庫同期エンジン(常駐daemon) ＝ [検知層] → [照合層] → [在庫更新層] → 自社DB(SSOT)
+      </div>
+      <div class="formula">
+【売却検知フロー（メール検知が主）】<br>
+1. Gmail取込(1〜2分間隔) 各販路の販売/落札/注文メールを検索<br>
+2. 一次パース：注文番号・商品名・販路を抽出<br>
+3. API照合：販路API(未注文落札一覧/orderList/getOrder/orderTransactions)で注文確定→external_order_id＋external_listing_id特定<br>
+4. 冪等チェック：sync_event_logにUNIQUE(channel,external_order_id)でINSERT(既存ならスキップ＝メールとポーリングの二重検知を吸収)<br>
+5. 在庫更新：listing_unit1件sold→quantity_available再計算<br>
+　├ &gt;0：channel_listing全販路のlisted_quantity更新（取り下げない）<br>
+　└ =0：channel_listing全販路をtakedown(Amazon=patch0 / メルカリ=0or削除 / Yahoo=stock_close / ヤフオク=在庫0)<br>
+6. 記録：sync_event_logにsuccess/fail。failは再試行キューへ
+      </div>
+      <h4>常駐プロセス（既存launchd方式に合わせる）</h4>
+      <table>
+        <tr><th>daemon</th><th>間隔</th><th>役割</th></tr>
+        <tr><td><code>p6_mail_detector</code></td><td>1〜2分</td><td>Gmail検知→照合→在庫更新（主）</td></tr>
+        <tr><td><code>p6_api_poller</code></td><td>5分</td><td>各販路注文API照合（保険＝メール取りこぼし対策）</td></tr>
+        <tr><td><code>p6_reconciler</code></td><td>数時間</td><td>DB↔各販路の在庫ズレ検査・警告(Chatwork通知に乗せ可)</td></tr>
+      </table>
+      <div class="warn">
+        <strong>残るオーバーセル窓（正直な整理・100%保証は不可）</strong>：①検知までの数分（メール配信ラグ＋取込間隔）②Amazon在庫反映の最大15分ラグ。→数量1の高額品が同時着弾した時のみ理論上発生→<strong>最先着を有効・後続はキャンセル</strong>運用で吸収（発生確率は低い）。Yahooショッピングは無人運用のため<strong>公開鍵登録＋トークン自動更新</strong>を必ず組み込む。
+      </div>
+
+      <div class="note">
+        <strong>連携先</strong>: ポータル購入リスト <code>/purchases</code>（<code>purchase-queries.ts</code>／<code>PurchasesManageView.tsx</code>／<code>purchase_orders</code> status=planned/ordered/arrived/listed・approval_status統合済）。P5売却先別利益(best_sell_channel)が出品先選定の判断材料。<br>
+        <strong>★プライスターUI調査 完了（2026-06-04）</strong>: Playwright＋CDPで契約中プライスター(Amazon専用)を実巡回。出品フロー／在庫一覧(価格自動改定6モード＋赤字/高値ストッパー)／注文一覧(=売却検知の対応物)／その他経費／売上分析を取り込み。<strong>結論：プライスター3画面を踏襲し「販路」軸を1本足すだけ</strong>で使用感維持。別添＝<code>~/Desktop/pricetar_ui_capture/プライスターUI調査_P6P7設計マッピング_20260604.html</code>（生データ・再取得スクリプト pt.py 同梱）。
+      </div>
+
+      <h4 style="margin-top:18px">★ P6 画面ワイヤー（5画面・2026-06-04 完成）<span class="badge badge-green">完了</span></h4>
+      <p>別添ビジュアル＝<code>~/Desktop/pricetar_ui_capture/P6_画面ワイヤー_20260604.html</code>。設計思想＝<strong>プライスターの「出品→在庫→注文」体験を崩さず「販路」軸を1本足す。難所の在庫同期は裏daemon＋同期ログ画面に隔離</strong>。</p>
+      <table>
+        <tr><th>画面</th><th>URL案</th><th>由来</th><th>P6での追加点（=プライスターとの差分）</th><th>主テーブル</th></tr>
+        <tr><td>① 多販路出品フロー</td><td><code>/listing/create</code></td><td>「自己発送で出品」</td><td><strong>購入リストから自動取り込み</strong>／出品先販路チェック／出品許可ガード／販路別 出品価格・暫定粗利(P5)／4販路同時出品</td><td>purchase_orders→listing_master・channel_listing</td></tr>
+        <tr><td>①-2 販路別 出品情報の作成</td><td><code>/listing/content</code></td><td>新規</td><td>Amazon以外を含む時だけ挟む。タイトル/説明/カテゴリ/画像をASINから<strong>自動下書き→レビュー</strong>。中古画像は<strong>使い分け</strong>。配送は販路別テンプレ</td><td>channel_listing(販路別コンテンツ)</td></tr>
+        <tr><td>② 在庫一覧</td><td><code>/inventory</code></td><td>「在庫一覧」</td><td>数量(quantity_available)列／販路別 出品状態(active/taken_down/error)／指定販路だけ取下げ</td><td>listing_master・listing_unit・channel_listing</td></tr>
+        <tr><td>③ 販路接続設定</td><td><code>/settings/channels</code></td><td>新規</td><td>トークン/ストアID/<strong>公開鍵</strong>/通知方式の一元管理（Yショは公開鍵登録＋12hトークン自動更新が無人運用必須）</td><td>channel_listing(接続情報)</td></tr>
+        <tr><td>④ 在庫同期ログ</td><td><code>/sync/log</code></td><td>新規</td><td>売却検知・取下げ・<strong>冪等skip</strong>・オーバーセル警告。検知元バッジ(email主/API保険/webhook高速)</td><td>sync_event_log</td></tr>
+      </table>
+
+      <div class="note">
+        <strong>★ 出品の自動取り込み（ユーザー確定）</strong>: 出品候補は購入リストから自動表示＝<code>purchase_orders.status='arrived'（到着済） AND status≠'listed' AND approval_status∈(approved, 許可不要)</code>。ASIN/JAN/仕入価格/コンディションは購入リストの値を引き継ぎ（プライスターの都度JAN検索が不要＝我々の強み）。🔒要許可・未承認は「出品不可」表示で出品ボタン抑止。検索ボックスは絞り込み用に格下げ。
+      </div>
+      <div class="warn">
+        <strong>★ Amazonと他3販路は出品の仕組みが根本的に違う（ユーザー確認済）</strong>: Amazon＝<strong>カタログ型</strong>(ASIN既存ページに価格/数量を載せるだけ＝即出品OK)。ヤフオク/メルカリ/Yahoo!ショッピング＝<strong>自前ページ型</strong>(商品画像/タイトル/説明文/カテゴリ/配送設定が必須)。→<strong>Amazonのみ選択なら即出品・非Amazon販路を含む時だけ①-2「出品情報作成」を挟む</strong>。<br>
+        <strong>手間圧縮方針（ユーザー確定）</strong>：タイトル/説明/カテゴリ/カタログ画像はASINから<strong>Amazonカタログ(Keepa保有)自動下書き→レビュー</strong>。中古画像は<strong>「商品により使い分け」</strong>(新品=カタログ既定／中古=実物撮影を促す・高額品ほど実物・行ごと切替)。配送は販路別初期値テンプレ。商品マスタ再利用は将来オプション。<br>
+        <strong>承認後に実物で詰める</strong>：各販路の商品登録API実項目／本・ゲームのカテゴリマッピング表／文字数・画像枚数の上限／売却メール書式（一次パース用）。
+      </div>
+    </div>
+  </div>
+
+  <!-- P7 専用セクション -->
+  <div class="section big">
+    <div class="section-header">🧾 P7 販売実績PL管理（損益管理）【設計確定／先行実装はP6・P4承認待ちに保留】</div>
+    <div class="section-body">
+      <p>ユーザー要望（2026-06-04）。<strong>毎月の損益(PL)を自動で集計・可視化</strong>し、手作業のExcel集計を卒業する。販管費・システム料(サブスク)も毎月自動計上する。別添ワイヤー＝<code>~/Desktop/P7_損益管理PL_設計ワイヤー_20260604.html</code>。</p>
+      <div class="note" style="background:#ecfeff;border-color:#0e7490">
+        <strong>★ ユーザー確定方針（2026-06-04）</strong>：<strong>粒度＝全社月次＋販路別＋ジャンル別(本/ゲーム/NETSEA)</strong>／<strong>会計＝発生主義(売れた月に計上)</strong>／<strong>税＝税抜・税込の両方を画面トグルで切替表示</strong>（課税事業者 T4010403016497）。
+      </div>
+
+      <div class="note">
+        <strong>★配置についてのユーザー希望</strong>: 在庫同期エンジン(P6)に内包するか、ポータルに付けるか、全部1つのポータルに統合するかは未定だが、<strong>「PL管理も同じポータル上でできると楽」</strong>との意向。<br>
+        <strong>→ 推奨方針</strong>: P6エンジンに内包せず、<strong>同一ポータル内の独立した「損益(PL)」ページ</strong>として新設。データはP6(販売実績)・購入リスト(仕入原価)から流し込み、固定費だけ別マスタで管理する構成が素直。
+      </div>
+      <div class="note">
+        <strong>★ プライスターに「原型」が既にある（2026-06-04 UI調査で判明）</strong>: プライスターの <code>分析・経費 → その他経費</code>(<code>/seller/orders/inputexpenses</code>) は<strong>項目ごとに「繰り返し」チェック＝毎月自動計上</strong>でき、これが<strong>P7「固定費マスタ」のお手本そのもの</strong>（人件費/送料/梱包材/通信費/税金/システム使用料＋自動計算分）。<code>売上分析</code>(<code>/seller/orders/smallanalysis</code>)は<strong>月次PLの原型</strong>（売上/仕入金額/手数料/利益額/利益率・月別日別曜日別時間帯別・ジャンル別グラフ）。→<strong>固定費マスタ＋月次集計の枠組みは販路承認を待たず先行実装可</strong>。詳細＝<code>~/Desktop/pricetar_ui_capture/プライスターUI調査_P6P7設計マッピング_20260604.html</code>。
+      </div>
+
+      <h4>自動で管理したい対象</h4>
+      <table>
+        <tr><th>区分</th><th>項目</th><th>データ源(候補)</th></tr>
+        <tr><td>売上</td><td>各販路の販売実績（Amazon／ヤフオク／メルカリ／Yahoo!ショッピング）</td><td>P6の売却ログ or 各販路の売上レポート(API/CSV)</td></tr>
+        <tr><td>売上原価</td><td>仕入値（仕入原価）</td><td><code>purchase_orders</code>（/purchases）</td></tr>
+        <tr><td>変動費</td><td>販売手数料15%・自社送料¥185・成約料¥80・仕入送料</td><td>P5の利益計算ロジックを流用（販路別）</td></tr>
+        <tr><td>販管費（固定費／システム料）</td><td>Keepa・オークファンProPlus(¥11,000)・プライスター・各販路の月額ストア料・サーバー/Cloud SQL・代行費 等のサブスク</td><td><strong>新規「固定費マスタ」テーブル</strong>（月額を手入力登録→毎月自動計上）</td></tr>
+      </table>
+
+      <h4>PLの構造（発生主義・税抜/税込両対応）</h4>
+      <div class="formula">
+売上高（売れた月＝sold_at）<br>
+− 売上原価（売れた商品の仕入値）<br>
+＝ 売上総利益（粗利）<br>
+− 変動費（販路別手数料 ／ 自社送料¥185 ／ 成約料¥80=Amazonメディア ／ 仕入送料）★P5ロジック流用<br>
+− 固定費（システム料・人件費 等）★固定費マスタ<br>
+＝ 営業利益
+      </div>
+      <ul>
+        <li><strong>税抜/税込トグル</strong>：売上は税込入金→税抜=税込÷1.1。手数料・仕入は課税仕入れ。全数値を切替。消費税(預り−仮払)も参考表示。</li>
+        <li><strong>ジャンル別PLの固定費配賦（実装時に最終決定）</strong>：全社共通費(Cloud SQL等)は<strong>既定＝売上比按分</strong>＋直課できるもの(NETSEA専用ツール等)は直課。「全社のみ計上・ジャンル別は粗利まで」も選択可。</li>
+      </ul>
+
+      <h4>画面（2画面）＋データモデル</h4>
+      <table>
+        <tr><th>画面/テーブル</th><th>内容</th></tr>
+        <tr><td><strong>① 月次PL</strong> <code>/pl</code></td><td>全社／販路別／ジャンル別タブ＋税抜税込トグル。プライスター「売上分析」踏襲＋3軸。KPI(売上/粗利/営業利益/固定費)＋PL表＋グラフ</td></tr>
+        <tr><td><strong>② 固定費マスタ</strong> <code>/pl/fixed-costs</code></td><td>プライスター「その他経費(繰り返し計上)」がお手本。月選択＋項目別入力＋<strong>「繰り返し」=毎月自動計上</strong>＋当月合計</td></tr>
+        <tr><td><code>fixed_cost</code>（新規）</td><td>name / category(システム料/販管費…) / amount / currency(JPY/EUR) / fx_rate_source / <strong>recurring</strong> / billing_day / <strong>allocation</strong>(company/by_sales/channel:xxx/genre:xxx) / effective_from / effective_to</td></tr>
+        <tr><td><code>fixed_cost_monthly</code>（新規）</td><td>fixed_cost_id / year_month / amount_jpy（recurring自動展開＋金額改定・単発の月次確定／上書き）</td></tr>
+        <tr><td>売上・原価・変動費</td><td><strong>新規テーブル不要</strong>。P6 <code>listing_unit</code>(sold_at/sold_channel) ⋈ <code>purchase_orders</code>(原価) ＋ P5計算 → 月次集計ビュー <code>pl_monthly_mv</code> 等を作る</td></tr>
+      </table>
+
+      <h4>実装ロードマップ</h4>
+      <table>
+        <tr><th>段階</th><th>内容</th><th>依存</th><th>状態</th></tr>
+        <tr><td>P7-1</td><td>固定費マスタ（<code>fixed_cost</code>＋<code>fixed_cost_monthly</code>＋入力画面）。サブスク登録＋繰り返し＋通貨換算</td><td>なし</td><td><span class="badge badge-green">今すぐ可</span></td></tr>
+        <tr><td>P7-2</td><td>月次PLページの枠組み（全社/販路別/ジャンル別・税抜税込トグル）。固定費は実値・売上はP6待ちで0表示</td><td>P7-1</td><td><span class="badge badge-green">今すぐ可</span></td></tr>
+        <tr><td>P7-3</td><td>（任意）Amazon既存売上をSP-APIで暫定流し込み</td><td>SP-API</td><td><span class="badge badge-yellow">任意</span></td></tr>
+        <tr><td>P7-4</td><td>P6売却ログ連携で売上・原価・変動費を本実装＋ジャンル別配賦確定</td><td>P6・P4</td><td><span class="badge badge-blue">P6後</span></td></tr>
+      </table>
+
+      <div class="warn">
+        <strong>★ ユーザー判断（2026-06-04）</strong>：P7-1/P7-2 は今すぐ実装可能だが、<strong>P6/P4の承認待ちに合わせて保留（設計確定のみ）</strong>。<br>
+        <strong>依存</strong>: 売上の実値はP6(販売実績)＋P4(販路)が前提。<strong>固定費マスタ＋PL枠組みだけは依存なしで着手可</strong>。
+      </div>
+    </div>
+  </div>
+
+  <!-- 自己発送 準備リスト -->
+  <div class="section big">
+    <div class="section-header">📦 自己発送（出品者出荷）への切替 準備リスト【2026-06-04 追加】</div>
+    <div class="section-body">
+      <p>FBA → <strong>全商品 自己発送</strong>へ移行（利益計算は既に自社送料¥185へ統一済）。発送・梱包・運用の実務準備をここに集約。<strong>運用主体（自社 or 代行）が未確定</strong>のため、両にらみで記載。</p>
+
+      <h4>① 明細（納品書）の扱い</h4>
+      <table>
+        <tr><th>販路</th><th>同梱</th><th>方針</th></tr>
+        <tr><td>Amazon</td><td><span class="badge badge-green">不要</span></td><td>規約上の同梱義務なし。価格入り明細はクレーム/返品の引き金になるため<strong>入れない方が無難</strong></td></tr>
+        <tr><td>メルカリ</td><td><span class="badge badge-green">不要</span></td><td>個人情報が載るため入れない</td></tr>
+        <tr><td>ヤフオク</td><td><span class="badge badge-green">不要</span></td><td>同上</td></tr>
+        <tr><td>Yahoo!ショッピング</td><td><span class="badge badge-yellow">原則必要</span></td><td>法人ストアは<strong>注文ごとの納品書発行が原則</strong>。出店時に最新ルール要確認</td></tr>
+      </table>
+      <div class="note"><strong>インボイス(適格請求書)は別物</strong>：BtoC個人客には発行義務ほぼ無し。相手が法人で求めた時のみ登録番号 <code>T4010403016497</code> で対応。</div>
+
+      <h4>② 梱包資材（最低限の常備品）</h4>
+      <table>
+        <tr><th>用途</th><th>資材</th></tr>
+        <tr><td>防水</td><td>OPP袋（本を1冊ずつ包む）／ラップ</td></tr>
+        <tr><td>緩衝・折れ防止</td><td>プチプチ（エアキャップ）・厚紙（当て板）</td></tr>
+        <tr><td>外装</td><td>クリックポスト用封筒／薄型ダンボール（A4）</td></tr>
+        <tr><td>封かん</td><td>クラフトテープ／OPPテープ</td></tr>
+        <tr><td>ラベル</td><td>プリンター＋ラベルシール（または普通紙＋透明テープ）</td></tr>
+      </table>
+      <p><strong>本の梱包手順</strong>：①OPP袋で防水 → ②薄い本は厚紙で挟む／厚い本はプチプチ巻き → ③封筒・箱に入れ隙間を緩衝材で埋める → ④追跡番号付きラベルを貼る</p>
+
+      <h4>③ 配送方法（追跡必須・コスト重視）</h4>
+      <table>
+        <tr><th>商品</th><th>方法</th><th>目安</th><th>備考</th></tr>
+        <tr><td>薄い本1冊</td><td><strong>クリックポスト</strong></td><td>¥185</td><td>追跡あり・ポスト投函。<strong>現行の利益計算¥185の前提</strong></td></tr>
+        <tr><td>厚い本・ゲーム</td><td>ゆうパケット／ネコポス</td><td>〜¥3cm</td><td>追跡あり</td></tr>
+        <tr><td>大型</td><td>ゆうパック等 宅配便</td><td>—</td><td>追跡あり</td></tr>
+      </table>
+      <div class="danger"><strong>追跡なしの普通郵便(定形外)は禁止</strong>：未着クレーム時に証明できず自動返金リスク。必ず追跡番号付きで送る。</div>
+
+      <h4>④ Amazon自己発送の必須ルール（守らないとアカウント評価低下）</h4>
+      <ul>
+        <li><strong>出荷期限</strong>：設定リードタイム内（多くは注文から1〜2営業日）に発送。遅延率はアカウント健全性に直結</li>
+        <li><strong>出荷通知＋追跡番号</strong>：発送後に管理画面で出荷通知を期限内登録。<strong>追跡番号入力を必須運用化</strong></li>
+        <li><strong>在庫管理＝最大の落とし穴</strong>：手元在庫切れ→キャンセルは評価大幅減。<strong>P6 在庫同期(オーバーセル防止)と直結</strong></li>
+      </ul>
+
+      <h4>⑤ 法令・表記</h4>
+      <table>
+        <tr><th>項目</th><th>状態</th></tr>
+        <tr><td>古物商許可</td><td><span class="badge badge-green">取得済み</span> <strong>第2310500001025（秋田県公安委員会）</strong>。中古多販路出品の法的要件クリア</td></tr>
+        <tr><td>特定商取引法に基づく表記</td><td><span class="badge badge-yellow">販路ごとに要設定</span> 各ストアページに表記が必要（メルカリShops/ヤフオクストア/Yahooショッピング）</td></tr>
+        <tr><td>インボイス登録番号</td><td><code>T4010403016497</code>（法人客への請求書要求時のみ）</td></tr>
+      </table>
+
+      <h4>⑥ 準備チェックリスト（着手順）</h4>
+      <table>
+        <tr><th></th><th>項目</th><th>備考</th></tr>
+        <tr><td>☐</td><td>梱包資材の調達</td><td>OPP袋・プチプチ・厚紙・封筒・テープ・ラベル</td></tr>
+        <tr><td>✅</td><td>クリックポスト アカウント開設</td><td><strong>登録完了(2026-06-04)</strong>。Amazonアカウント(薩摩賢幸/support@ss-in.net)連携・支払=Amazon Pay。差出人＝<strong>（同）SSインベスター 秋田倉庫</strong>／〒018-2504 秋田県山本郡八峰町峰浜石川416。実務担当=北川さん</td></tr>
+        <tr><td>☐</td><td>Amazon各商品のリードタイム確認</td><td>出荷期限の現実的な設定</td></tr>
+        <tr><td>☐</td><td>出荷通知＋追跡番号 登録フロー確定</td><td><strong>自社か代行か未決</strong>＝下記で要確認</td></tr>
+        <tr><td>☐</td><td>各販路の特商法表記 設定</td><td>承認後</td></tr>
+        <tr><td>✅</td><td>古物商許可</td><td>取得済（第2310500001025）</td></tr>
+      </table>
+
+      <div class="note" style="background:#ecfeff;border-color:#0e7490">
+        <strong>★ 確定（2026-06-04）：発送は「自社化」へ移行</strong>。現在はChatwork代行を利用中だが、<strong>自社（本人/スタッフ）で梱包・発送する方針に変更。今月中（2026年6月中）に移行</strong>する。<br>
+        → これに伴い：①出荷通知＋追跡番号の登録は<strong>自社オペレーションに組み込む</strong>（代行への発送依頼通知パイプラインは段階的に縮小・停止）／②梱包は自社で実施（上記資材を常備）／③<strong>P6在庫同期の"売却検知→取下げ"は自社発送前提で設計</strong>（代行向け発送通知Chatworkパイプラインへの依存を解消できる）。<br>
+        <strong>移行期の注意</strong>：6月中は代行発送と自社発送が混在しうる。出荷通知漏れ・二重発送が起きないよう、どの注文をどちらが処理するかの線引きを明確にすること。
+      </div>
+
+      <div class="note" style="background:#fffbeb;border-color:#b45309">
+        <strong>★ 予定（2026-06-05 追加）：出品制限本は代行→秋田倉庫へ転送して自社発送する</strong><br>
+        現在 <strong>FBA代行業者に未到着の発注済み 47冊（発送済18／未発送29）</strong> がある。<strong>残り29冊が発送され代行に到着し次第、そのうち「出品制限（要許可）がかかっている本」を、FBA代行業者から秋田倉庫（〒018-2504 秋田県山本郡八峰町峰浜石川416・実務=北川さん）へ転送（再発送）してもらい、自社発送で出品する予定</strong>。<br>
+        理由＝出品制限本は代行経由（FBA／通常フロー）で出品できないため、gating解除済み or 自社発送で対応できるものは秋田倉庫に集約する。<br>
+        <strong>☐ 未着手</strong>：①29冊の到着待ち ②到着分の出品制限判定（<code>listing_restrictions.needs_approval</code>）③制限本を抽出し代行へ秋田倉庫転送を依頼 ④秋田倉庫着→自社発送で出品。
+      </div>
+    </div>
+  </div>
+
+  <!-- 技術メモ -->
+  <div class="section">
+    <div class="section-header">🔧 技術メモ・デプロイ手順・落とし穴</div>
+    <div class="section-body">
+
+      <h4>デプロイ手順（★ビルド中再起動=ChunkLoadError の原因。順厳守★）</h4>
+      <div class="formula">
+# 1. 停止<br>
+launchctl bootout gui/$(id -u)/com.ssinvestor.arbitrage.portal-web<br>
+# 2. ビルド（成功確認後に次へ）<br>
+npm --prefix /Users/apple/projects/ebay-arbitrage/apps/web run build<br>
+# 3. 起動（最初の "Bootstrap failed: 5" は一時的→数秒後に成功）<br>
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.ssinvestor.arbitrage.portal-web.plist
+      </div>
+
+      <h4>動作確認（★curlは IPv6 [::1]。127.0.0.1だとHTTP000。Bashループ内でcurlがPATHから消える事象あり→フルパス推奨★）</h4>
+      <div class="formula">/usr/bin/curl -s --max-time 90 "http://[::1]:3000/books" -o /dev/null -w "HTTP:%{http_code}\n"</div>
+
+      <h4>DB接続</h4>
+      <div class="formula">
+PSQL="/opt/homebrew/Cellar/libpq/18.3/bin/psql"<br>
+DB_URL="postgresql://app:bYiKxN9yE7lm7nU17gW51JR2p7ZbypP2@35.221.125.218:5432/ebay_arbitrage?sslmode=require"<br>
+"$PSQL" "$DB_URL"
+      </div>
+
+      <h4>主要ファイルパス</h4>
+      <table>
+        <tr><th>役割</th><th>パス</th></tr>
+        <tr><td>利益計算（本・P5本体）</td><td><code>apps/web/src/lib/book-queries.ts</code>（<code>computeSellChannelProfits()</code>=export済）</td></tr>
+        <tr><td>利益計算（ゲーム）</td><td><code>apps/web/src/lib/game-queries.ts</code>（P5組込み済）</td></tr>
+        <tr><td>利益計算（NETSEA）</td><td><code>apps/web/src/lib/netsea-queries.ts</code>（P5＋丸め統一済）</td></tr>
+        <tr><td>購入リスト（P6連携先）</td><td><code>apps/web/src/lib/purchase-queries.ts</code> / <code>components/PurchasesManageView.tsx</code></td></tr>
+        <tr><td>一覧表示UI（全ページ共通）</td><td><code>apps/web/src/components/BookProductsListView.tsx</code></td></tr>
+        <tr><td>NETSEAスキャナ</td><td><code>apps/scraper/scripts/netsea_phase2_scan.py</code>（多重起動ガード追加済）</td></tr>
+        <tr><td>仕様書ページ</td><td><code>apps/web/src/app/spec/page.tsx</code></td></tr>
+        <tr><td>マイグレーション</td><td><code>db/migrations/</code>（最新: 0039）</td></tr>
+        <tr><td>設計書</td><td><code>~/Desktop/転売事業_全サイトアービトラージ移行_設計書_20260603.html</code></td></tr>
+      </table>
+
+      <h4>重要な落とし穴（事故歴あり）</h4>
+      <table>
+        <tr><th>パターン</th><th>内容</th><th>対策</th></tr>
+        <tr><td><span class="badge badge-red">🚨 二重起動</span></td><td>NETSEA/メルカリ等で手動起動＋定時起動が重なり二重稼働→Keepaトークン二重消費</td><td>NETSEA phase2はfcntlガード追加済。手動起動時は既存プロセス確認</td></tr>
+        <tr><td><span class="badge badge-red">🚨 DB操作</span></td><td>マイグレーション並列適用・コミット前放置→ACCESSロック58分</td><td>1ファイルずつ・autocommit即コミット・並列禁止</td></tr>
+        <tr><td><span class="badge badge-red">🚨 NETSEA</span></td><td><code>netsea_items.profit</code>はFBA代行費込み。利益表示には使わない</td><td>売価から直接計算（TS側）。丸めはゲートSQLと一致（全体1回ROUND・生卸値）</td></tr>
+        <tr><td><span class="badge badge-yellow">⚠️ ビルド</span></td><td>ビルド中に portal-web 起動→ChunkLoadError</td><td>stop→build→start 厳守</td></tr>
+        <tr><td><span class="badge badge-yellow">⚠️ curl確認</span></td><td>Next.jsはIPv6待受。127.0.0.1はHTTP000。ループ内でcurl消失</td><td><code>http://[::1]:3000</code>＋フルパス<code>/usr/bin/curl</code></td></tr>
+        <tr><td><span class="badge badge-blue">📝 MV作成</span></td><td>MV作成後にUNIQUE INDEX忘れ→自動REFRESHサイレント失敗</td><td>CREATE→UNIQUE INDEX→auto_pipeline→pipeline-check の4点セット</td></tr>
+        <tr><td><span class="badge badge-blue">📝 新サイト追加</span></td><td>buyCands配列3箇所・book_summary_mv 3箇所・keepa逆引き4箇所</td><td>new-scraping-site スキル参照</td></tr>
+        <tr><td><span class="badge badge-blue">📝 bp_one</span></td><td>CONCURRENTLY index作成は<code>statement_timeout='0'</code>＋<code>lock_timeout='600s'</code>必須（DB保険のlock_timeout=30sに阻まれる）</td><td>明示BEGIN内ではCONCURRENTLY不可＝heredocで個別autocommit</td></tr>
+        <tr><td><span class="badge badge-purple">🚫 恒久ルール</span></td><td>GitHub使用は全面禁止／変更したら/spec＋メモリ両方更新で完了</td><td>—</td></tr>
+      </table>
+
+      <div class="note" style="margin-top:16px">
+        <strong>確認事項（2026-06-04 ユーザー回答済み）:</strong><br>
+        ① ¥80 カテゴリ成約料 → <strong>残す（現行どおり）</strong><br>
+        ② 古物商 → <strong>取得済み（第2310500001025・秋田県公安委員会）</strong><br>
+        ③ Yahoo!ショッピング出品 → <strong>申込済み・承認待ち</strong><br>
+        ④ 発送体制 → <strong>代行→自社化へ移行確定（今月＝2026年6月中に移行）</strong><br>
+        ※ オークファンのフリマ相場 取得方式は別ターミナルのP3で対応中＝検証完了し正規ルート(法人API／MCPサーバー／データ納品)を問い合わせ送信済・返信待ち。MCPサーバー(Claude直結)が最有力。
+      </div>
+    </div>
+  </div>
+
+  <!-- 最初の一歩 -->
+  <div class="section waiting">
+    <div class="section-header">🚀 引き継ぎ先への最初の一歩</div>
+    <div class="section-body">
+      <ol style="padding-left:20px">
+        <li>このファイル（＝唯一の引き継ぎ物・自己完結）を読む。詳細メモリ＝<code>project_p6_inventory_sync_design_20260604</code>・<code>project_pricetar_ui_research_20260604</code>・<code>project_allsite_arbitrage_migration_20260603</code>。別添ビジュアル＝<code>~/Desktop/pricetar_ui_capture/P6_画面ワイヤー_20260604.html</code>・<code>~/Desktop/P7_損益管理PL_設計ワイヤー_20260604.html</code>（同一PCに存在）</li>
+        <li><span class="badge badge-green">完了(2026-06-04)</span> P6＝設計3点＋プライスターUI実調査＋<strong>画面ワイヤー5枚</strong>（上記P6セクションに清書済）。出品の自動取り込み・Amazon即出品/他販路はコンテンツ作成ステップ・中古画像の使い分け まで確定</li>
+        <li><span class="badge badge-green">完了(2026-06-04)</span> P7＝<strong>設計確定</strong>（粒度3軸・発生主義・税抜税込トグル・固定費マスタ＋月次PLの2画面・データモデル・ロードマップ。上記P7セクションに清書済）</li>
+        <li><strong>★ 次にやること＝販路アカウント承認待ち</strong>。承認が下りたら：①各販路の出品/注文API実項目とカテゴリマッピング表を実物で確定 → ②在庫同期エンジン実装（4テーブル作成→出品→売却検知→取下げ）→ ③P7固定費マスタ＋月次PL実装（P7-1/P7-2は依存なしなので先行も可）</li>
+        <li><span class="badge badge-green">新規(2026-06-05)</span> <strong>★ P8 eBay越境輸出＝Step0検証完了・GO（仕入れNO-GO/出品GO・ゲーム優先）</strong>。<strong>ユーザー指示＝Step1 eBayセラーアカウント整備から着手</strong>（登録/本人確認/支払い受取/セリングリミット解放/<strong>アプリOAuth認可→refresh token</strong>/business policies）。Step2輸出黒字候補リストはアカウント不要で並行着手可。詳細＝上の「🛒 P8 eBay連携」セクション＋メモリ <code>project_ebay_integration_20260605</code>。検証スクリプト＝<code>apps/scraper/scripts/ebay_step0_pilot.py</code>(仕入れ)・<code>ebay_step0_sell_pilot.py</code>(出品)。認証＝Secret Manager <code>ebay-app-id-prod</code>/<code>ebay-cert-id-prod</code>。<strong>最初に「開発者キーセット(TAKAYUKI-…)の所有eBayアカウント＝実際に売るセラーアカウントか」を確認</strong></li>
+        <li>オークファンP3は別ターミナル担当＝触らない</li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
