@@ -241,8 +241,8 @@
       <td>🟧 ブックオフ</td>
       <td><span class="genre">本</span></td>
       <td><span class="badge isbn">ISBN</span></td>
-      <td class="note">Phase1（深夜1〜7時・sitemap）＋ Phase2（VPN固定IP・24h・並列2・waf_blocks=0）</td>
-      <td><span class="badge ok">✅稼働中</span></td>
+      <td class="note">Phase1（深夜1〜7時・sitemap）＋ Phase2（VPN固定IP・24h・並列2・waf_blocks=0）。<b>★2026-06-10 SOCKS5東京(jp-tyo-wg-socks5-202)でモモ2台目インスタンス追加＝並列2重化で処理速度2倍★</b>（launchd: bookoff-socks5・KeepAlive）。残516K件を約7日で消化見込み。</td>
+      <td><span class="badge ok">✅稼働中（2重化済み）</span></td>
     </tr>
     <tr>
       <td>🟣 メルカリ（ISBN）</td>
@@ -276,8 +276,8 @@
       <td>💰 ヤフオク <b>落札相場</b><br><span class="note">※仕入でなく売値相場収集</span></td>
       <td><span class="genre">本</span></td>
       <td><span class="badge jan">ISBN/タイトル照合</span></td>
-      <td class="note">落札済み(istatus=close+p=isbn)巡回→sold_listings(yahoo_auctions)蓄積。出口IP=<b>Mullvad SOCKS5東京(jp-tyo-wg-socks5-201)＝ヤフオクISBN仕入と分離</b>。2026-06-10 リンゴから移管。match(30分毎)・LLM verify(2時間毎)はリンゴ担当。★残：channel='yahoo_sold'をBEST_PROFIT_SQLへ統合</td>
-      <td><span class="badge ok">✅稼働中（SOCKS5東京・足切り未統合）</span></td>
+      <td class="note">落札済み(istatus=close+p=isbn)巡回→sold_listings(yahoo_auctions)蓄積。出口IP=<b>Mullvad SOCKS5東京(jp-tyo-wg-socks5-201)＝ヤフオクISBN仕入と分離</b>。2026-06-10 リンゴから移管。match(30分毎)・LLM verify(2時間毎)はリンゴ担当。<b>★2026-06-10 BEST_PROFIT_SQL(smp_ys)へ統合済み・ポータル足切りに自動反映★</b></td>
+      <td><span class="badge ok">✅稼働中・足切り統合済み</span></td>
     </tr>
   </tbody>
 </table>
@@ -288,14 +288,14 @@
   <thead><tr><th>タスク</th><th>内容・理由</th><th>前提・優先度</th></tr></thead>
   <tbody>
     <tr>
-      <td>① is_cd補完 完了待ち</td>
-      <td class="note">backfill_cd_is_cd_flag.py実行中（4,773/274,039件完了）。完了すると駿河屋CD・楽天CDが274K JAN規模で本格稼働。Keepa365スプリントと競合してデッドロックしやすいためバッチ分割で断続実行中。</td>
-      <td class="note"><span class="badge near">自動完了待ち</span></td>
+      <td>① is_cd補完</td>
+      <td class="note">backfill_cd_is_cd_flag.py完了済み（672,186件がis_cd=TRUE）。駿河屋CD・楽天CDが本格稼働中。</td>
+      <td class="note"><span class="badge ok">✅完了（2026-06-10）</span></td>
     </tr>
     <tr>
       <td>② ヤフオク落札相場 → ポータル足切り統合</td>
-      <td class="note">channel='yahoo_sold'をBEST_PROFIT_SQLのsmp_y（ヤフオク売値）に追加。現状yahoo_soldはDBにあるがポータルの利益計算に使われていない。</td>
-      <td class="note"><span class="badge near">即着手可</span></td>
+      <td class="note">book-queries.ts / game-queries.tsにsmp_ys(channel='yahoo_sold')をBEST_PROFIT_SQLへ追加。GREATEST(Amazon, eBay, yahoo_auctions, yahoo_sold, mercari)でポータル足切りに自動反映。</td>
+      <td class="note"><span class="badge ok">✅完了・デプロイ済み（2026-06-10）</span></td>
     </tr>
     <tr>
       <td>③ ブックオフ CDカテゴリ追加</td>
