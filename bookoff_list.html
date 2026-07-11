@@ -1,188 +1,64 @@
-<title>ブックオフ仕入れ 商品リスト（写真照合）</title>
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ブックオフ仕入れ 出品チェックリスト</title>
 <style>
-  :root {
-    --bg: #f6f5f2;
-    --surface: #ffffff;
-    --ink: #1c1b19;
-    --ink-soft: #56534d;
-    --line: #e3e0d8;
-    --accent: #b3541e;
-    --accent-soft: #f2e6dc;
-    --hi: #2f7d4f;
-    --hi-bg: #e6f1ea;
-    --mid: #b8860b;
-    --mid-bg: #f6eecf;
-    --lo: #9a3b2f;
-    --lo-bg: #f6e3df;
-    --radius: 10px;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #171614; --surface: #201e1b; --ink: #f0ede6; --ink-soft: #a9a49a;
-      --line: #322f2a; --accent: #e08a4e; --accent-soft: #33261d;
-      --hi: #6fbf8e; --hi-bg: #1c2c23; --mid: #d9b84e; --mid-bg: #2d2717;
-      --lo: #e0897c; --lo-bg: #2e1e1b;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #171614; --surface: #201e1b; --ink: #f0ede6; --ink-soft: #a9a49a;
-    --line: #322f2a; --accent: #e08a4e; --accent-soft: #33261d;
-    --hi: #6fbf8e; --hi-bg: #1c2c23; --mid: #d9b84e; --mid-bg: #2d2717;
-    --lo: #e0897c; --lo-bg: #2e1e1b;
-  }
-  :root[data-theme="light"] {
-    --bg: #f6f5f2; --surface: #ffffff; --ink: #1c1b19; --ink-soft: #56534d;
-    --line: #e3e0d8; --accent: #b3541e; --accent-soft: #f2e6dc;
-    --hi: #2f7d4f; --hi-bg: #e6f1ea; --mid: #b8860b; --mid-bg: #f6eecf;
-    --lo: #9a3b2f; --lo-bg: #f6e3df;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, system-ui, sans-serif;
-    line-height: 1.6; -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 40px 20px 80px; }
-  header { border-bottom: 2px solid var(--accent); padding-bottom: 20px; margin-bottom: 8px; }
-  .eyebrow { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
-  h1 { font-size: 1.8rem; margin: .3em 0 .2em; letter-spacing: .01em; text-wrap: balance; }
-  .sub { color: var(--ink-soft); font-size: .92rem; margin: 0; }
-  .summary { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 8px; }
-  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 16px; min-width: 92px; }
-  .stat b { display: block; font-size: 1.5rem; font-variant-numeric: tabular-nums; }
-  .stat span { font-size: .74rem; color: var(--ink-soft); }
-  .note { background: var(--accent-soft); border-radius: var(--radius); padding: 14px 18px; font-size: .86rem; color: var(--ink); margin: 20px 0 8px; border: 1px solid var(--line); }
-  h2 { font-size: 1.12rem; margin: 40px 0 4px; display: flex; align-items: baseline; gap: 10px; }
-  h2 .fname { font-size: .72rem; color: var(--ink-soft); font-weight: 500; letter-spacing: .04em; }
-  .cat { color: var(--ink-soft); font-size: .85rem; margin: 0 0 14px; }
-  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-  table { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 680px; }
-  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); font-weight: 700; background: var(--bg); }
-  tr:last-child td { border-bottom: none; }
-  td.no { color: var(--ink-soft); font-variant-numeric: tabular-nums; width: 30px; }
-  td.price { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 600; text-align: right; }
-  .price .yen { font-size: .78rem; font-weight: 400; color: var(--ink-soft); margin-right: 1px; }
-  .price .na { color: var(--ink-soft); font-weight: 400; }
-  .title { font-weight: 600; }
-  .meta { color: var(--ink-soft); font-size: .82rem; }
-  .badge { display: inline-block; font-size: .68rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; letter-spacing: .03em; }
-  .b-hi { color: var(--hi); background: var(--hi-bg); }
-  .b-mid { color: var(--mid); background: var(--mid-bg); }
-  .b-lo { color: var(--lo); background: var(--lo-bg); }
-  a.amz { display: inline-flex; align-items: center; gap: 5px; color: var(--accent); text-decoration: none; font-weight: 600; font-size: .82rem; border: 1px solid var(--accent); border-radius: 6px; padding: 4px 9px; white-space: nowrap; }
-  a.amz:hover { background: var(--accent); color: #fff; }
-  a.amz:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  a.amz.search { border-style: dashed; }
-  footer { margin-top: 40px; color: var(--ink-soft); font-size: .8rem; border-top: 1px solid var(--line); padding-top: 16px; }
-</style>
-
-<div class="wrap">
-  <header>
-    <div class="eyebrow">古本Arbitrage ・ 仕入れ照合</div>
-    <h1>ブックオフ 写真照合リスト</h1>
-    <p class="sub">デスクトップ「ブックオフ」フォルダ 写真5枚 / 497879〜497883.jpg を照合</p>
-  </header>
-
-  <div class="summary">
-    <div class="stat"><b>36</b><span>掲載点数</span></div>
-    <div class="stat"><b>26</b><span>商品ページ特定</span></div>
-    <div class="stat"><b>4</b><span>K-POP CD</span></div>
-    <div class="stat"><b>16</b><span>DVD</span></div>
-    <div class="stat"><b>16</b><span>アニメ系CD</span></div>
-  </div>
-
-  <div class="note">
-    <b>リンク：</b> 「開く ↗」は個別の <b>Amazon商品ページ(dp)</b> に直リンクしています（間違いを許容した推測込み・別バージョンや巻違いを含む場合あり）。破線ボタンは商品特定できず検索リンクです。<br>
-    <b>中古最低価格：</b> Amazonは中古価格を機械取得できないため、<b>全て相場からの「目安」</b>です（正確な最安値はリンク先で要確認）。<br>
-    <b>判読バッジ：</b> <span class="badge b-hi">高</span> ほぼ確実 ／ <span class="badge b-mid">中</span> タイトルは読めるが版・巻数など要確認 ／ <span class="badge b-lo">要確認</span> 反射・逆さま・値札で判読困難。
-  </div>
-
-  <!-- 写真1 -->
-  <h2>写真1 <span class="fname">497879_0.jpg</span></h2>
-  <p class="cat">K-POP CD・Stray Kids（同一アルバムの別バージョン）</p>
-  <div class="tablewrap"><table>
-    <thead><tr><th>#</th><th>商品</th><th>判読</th><th style="text-align:right">中古最低(目安)</th><th>Amazon</th></tr></thead>
-    <tbody>
-      <tr><td class="no">1</td><td><div class="title">Stray Kids「★★★★★（5-STAR）」The 3rd Album</div><div class="meta">黒ジャケ・通常盤（韓国盤）</div></td><td><span class="badge b-hi">高</span></td><td class="price"><span class="yen">¥</span>1,800</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B0C3V3YBBB" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">2</td><td><div class="title">Stray Kids「樂-STAR（ROCK-STAR）」</div><div class="meta">ピンク・通常盤 ROLL ver 系</div></td><td><span class="badge b-hi">高</span></td><td class="price"><span class="yen">¥</span>1,500</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B0CKQLKX3T" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">3</td><td><div class="title">Stray Kids「★★★★★（5-STAR）」The 3rd Album</div><div class="meta">白ジャケ・龍柄（VER.C 系）</div></td><td><span class="badge b-hi">高</span></td><td class="price"><span class="yen">¥</span>2,000</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B0C3V4TBWG" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">4</td><td><div class="title">Stray Kids「樂-STAR（ROCK-STAR）」</div><div class="meta">紫・LIMITED STAR ver</div></td><td><span class="badge b-hi">高</span></td><td class="price"><span class="yen">¥</span>2,500</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B0CKKTZ73V" target="_blank" rel="noopener">開く ↗</a></td></tr>
-    </tbody>
-  </table></div>
-
-  <!-- 写真2 -->
-  <h2>写真2 <span class="fname">497880_0.jpg</span></h2>
-  <p class="cat">DVD 8点（スポーツ指導・邦画/洋画・宝塚・音楽）</p>
-  <div class="tablewrap"><table>
-    <thead><tr><th>#</th><th>商品</th><th>判読</th><th style="text-align:right">中古最低(目安)</th><th>Amazon</th></tr></thead>
-    <tbody>
-      <tr><td class="no">5</td><td><div class="title">マリーンズ・ベースボール・アカデミー VOL.3</div><div class="meta">千葉ロッテ 野球指導DVD</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>1,800</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B004TJWCRC" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">6</td><td><div class="title">マリーンズ・ベースボール・アカデミー VOL.4</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>1,800</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B005BBEHZ2" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">7</td><td><div class="title">マリーンズ・ベースボール・アカデミー VOL.5</div><div class="meta">単独Amazonページ未特定（絶版/未登録の可能性）</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">—</span></td><td><a class="amz search" href="https://www.amazon.co.jp/s?k=マリーンズ+ベースボール+アカデミー+VOL.5&i=dvd" target="_blank" rel="noopener">検索 ↗</a></td></tr>
-      <tr><td class="no">8</td><td><div class="title">早霧せいな Brilliant Dreams＋NEXT VOL.2</div><div class="meta">SAGIRI＝宝塚 早霧せいな。ジャケの黄帯どおり</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>3,500</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B00FAJ5HZE" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">9</td><td><div class="title">でんぱの神神（かみがみ）DVD</div><div class="meta">でんぱ組.inc。全12巻あり巻数要確認（第1弾を仮表示）</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>2,000</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B00FRC13FC" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">10</td><td><div class="title">ステップ・アップ2：ザ・ストリート デラックス版</div><div class="meta">※韓国映画ではなく米ダンス映画でした</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>500</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B001LDC8K0" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">11</td><td><div class="title">仁志学校 内野守備 上巻（仁志敏久）</div><div class="meta">野球指導DVD。下巻・打撃/走塁編は別ASIN</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>3,000</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B009K8KB0M" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">12</td><td><div class="title">嵐 ARASHI 10-11 TOUR "Scene" DOME+ 通常盤</div><div class="meta">〜君と僕の見ている風景〜。中古豊富で安価</div></td><td><span class="badge b-hi">高</span></td><td class="price"><span class="yen">¥</span>800</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B004ZVVA90" target="_blank" rel="noopener">開く ↗</a></td></tr>
-    </tbody>
-  </table></div>
-
-  <!-- 写真3 -->
-  <h2>写真3 <span class="fname">497881_0.jpg</span></h2>
-  <p class="cat">DVD 8点（韓流ドラマBOX中心）</p>
-  <div class="tablewrap"><table>
-    <thead><tr><th>#</th><th>商品</th><th>判読</th><th style="text-align:right">中古最低(目安)</th><th>Amazon</th></tr></thead>
-    <tbody>
-      <tr><td class="no">13</td><td><div class="title">美しき日々 DVD-BOX</div><div class="meta">イ・ビョンホン/チェ・ジウ。分割版は別ASIN</div></td><td><span class="badge b-hi">高</span></td><td class="price"><span class="yen">¥</span>5,000</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B002AIQ0K4" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">14</td><td><div class="title">ファイターへの道 航空自衛隊・パイロット誕生</div><div class="meta">2002年 WAC。続編は別ASIN</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>2,500</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B000CCGI5W" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">15</td><td><div class="title">夏の香り DVD-BOX 1</div><div class="meta">ソン・スンホン/ソン・イェジン</div></td><td><span class="badge b-hi">高</span></td><td class="price"><span class="yen">¥</span>1,704</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B00014N7LY" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">16</td><td><div class="title">夏の香り DVD-BOX 2</div></td><td><span class="badge b-hi">高</span></td><td class="price"><span class="yen">¥</span>2,000</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B0002ZEU4A" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">17</td><td><div class="title">ゴールデンボンバー「No Music No Weapon」CD+DVD</div><div class="meta">2015年アルバム。純映像作品ではなくCD+DVD盤が最一致</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>800</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B00XVSZR88" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">18</td><td><div class="title">（反射で判読不可のDVD）</div><div class="meta">写真中段・紫〜赤系ジャケ ／ 要現物確認</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">—</span></td><td><span class="meta">—</span></td></tr>
-      <tr><td class="no">19</td><td><div class="title">パリの恋人 DVD-BOX 1</div><div class="meta">キム・ジョンウン/パク・シニャン</div></td><td><span class="badge b-hi">高</span></td><td class="price"><span class="yen">¥</span>2,500</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B0007SMGUM" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">20</td><td><div class="title">パリの恋人 DVD-BOX 2</div></td><td><span class="badge b-hi">高</span></td><td class="price"><span class="yen">¥</span>2,500</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B00083G34G" target="_blank" rel="noopener">開く ↗</a></td></tr>
-    </tbody>
-  </table></div>
-
-  <!-- 写真4 -->
-  <h2>写真4 <span class="fname">497882_0.jpg</span></h2>
-  <p class="cat">アニメ/ドラマCD 12点 ・ 値札300〜330円帯 ／ 判読困難が多い</p>
-  <div class="tablewrap"><table>
-    <thead><tr><th>#</th><th>商品</th><th>判読</th><th style="text-align:right">中古最低(目安)</th><th>Amazon</th></tr></thead>
-    <tbody>
-      <tr><td class="no">21</td><td><div class="title">ドラマCD「STORY」系</div><div class="meta">判読不可</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">—</span></td><td><span class="meta">—</span></td></tr>
-      <tr><td class="no">22</td><td><div class="title">（黒ジャケ・円モチーフ・300円）</div><div class="meta">判読不可</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">—</span></td><td><span class="meta">—</span></td></tr>
-      <tr><td class="no">23</td><td><div class="title">TESTAMENT「The Gathering」（推測）</div><div class="meta">米スラッシュメタル。アルバム特定不可・輸入盤</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">目安 ¥500〜2,000</span></td><td><a class="amz" href="https://www.amazon.co.jp/dp/B00002DGB2" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">24</td><td><div class="title">「田中くんはいつもけだるげ」ドラマCD（推測）</div><div class="meta">「腐男子クラスの田中さん」に該当品なし→近い候補</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="yen">¥</span>1,500</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B01CIN05QK" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">25</td><td><div class="title">うたの☆プリンスさまっ♪「雪月花」Ver.MOON</div><div class="meta">※雪月火→雪月花(SETSUGEKKA)。Ver違い3種あり</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>1,500</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B07DY86VPK" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">26</td><td><div class="title">BROKEN HEART / The Metal（洋楽系？）</div><div class="meta">判読不可</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">—</span></td><td><span class="meta">—</span></td></tr>
-      <tr><td class="no">27</td><td><div class="title">（青ジャケ・恋の自由研究 帯・ドラマCD）</div><div class="meta">判読不可</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">—</span></td><td><span class="meta">—</span></td></tr>
-      <tr><td class="no">28</td><td><div class="title">（銀ジャケ・HIGHEST 表記？）</div><div class="meta">判読不可</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">—</span></td><td><span class="meta">—</span></td></tr>
-      <tr><td class="no">29</td><td><div class="title">（人物ジャケ・300円）</div><div class="meta">判読不可</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">—</span></td><td><span class="meta">—</span></td></tr>
-      <tr><td class="no">30</td><td><div class="title">三者三葉 OP「クローバー♣かくめーしょん」</div><div class="meta">歌：とりぷる♣ふぃーりんぐ（「とりふぇす」の読み違い）</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>800</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B01CEABN0Y" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">31</td><td><div class="title">（青空・学生ジャケ・300円）</div><div class="meta">判読不可</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">—</span></td><td><span class="meta">—</span></td></tr>
-      <tr><td class="no">32</td><td><div class="title">ご注文はうさぎですか?? キャラソン（チノ系）</div><div class="meta">ココア中心/合同盤なら別ASIN。要確認</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>1,000</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B016PYU7MK" target="_blank" rel="noopener">開く ↗</a></td></tr>
-    </tbody>
-  </table></div>
-
-  <!-- 写真5 -->
-  <h2>写真5 <span class="fname">497883_0.jpg</span></h2>
-  <p class="cat">アニメCD 12点 ・ 多くが逆さま/反射で判読困難 ／ 値札300〜500円帯</p>
-  <div class="tablewrap"><table>
-    <thead><tr><th>#</th><th>商品</th><th>判読</th><th style="text-align:right">中古最低(目安)</th><th>Amazon</th></tr></thead>
-    <tbody>
-      <tr><td class="no">33</td><td><div class="title">（人物・和装風アニメジャケ・500円）</div><div class="meta">判読不可</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">—</span></td><td><span class="meta">—</span></td></tr>
-      <tr><td class="no">34</td><td><div class="title">MONGOL800「GOOD MORNING OKINAWA」</div><div class="meta">値札1800円表記。中古は安価</div></td><td><span class="badge b-mid">中</span></td><td class="price"><span class="yen">¥</span>400</td><td><a class="amz" href="https://www.amazon.co.jp/dp/B00AZYD3V4" target="_blank" rel="noopener">開く ↗</a></td></tr>
-      <tr><td class="no">35</td><td><div class="title">GO ON AS YOU ARE（水玉ジャケ・300円）</div><div class="meta">判読不可</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">—</span></td><td><span class="meta">—</span></td></tr>
-      <tr><td class="no">36</td><td><div class="title">Contemplating Jazz / Hanna（推測）</div><div class="meta">残り約8枚は逆さま/反射で判読困難 ・ 現物スキャン推奨</div></td><td><span class="badge b-lo">要確認</span></td><td class="price"><span class="na">目安 ¥1,000前後</span></td><td><a class="amz" href="https://www.amazon.co.jp/dp/B000069B2I" target="_blank" rel="noopener">開く ↗</a></td></tr>
-    </tbody>
-  </table></div>
-
-  <footer>
-    照合日：2026-07-11 ／ 元データ：~/Desktop/ブックオフ/497879〜497883_0.jpg（5枚）。<br>
-    ・「開く ↗」＝個別Amazon商品ページ（推測込み・別バージョン/巻違いを含む場合あり）。<br>
-    ・中古最低価格は<b>全て相場からの目安</b>で、実際の最安値はリンク先で要確認（Amazonは中古価格を機械取得できないため）。<br>
-    ・写真4・5のアニメCDは判読困難が多数。正確な相場判定には現物のバーコードスキャン（JAN→SP-API/Keepa照合）を推奨します。
-  </footer>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;margin:0;padding:1.2rem;background:#fafafa;color:#1a1a1a}
+h1{font-size:1.25rem;margin:0 0 .4rem}
+.meta{color:#555;font-size:.85rem;margin-bottom:.9rem}
+.stats{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem}
+.stat{background:#fff;border:1px solid #e2e2e2;border-radius:10px;padding:.5rem .9rem;font-size:.9rem}
+.stat b{font-size:1.15rem}
+.stat.g b{color:#0a7a34} .stat.r b{color:#b00020} .stat.y b{color:#9a6a00}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;background:#fff;font-size:.86rem}
+th,td{border:1px solid #e6e6e6;padding:.4rem .5rem;text-align:left;vertical-align:middle}
+th{background:#f0f0f0;position:sticky;top:0;white-space:nowrap}
+td.seq{text-align:right;color:#888}
+td.img img{width:52px;height:52px;object-fit:contain;background:#fff}
+td.mono,.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+td.num{text-align:right}
+td.note{min-width:120px;background:#fffef2}
+td.verdict{white-space:nowrap;font-weight:600}
+tr.gomi{background:#fdecec} tr.gomi td.verdict{color:#b00020}
+tr.warn{background:#fff6e5} tr.warn td.verdict{color:#9a6a00}
+tr.ok td.verdict{color:#0a7a34}
+.legend{font-size:.8rem;color:#555;margin-top:1rem;line-height:1.6}
+</style></head><body>
+<h1>ブックオフ仕入れ 出品チェックリスト</h1>
+<div class="meta">生成: 2026-07-11 23:08／状態=全「良い」固定・Amazon出品価格 ¥100,000／ゴミ基準=Amazon中古 ≤ ¥500</div>
+<div class="stats">
+  <div class="stat"><b>1</b> 点 取込</div>
+  <div class="stat g"><b>0</b> 出品対象</div>
+  <div class="stat r"><b>1</b> 🗑️ ゴミ(除外)</div>
+  <div class="stat y"><b>0</b> ⚠️ 要確認</div>
 </div>
+<div class="wrap">
+<table>
+<thead><tr>
+<th>#</th><th>写真</th><th>商品名</th><th>ASIN</th><th>JAN/ISBN</th><th>状態</th>
+<th>Amazon中古</th><th>年間販売</th><th>判定</th><th>出品価格</th><th>コメント(後で)</th>
+</tr></thead>
+<tbody>
+<tr class="gomi">
+  <td class="seq">1</td>
+  <td class="img">—</td>
+  <td class="title">古今亭今輔</td>
+  <td><a href="https://www.amazon.co.jp/dp/B001HQKW2C" target="_blank">B001HQKW2C</a></td>
+  <td class="mono">4961523390145</td>
+  <td>良い</td>
+  <td class="num">¥398</td>
+  <td class="num">0</td>
+  <td class="verdict">🗑️ ゴミ</td>
+  <td class="num">—</td>
+  <td class="note"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="legend">
+✅出品=Amazon中古がゴミ基準超・ASIN特定済／🗑️ゴミ=Amazon中古 ≤ ¥500(出品対象外)／⚠️要確認=ASIN特定不可 or 相場未取得。<br>
+写真=Amazonカタログ画像(識別確認用)。JAN/ISBNは裏バーコードの機械読取り(誤マッチ0)。コメント欄は出品後に一括変更。
+</div>
+</body></html>
