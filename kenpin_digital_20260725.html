@@ -284,6 +284,23 @@
     font-size: .66rem; color: var(--ink-faint); text-align: center; line-height: 1.25;
   }
 
+  /* 写真タブ */
+  .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+  .photo { border: 1px solid var(--rule-soft); border-radius: 4px; overflow: hidden; background: var(--slip); }
+  .photo .ph {
+    aspect-ratio: 1; background: var(--slip-alt);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-faint); font-size: .8rem;
+  }
+  .photo .del {
+    appearance: none; width: 100%; cursor: pointer;
+    font-family: inherit; font-size: .82rem; font-weight: 700;
+    padding: .5rem; border: 0; border-top: 1px solid var(--rule-soft);
+    background: var(--vermilion-bg); color: var(--vermilion);
+  }
+  .photo .del:focus-visible { outline: 2px solid var(--indigo); outline-offset: -2px; }
+  .hint { margin: 0; font-size: .8rem; color: var(--ink-faint); line-height: 1.7; }
+
   /* 検品票タブ */
   .segs { display: flex; gap: .3rem; flex-wrap: wrap; }
   .seg {
@@ -410,6 +427,10 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.7l1.3-2h7l1.3 2h1.7A2.5 2.5 0 0 1 21 8.5v9A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z"/><circle cx="12" cy="13" r="3.6"/></svg>
           撮影
         </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-photos" id="t-photos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="M3 15l5-4 4 3 3-2 6 4"/><circle cx="8.5" cy="9.5" r="1.2"/></svg>
+          写真
+        </button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="p-form" id="t-form">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9.5 8h5M9.5 12h5M9.5 16h3"/></svg>
           検品票
@@ -429,6 +450,18 @@
             <div class="thumb">バー<br>コード</div>
           </div>
         </div>
+      </div>
+
+      <!-- 写真タブ -->
+      <div class="panel" id="p-photos" role="tabpanel" aria-labelledby="t-photos" hidden>
+        <div class="sec-label">このフォルダの写真　4件</div>
+        <div class="photo-grid">
+          <div class="photo"><div class="ph">表紙</div><button class="del" type="button">🗑 削除</button></div>
+          <div class="photo"><div class="ph">背面</div><button class="del" type="button">🗑 削除</button></div>
+          <div class="photo"><div class="ph">横</div><button class="del" type="button">🗑 削除</button></div>
+          <div class="photo"><div class="ph">バーコード</div><button class="del" type="button">🗑 削除</button></div>
+        </div>
+        <p class="hint">ドライブのアプリを開き直さなくても、この画面から要らない写真を消せます。消した写真はドライブのごみ箱に入るので、間違えても戻せます。</p>
       </div>
 
       <!-- 検品票タブ -->
@@ -482,6 +515,14 @@
       <div class="note">
         <h3>写真は1枚減る</h3>
         <p>検品表を撮る作業が無くなるので、印刷の手間に加えて<strong>撮影とアップロードも1回分減ります</strong>。商品写真の枚数や順番のルールは変わりません。</p>
+      </div>
+      <div class="note">
+        <h3>要らない写真はその場で消せる</h3>
+        <p>「写真」タブに、そのフォルダの写真が並びます。<strong>ドライブのアプリを開き直さずに削除できます</strong>。消した写真はドライブのごみ箱に入るので、間違えても戻せます。</p>
+      </div>
+      <div class="note">
+        <h3>真っ黒な写真は保存しません</h3>
+        <p>スマホは画面に映っていないカメラの映像を止めることがあり、そのまま撮ると中身が真っ黒な写真になります。<strong>撮影時とアップロード時の二重で検査し、真っ黒なら保存しません。</strong></p>
       </div>
     </div>
   </section>
@@ -544,7 +585,7 @@
     });
   }
 
-  [["t-shoot", "p-shoot"], ["t-form", "p-form"]].forEach(([tabId, panelId], i, all) => {
+  [["t-shoot", "p-shoot"], ["t-photos", "p-photos"], ["t-form", "p-form"]].forEach(([tabId, panelId], i, all) => {
     $(tabId).addEventListener("click", () => {
       all.forEach(([t, p]) => {
         const on = t === tabId;
