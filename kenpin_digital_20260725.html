@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>*,*::before,*::after{box-sizing:border-box}img{max-width:100%}</style>
+</head>
+<body>
+<title>検品票のデジタル化 — 試作画面</title>
+<style>
+  :root {
+    --paper: #F4F6F1;
+    --slip: #FFFFFF;
+    --slip-alt: #FAFBF7;
+    --rule: #CBD8CC;
+    --rule-soft: #E2EAE1;
+    --ink: #1B2620;
+    --ink-soft: #5A6B60;
+    --ink-faint: #8B9990;
+    --vermilion: #BE4028;
+    --vermilion-bg: #FBEDE9;
+    --indigo: #2B5468;
+    --shadow: 0 1px 2px rgba(27, 38, 32, .06), 0 12px 32px rgba(27, 38, 32, .10);
+
+    --sans: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic Medium", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif;
+    --mincho: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #11170F;
+      --slip: #1A211B;
+      --slip-alt: #1F2721;
+      --rule: #35443A;
+      --rule-soft: #2A352D;
+      --ink: #E9EFE8;
+      --ink-soft: #A3B4A7;
+      --ink-faint: #7A8B7F;
+      --vermilion: #E8785D;
+      --vermilion-bg: #33201B;
+      --indigo: #8FBBD0;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px rgba(0, 0, 0, .45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #11170F;
+    --slip: #1A211B;
+    --slip-alt: #1F2721;
+    --rule: #35443A;
+    --rule-soft: #2A352D;
+    --ink: #E9EFE8;
+    --ink-soft: #A3B4A7;
+    --ink-faint: #7A8B7F;
+    --vermilion: #E8785D;
+    --vermilion-bg: #33201B;
+    --indigo: #8FBBD0;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px rgba(0, 0, 0, .45);
+  }
+  :root[data-theme="light"] {
+    --paper: #F4F6F1;
+    --slip: #FFFFFF;
+    --slip-alt: #FAFBF7;
+    --rule: #CBD8CC;
+    --rule-soft: #E2EAE1;
+    --ink: #1B2620;
+    --ink-soft: #5A6B60;
+    --ink-faint: #8B9990;
+    --vermilion: #BE4028;
+    --vermilion-bg: #FBEDE9;
+    --indigo: #2B5468;
+    --shadow: 0 1px 2px rgba(27, 38, 32, .06), 0 12px 32px rgba(27, 38, 32, .10);
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.75;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap {
+    max-width: 61rem;
+    margin: 0 auto;
+    padding: clamp(1.75rem, 5vw, 3.5rem) clamp(1.1rem, 4vw, 2rem) 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 5vw, 3.25rem);
+  }
+
+  .eyebrow {
+    font-size: .72rem;
+    letter-spacing: .22em;
+    color: var(--ink-faint);
+    margin: 0 0 .7rem;
+    font-weight: 600;
+  }
+  h1 {
+    font-family: var(--mincho);
+    font-weight: 600;
+    font-size: clamp(1.65rem, 5vw, 2.4rem);
+    line-height: 1.35;
+    letter-spacing: .01em;
+    margin: 0 0 .85rem;
+    text-wrap: balance;
+  }
+  .lead {
+    margin: 0;
+    max-width: 34em;
+    color: var(--ink-soft);
+    font-size: clamp(.95rem, 2.4vw, 1.02rem);
+  }
+  h2 {
+    font-family: var(--mincho);
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin: 0 0 1.1rem;
+    letter-spacing: .02em;
+  }
+
+  /* 流れ */
+  .flow {
+    display: grid;
+    gap: 1px;
+    background: var(--rule-soft);
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  @media (min-width: 40rem) { .flow { grid-template-columns: repeat(3, 1fr); } }
+  .step {
+    background: var(--slip);
+    padding: 1.15rem 1.25rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+  }
+  .step-n {
+    font-family: var(--mono);
+    font-size: .75rem;
+    color: var(--vermilion);
+    letter-spacing: .1em;
+    font-variant-numeric: tabular-nums;
+  }
+  .step-t { font-weight: 700; font-size: .98rem; }
+  .step-d { font-size: .87rem; color: var(--ink-soft); line-height: 1.7; }
+
+  /* スマホ枠 */
+  .stage { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+  .phone {
+    width: min(23.5rem, 100%);
+    background: var(--slip);
+    border: 1px solid var(--rule);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .caption {
+    font-size: .8rem;
+    color: var(--ink-faint);
+    text-align: center;
+    max-width: 30em;
+  }
+
+  .bar {
+    padding: .8rem 1rem .55rem;
+    border-bottom: 1px solid var(--rule-soft);
+    background: var(--slip-alt);
+  }
+  .crumb {
+    font-size: .74rem;
+    color: var(--ink-faint);
+    font-family: var(--mono);
+    display: flex;
+    gap: .35rem;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .crumb b { color: var(--ink); font-size: .95rem; font-family: var(--sans); }
+  .title-row {
+    display: flex; align-items: baseline; justify-content: space-between; gap: .5rem;
+    margin-top: .15rem;
+  }
+  .title-row .name { font-weight: 700; font-size: 1.02rem; }
+  .stamp {
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .06em;
+    color: var(--vermilion);
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    padding: .05rem .3rem;
+    white-space: nowrap;
+  }
+
+  .tabs { display: grid; grid-template-columns: 1fr 1fr; background: var(--slip-alt); }
+  .tab {
+    appearance: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--ink-faint);
+    font-family: inherit;
+    font-size: .92rem;
+    font-weight: 700;
+    padding: .8rem .5rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: .45rem;
+  }
+  .tab svg { width: 1.05em; height: 1.05em; }
+  .tab[aria-selected="true"] {
+    color: var(--ink);
+    background: var(--slip);
+    border-bottom-color: var(--vermilion);
+  }
+  .tab:focus-visible { outline: 2px solid var(--indigo); outline-offset: -3px; }
+
+  .panel { padding: 1.05rem 1rem 1.3rem; display: flex; flex-direction: column; gap: 1.1rem; }
+  .panel[hidden] { display: none; }
+
+  .sec-label {
+    font-size: .74rem;
+    letter-spacing: .12em;
+    color: var(--ink-faint);
+    font-weight: 700;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .sec-label::after { content: ""; flex: 1; height: 1px; background: var(--rule-soft); }
+
+  /* 撮影タブ */
+  .view {
+    aspect-ratio: 4 / 3;
+    border-radius: 4px;
+    background:
+      repeating-linear-gradient(135deg, var(--slip-alt) 0 10px, transparent 10px 20px),
+      var(--slip-alt);
+    border: 1px solid var(--rule-soft);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-faint);
+    font-size: .84rem;
+    position: relative;
+  }
+  .view::before, .view::after {
+    content: ""; position: absolute; width: 18px; height: 18px;
+    border: 2px solid var(--rule);
+  }
+  .view::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+  .view::after { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+  .shutter {
+    width: 4.4rem; height: 4.4rem; border-radius: 50%;
+    border: 3px solid var(--rule);
+    background: var(--vermilion);
+    margin: .2rem auto 0;
+    display: block; cursor: pointer;
+  }
+  .shutter:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
+  .thumbs { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .thumb {
+    width: 3.1rem; height: 3.1rem; border-radius: 3px;
+    background: var(--slip-alt); border: 1px solid var(--rule-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .66rem; color: var(--ink-faint); text-align: center; line-height: 1.25;
+  }
+
+  /* 検品票タブ */
+  .segs { display: flex; gap: .3rem; flex-wrap: wrap; }
+  .seg {
+    appearance: none; font-family: inherit; font-size: .8rem; font-weight: 700;
+    padding: .34rem .7rem; border-radius: 2px; cursor: pointer;
+    border: 1px solid var(--rule); background: transparent; color: var(--ink-soft);
+  }
+  .seg[aria-pressed="true"] { background: var(--ink); color: var(--slip); border-color: var(--ink); }
+  .seg:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+
+  .grades { display: flex; flex-direction: column; gap: .35rem; }
+  .grade {
+    appearance: none; font-family: inherit; text-align: left; cursor: pointer;
+    display: flex; align-items: center; gap: .65rem;
+    padding: .68rem .8rem; font-size: .95rem; font-weight: 600;
+    border: 1px solid var(--rule-soft); border-radius: 3px;
+    background: var(--slip); color: var(--ink);
+  }
+  .grade .dot {
+    width: 1.05rem; height: 1.05rem; border-radius: 50%;
+    border: 2px solid var(--rule); flex: none;
+  }
+  .grade[aria-pressed="true"] {
+    border-color: var(--vermilion);
+    background: var(--vermilion-bg);
+  }
+  .grade[aria-pressed="true"] .dot { border-color: var(--vermilion); background: var(--vermilion); box-shadow: inset 0 0 0 3px var(--vermilion-bg); }
+  .grade:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+
+  .checks { display: flex; flex-direction: column; border-top: 1px solid var(--rule-soft); }
+  .check {
+    appearance: none; font-family: inherit; text-align: left; cursor: pointer;
+    display: flex; align-items: center; gap: .7rem;
+    padding: .72rem .2rem; font-size: .95rem;
+    border: 0; border-bottom: 1px solid var(--rule-soft);
+    background: transparent; color: var(--ink);
+  }
+  .check .box {
+    width: 1.5rem; height: 1.5rem; flex: none;
+    border: 2px solid var(--rule); border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .check .box svg { width: 1rem; height: 1rem; opacity: 0; transform: scale(.6); }
+  .check[aria-pressed="true"] .box { border-color: var(--vermilion); background: var(--vermilion); }
+  .check[aria-pressed="true"] .box svg { opacity: 1; transform: none; stroke: var(--slip); }
+  .check[aria-pressed="true"] { font-weight: 700; }
+  .check:focus-visible { outline: 2px solid var(--indigo); outline-offset: -2px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .check .box svg { transition: opacity .12s ease, transform .12s ease; }
+  }
+
+  textarea {
+    font-family: inherit; font-size: .95rem; line-height: 1.7; color: var(--ink);
+    background: var(--slip-alt);
+    border: 1px solid var(--rule-soft); border-radius: 3px;
+    padding: .65rem .7rem; width: 100%; box-sizing: border-box; min-height: 5.5rem;
+    resize: vertical;
+  }
+  textarea:focus-visible { outline: 2px solid var(--indigo); outline-offset: -1px; }
+
+  .saved {
+    font-family: var(--mono); font-size: .74rem; color: var(--ink-faint);
+    display: flex; align-items: center; gap: .4rem; font-variant-numeric: tabular-nums;
+  }
+  .saved .pip { width: .45rem; height: .45rem; border-radius: 50%; background: var(--indigo); flex: none; }
+
+  /* 補足 */
+  .notes { display: grid; gap: 1px; background: var(--rule-soft); border: 1px solid var(--rule-soft); border-radius: 3px; overflow: hidden; }
+  @media (min-width: 46rem) { .notes { grid-template-columns: repeat(2, 1fr); } }
+  .note { background: var(--slip); padding: 1.05rem 1.2rem 1.2rem; }
+  .note:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .note h3 { margin: 0 0 .3rem; font-size: .94rem; }
+  .note p { margin: 0; font-size: .87rem; color: var(--ink-soft); line-height: 1.75; }
+  .note strong { color: var(--ink); }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">出品スキル / 運用改善案</p>
+    <h1>紙の検品表を撮らずに、<br>スマホで直接チェックする</h1>
+    <p class="lead">撮影ページ（/shoot）でフォルダを選ぶと、その商品専用の検品票が同じ画面に出てきます。検品票を「作る」操作はありません。以下は実際に触れる試作画面です。</p>
+  </header>
+
+  <section>
+    <h2>使う流れ</h2>
+    <div class="flow">
+      <div class="step">
+        <span class="step-n">STEP 1</span>
+        <span class="step-t">フォルダを作る</span>
+        <span class="step-d">いつもどおり撮影ページで「ポータル経由」の下に番号フォルダを作ります。この瞬間に、そのフォルダ用の空の検品票が裏側で用意されます。</span>
+      </div>
+      <div class="step">
+        <span class="step-n">STEP 2</span>
+        <span class="step-t">撮る・チェックする</span>
+        <span class="step-d">画面上のタブで「撮影」と「検品票」を行き来します。写真を撮りながら、思い出した時にチェックを足す、という順番でも構いません。押し間違えても、もう一度押せば外れます。</span>
+      </div>
+      <div class="step">
+        <span class="step-n">STEP 3</span>
+        <span class="step-t">そのまま出品へ</span>
+        <span class="step-d">チェックした内容は写真を介さずシステムに入るので、読み取りミスが起きません。商品説明文の状態欄に自動で反映されます。</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage">
+    <h2 style="align-self:flex-start">試作画面（触れます）</h2>
+    <div class="phone">
+      <div class="bar">
+        <div class="crumb"><span>出品写真 ／ ポータル経由 ／</span><b>3</b></div>
+        <div class="title-row">
+          <span class="name">3 番の商品</span>
+          <span class="stamp">検品票 未完了</span>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="p-shoot" id="t-shoot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.7l1.3-2h7l1.3 2h1.7A2.5 2.5 0 0 1 21 8.5v9A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z"/><circle cx="12" cy="13" r="3.6"/></svg>
+          撮影
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-form" id="t-form">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9.5 8h5M9.5 12h5M9.5 16h3"/></svg>
+          検品票
+        </button>
+      </div>
+
+      <!-- 撮影タブ -->
+      <div class="panel" id="p-shoot" role="tabpanel" aria-labelledby="t-shoot">
+        <div class="view">カメラ（いまと同じ）</div>
+        <button class="shutter" aria-label="撮影する"></button>
+        <div>
+          <div class="sec-label">この商品の写真　4枚</div>
+          <div class="thumbs" style="margin-top:.6rem">
+            <div class="thumb">表紙</div>
+            <div class="thumb">背面</div>
+            <div class="thumb">横</div>
+            <div class="thumb">バー<br>コード</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 検品票タブ -->
+      <div class="panel" id="p-form" role="tabpanel" aria-labelledby="t-form" hidden>
+        <div>
+          <div class="sec-label">種別</div>
+          <div class="segs" id="kinds" style="margin-top:.6rem"></div>
+        </div>
+
+        <div>
+          <div class="sec-label">コンディション（必須・1つ）</div>
+          <div class="grades" id="grades" style="margin-top:.6rem"></div>
+        </div>
+
+        <div>
+          <div class="sec-label">状態チェック（当てはまるもの全部）</div>
+          <div class="checks" id="checks" style="margin-top:.35rem"></div>
+          <button class="seg" type="button" id="clear" style="margin-top:.7rem">チェックを全部外す</button>
+        </div>
+
+        <div>
+          <div class="sec-label">自由記入</div>
+          <textarea id="memo" style="margin-top:.6rem" placeholder="チェック項目にない状態を書いてください。例：3ページ目に折れあり。カバー背に色あせ。"></textarea>
+        </div>
+
+        <div class="saved" id="saved"><span class="pip"></span>自動保存済み　—:—</div>
+      </div>
+    </div>
+    <p class="caption">スマホで開くと、実機に近い大きさで確認できます。項目名・5段階のコンディションは、いまポータルの出品画面で使っているものと同じ定義です。</p>
+  </section>
+
+  <section>
+    <h2>補足</h2>
+    <div class="notes">
+      <div class="note">
+        <h3>押し間違えても、何度でも直せる</h3>
+        <p>チェックはもう一度押せば外れます。コンディションも選び直すだけ。「チェックを全部外す」でまとめてやり直せます。<strong>出品する前ならいつでも開き直して修正できます</strong>（1商品ぶんの入力は、この1画面で完結します）。</p>
+      </div>
+      <div class="note">
+        <h3>紙のルートは残します</h3>
+        <p>紙に手書き、撮影してアップ、という従来の流れは<strong>そのまま残します</strong>。デジタル検品票が入っているフォルダはそちらを優先し、無ければ従来どおり写真から読み取ります。</p>
+      </div>
+      <div class="note">
+        <h3>読み取りミスがゼロになる</h3>
+        <p>手書きの撮影だと、チェックの位置や文字をAIが読み違える余地があります。画面で押した内容は<strong>そのまま数値として保存される</strong>ため、読み違い自体が発生しません。</p>
+      </div>
+      <div class="note">
+        <h3>記録用の控えも残す</h3>
+        <p>保存すると、紙と同じ見た目の検品票（PDF）をそのフォルダにも自動保存します。<strong>後から「この商品はどう検品したか」を目で確認できます。</strong></p>
+      </div>
+      <div class="note">
+        <h3>写真は1枚減る</h3>
+        <p>検品表を撮る作業が無くなるので、印刷の手間に加えて<strong>撮影とアップロードも1回分減ります</strong>。商品写真の枚数や順番のルールは変わりません。</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // 状態チェック項目は、現行ポータル(condition-items.ts)の定義と同じものを使う。
+  const ITEMS = {
+    "本": ["表紙/カバーに傷", "汚れ・シミ", "日焼け・変色", "書き込み・線引き", "折れ・ヨレ", "水濡れ跡", "採番・蔵書印（図書館除籍）", "裁断されています", "帯なし", "付属品欠品", "付属の箱がありません", "付属の説明書がありません"],
+    "CD": ["ケースに傷", "ディスクに傷", "帯なし", "歌詞カードなし", "汚れ・シミ", "付属品欠品", "付属の箱がありません", "付属の説明書がありません"],
+    "DVD": ["ジャケット/ケースに傷", "ディスクに傷", "レンタル落ち", "帯なし", "汚れ・シミ", "付属品欠品", "付属の箱がありません", "付属の説明書がありません"],
+    "ゲーム": ["ケースに傷", "ディスク/カートリッジに傷", "付属の説明書がありません", "汚れ・シミ", "付属品欠品", "付属の箱がありません", "動作確認済み"],
+    "レコード": ["盤に傷", "ジャケットに傷み", "反り", "帯なし", "歌詞/インサートなし", "汚れ・シミ", "付属の箱がありません", "付属の説明書がありません"]
+  };
+  const GRADES = ["新品", "中古：ほぼ新品", "中古：非常に良い", "中古：良い", "中古：可"];
+  const TICK = '<svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4.5 4.5L19 7"/></svg>';
+
+  const $ = (id) => document.getElementById(id);
+  const savedEl = $("saved");
+  let kind = "本";
+
+  function touch() {
+    const d = new Date();
+    const t = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+    savedEl.innerHTML = '<span class="pip"></span>自動保存済み　' + t;
+  }
+
+  function renderKinds() {
+    $("kinds").innerHTML = Object.keys(ITEMS).map((k) =>
+      '<button class="seg" type="button" aria-pressed="' + (k === kind) + '">' + k + "</button>"
+    ).join("");
+    $("kinds").querySelectorAll(".seg").forEach((b) => {
+      b.addEventListener("click", () => { kind = b.textContent; renderKinds(); renderChecks(); touch(); });
+    });
+  }
+
+  function renderGrades() {
+    $("grades").innerHTML = GRADES.map((g) =>
+      '<button class="grade" type="button" aria-pressed="false"><span class="dot"></span>' + g + "</button>"
+    ).join("");
+    $("grades").querySelectorAll(".grade").forEach((b) => {
+      b.addEventListener("click", () => {
+        $("grades").querySelectorAll(".grade").forEach((o) => o.setAttribute("aria-pressed", "false"));
+        b.setAttribute("aria-pressed", "true");
+        touch();
+      });
+    });
+  }
+
+  function renderChecks() {
+    $("checks").innerHTML = ITEMS[kind].map((label) =>
+      '<button class="check" type="button" aria-pressed="false"><span class="box">' + TICK + "</span>" + label + "</button>"
+    ).join("");
+    $("checks").querySelectorAll(".check").forEach((b) => {
+      b.addEventListener("click", () => {
+        b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true");
+        touch();
+      });
+    });
+  }
+
+  [["t-shoot", "p-shoot"], ["t-form", "p-form"]].forEach(([tabId, panelId], i, all) => {
+    $(tabId).addEventListener("click", () => {
+      all.forEach(([t, p]) => {
+        const on = t === tabId;
+        $(t).setAttribute("aria-selected", String(on));
+        $(p).hidden = !on;
+      });
+    });
+  });
+
+  $("clear").addEventListener("click", () => {
+    $("checks").querySelectorAll(".check").forEach((b) => b.setAttribute("aria-pressed", "false"));
+    touch();
+  });
+
+  $("memo").addEventListener("input", touch);
+  renderKinds(); renderGrades(); renderChecks(); touch();
+</script>
+
+</body>
+</html>
