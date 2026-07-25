@@ -89,6 +89,27 @@
     gap: clamp(2rem, 5vw, 3.25rem);
   }
 
+  .live {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    border-left: 3px solid var(--vermilion);
+    background: var(--slip);
+    padding: .9rem 1.1rem 1rem;
+    border-radius: 0 3px 3px 0;
+    box-shadow: var(--shadow);
+  }
+  .live b { font-size: .82rem; letter-spacing: .06em; color: var(--vermilion); }
+  .live span { font-size: .9rem; color: var(--ink-soft); line-height: 1.75; }
+  .live code {
+    font-family: var(--mono);
+    font-size: .85em;
+    background: var(--slip-alt);
+    border: 1px solid var(--rule-soft);
+    border-radius: 2px;
+    padding: .05em .35em;
+  }
+
   .eyebrow {
     font-size: .72rem;
     letter-spacing: .22em;
@@ -340,6 +361,11 @@
 </style>
 
 <div class="wrap">
+
+  <div class="live">
+    <b>2026年7月25日 公開済み</b>
+    <span>この仕組みは実装が完了し、すでに使えます。スマホで撮影ページ（<code>/shoot</code>）を開き、フォルダを選ぶと「検品票」タブが出ます。以下の試作画面は、そのまま実際の画面の説明としてお読みください。</span>
+  </div>
 
   <header>
     <p class="eyebrow">出品スキル / 運用改善案</p>
