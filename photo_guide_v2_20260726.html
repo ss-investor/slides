@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>出品写真ガイド v2</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@page{size:A4 portrait;margin:0}
+html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;
+  font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;color:#1c2530}
+.page{width:210mm;height:293mm;overflow:hidden;background:#fff;margin:0 auto;
+  padding:11mm 12mm 9mm;position:relative}
+.head{display:flex;align-items:center;gap:11px;border-bottom:3.5px solid #1666c9;padding-bottom:8px}
+.head .badge{background:#1666c9;color:#fff;font-weight:800;font-size:13px;padding:5px 11px;border-radius:7px;white-space:nowrap}
+.head h1{font-size:21px;font-weight:800;white-space:nowrap}
+.head .sub{margin-left:auto;font-size:9.5px;color:#5b6b7c;text-align:right;line-height:1.4;width:54mm}
+.lead{font-size:11.5px;color:#34445a;margin:9px 0 10px;line-height:1.55}
+.lead b{color:#c0392b}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{border:1.6px solid #d7e0ea;border-radius:10px;padding:10px 13px;background:#fbfdff}
+.card h2{font-size:14.5px;font-weight:800;color:#0f3f7a;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.num{display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;border-radius:50%;
+  background:#1666c9;color:#fff;font-size:13px;font-weight:800;flex:0 0 auto}
+.card p{font-size:11px;line-height:1.55;color:#2b3a4b}
+.card p+p{margin-top:4px}
+.card b{color:#0f3f7a}
+.hot{color:#c0392b;font-weight:800}
+
+/* 赤枠カード(最重要) */
+.card.key{border-color:#e8a0a0;background:#fff7f6}
+.card.key h2{color:#c0392b}
+.card.key .num{background:#c0392b}
+
+/* フォルダ構成ツリー */
+.tree{background:#0f2c4d;border-radius:8px;padding:9px 12px;color:#e8f1fb;font-size:10.5px;line-height:1.8;
+  font-family:"SF Mono","Menlo",monospace;margin-top:4px}
+.tree .root{color:#ffd479;font-weight:700}
+.tree .route{color:#8fd0ff}
+.tree .item{color:#c7f9d6}
+.tree .cmt{color:#88a3bf}
+.tree .n1{padding-left:14px}.tree .n2{padding-left:30px}.tree .n3{padding-left:46px}
+
+/* 写真の種類 */
+.shots{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:5px}
+.shot{border:1.5px solid #cdd9e6;border-radius:8px;padding:7px 3px 6px;text-align:center;background:#fff}
+.shot .ic{font-size:23px;line-height:1}
+.shot .nm{font-size:11px;font-weight:800;color:#0f3f7a;margin-top:4px}
+.shot .ds{font-size:8.8px;color:#5b6b7c;line-height:1.25;margin-top:2px}
+.shot.bar{border-color:#c0392b;background:#fff5f4;border-width:2.2px}
+.shot.bar .nm{color:#c0392b}
+
+.note{font-size:10px;color:#5b6b7c;margin-top:5px;line-height:1.45}
+
+/* 良い例・悪い例 */
+.gb{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:5px}
+.gb div{border-radius:8px;padding:7px 10px;font-size:10.3px;line-height:1.45}
+.good{background:#eafaf0;border:1.5px solid #7fd6a0}
+.bad{background:#fdeeee;border:1.5px solid #eba3a3}
+.gb .t{font-weight:800;font-size:11px;display:block;margin-bottom:2px}
+.good .t{color:#1a8a4e}.bad .t{color:#c0392b}
+
+/* 品番の場所テーブル */
+.wh{width:100%;border-collapse:collapse;margin-top:5px;font-size:10.3px}
+.wh th{background:#fdeede;color:#8a5a12;font-weight:800;padding:4px 7px;border:1px solid #e5cfa8;text-align:left;white-space:nowrap}
+.wh td{padding:4px 7px;border:1px solid #e5cfa8;line-height:1.4}
+.wh .ng{background:#fdeeee;color:#a33}
+
+.chk{background:#fff8e6;border:1.7px solid #f0d488;border-radius:9px;padding:9px 14px;margin-top:9px}
+.chk .t{font-size:13px;font-weight:800;color:#8a6d1a;margin-bottom:4px}
+.chk ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:3px 16px}
+.chk li{font-size:11px;color:#5c4d20;line-height:1.5}
+.chk li::before{content:"☑ ";color:#c9a227;font-weight:800}
+
+.foot{position:absolute;left:12mm;right:12mm;bottom:7mm;border-top:1.6px solid #d7e0ea;
+  padding-top:6px;font-size:10.3px;color:#44586c;line-height:1.5}
+.foot b{color:#0f3f7a}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="head">
+    <span class="badge">作業者むけ</span>
+    <h1>出品写真の撮り方・入れ方ガイド</h1>
+    <div class="sub">Google ドライブ「出品写真」フォルダ用<br>1商品＝1フォルダ／v2（2026-07-26 CD等の品番を追加）</div>
+  </div>
+
+  <p class="lead">
+    仕入れた商品を出品するために、<b>検品チェック表</b>と<b>商品写真</b>をドライブに入れてください。
+    下のとおり入れれば、システムが自動で商品を特定します。<b>迷ったらこの1枚を見れば大丈夫です。</b>
+  </p>
+
+  <div class="grid">
+
+    <!-- 1 フォルダの作り方 -->
+    <div class="card">
+      <h2><span class="num">1</span>フォルダの作り方</h2>
+      <p>仕入れ経路のフォルダの中に <b>番号フォルダ（1・2・3…の連番）</b> を作ります。番号は<b>連番のままでOK</b>。</p>
+      <div class="tree">
+        <div class="root">📁 出品写真/</div>
+        <div class="route n1">📁 1、ポータル経由/ <span class="cmt">← 経路</span></div>
+        <div class="item n2">📁 1/ <span class="cmt">← 1商品ぶん</span></div>
+        <div class="n3 cmt">検品チェック表＋商品写真</div>
+        <div class="item n2">📁 2/ <span class="cmt">← 次の商品</span></div>
+        <div class="route n1">📁 2、サムライソウル/</div>
+      </div>
+    </div>
+
+    <!-- 2 1フォルダ1商品 -->
+    <div class="card">
+      <h2><span class="num">2</span>1フォルダ＝1商品</h2>
+      <p><span class="hot">1つの番号フォルダには、1つの商品だけ</span>。複数の商品を同じフォルダに混ぜないでください。</p>
+      <div class="gb">
+        <div class="good"><span class="t">◯ 良い例</span>「1」の中は本Aだけ。「2」は本Bだけ。</div>
+        <div class="bad"><span class="t">× ダメな例</span>「1」に本Aと本Bが混ざっている。</div>
+      </div>
+      <p class="note">※ 混ざると別の商品として出品される事故になります。</p>
+    </div>
+
+    <!-- 3 商品写真の種類 -->
+    <div class="card">
+      <h2><span class="num">3</span>入れるもの・写真の種類</h2>
+      <p><b>ア）検品チェック表</b>…1枚　<b>イ）商品写真</b>…下の4種類</p>
+      <div class="shots">
+        <div class="shot"><div class="ic">📕</div><div class="nm">正面</div><div class="ds">表紙・おもて</div></div>
+        <div class="shot"><div class="ic">📖</div><div class="nm">背面</div><div class="ds">裏表紙</div></div>
+        <div class="shot"><div class="ic">📚</div><div class="nm">横</div><div class="ds">側面・背</div></div>
+        <div class="shot bar"><div class="ic">|||</div><div class="nm">バーコード</div><div class="ds">商品特定の要</div></div>
+      </div>
+      <p class="note">順番も枚数も自由。同じ種類が何枚あってもOKです。</p>
+    </div>
+
+    <!-- 4 バーコードは大きく(最重要) -->
+    <div class="card key">
+      <h2><span class="num">4</span>バーコードは必ず「1枚だけ」で大きく</h2>
+      <p><span class="hot">バーコードだけを画面いっぱいに写した写真を、必ず1枚</span>入れてください。ここで商品が決まります。</p>
+      <div class="gb">
+        <div class="good"><span class="t">◯</span>画面いっぱい・くっきり・数字まで全部入っている。</div>
+        <div class="bad"><span class="t">×</span>ピンぼけ／小さい／<b>端が切れている</b>。</div>
+      </div>
+      <p class="note">★ 端が数ミリ切れているだけで読み取れません（実際に起きました）。<b>余白を広めに</b>入れてください。</p>
+    </div>
+
+    <!-- 5 CD・DVD・ゲーム(新設) -->
+    <div class="card key">
+      <h2><span class="num">5</span>CD・DVD・ゲームは「品番」も撮る</h2>
+      <p>バーコードが無い／読めないとき、<b>品番（規格番号）</b>で商品を特定します。次の場所を1枚撮ってください。</p>
+      <table class="wh">
+        <tr><th>◯ 撮る場所</th><td><b>裏ジャケットの下のほう</b>／<b>ディスクの印刷面</b><br>例：<b>KTGS-30255CD</b>／<b>HICC-1001</b>（英字＋ハイフン＋数字）</td></tr>
+        <tr><th class="ng">× 使わない</th><td class="ng">ディスク<b>中心のリング部分</b>に刻まれた細かい文字<br>（製造管理用の番号で、商品の特定には使えません）</td></tr>
+      </table>
+    </div>
+
+    <!-- 6 チェック表 -->
+    <div class="card">
+      <h2><span class="num">6</span>チェック表は印刷して撮る</h2>
+      <p>検品チェック表は<b>印刷して手書きでチェック</b>し、それを撮影します。</p>
+      <p><span class="hot">種別・コンディション・自由記入欄まで用紙ぜんぶ</span>が写るように撮ってください。画面の撮影は縞模様が出るため非推奨です。</p>
+    </div>
+
+  </div><!-- /grid -->
+
+  <div class="chk">
+    <div class="t">7. きれいに撮るコツ（全部の写真に共通）</div>
+    <ul>
+      <li>明るい場所で撮る</li>
+      <li>光の映り込み・影を避ける</li>
+      <li>被写体を画面いっぱいに</li>
+      <li>ピントを合わせる（ぶれない）</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <b>まとめ：</b>経路フォルダ → 番号フォルダ（1商品）→ その中に「検品チェック表」＋「正面・背面・横・バーコード」。
+    <b>バーコードは切れないよう大きく1枚。CD・DVD・ゲームは品番も1枚。</b>
+  </div>
+
+</div>
+</body>
+</html>

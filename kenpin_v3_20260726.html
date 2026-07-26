@@ -1,0 +1,168 @@
+<meta charset="utf-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@page{size:A4 portrait;margin:0}
+html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;color:#111}
+.page{width:210mm;height:293mm;overflow:hidden;background:#fff;margin:0 auto;
+  padding:10mm 12mm 8mm;position:relative}
+
+/* ヘッダー */
+.head{display:flex;justify-content:space-between;align-items:flex-end;
+  border-bottom:3px solid #111;padding-bottom:3mm;margin-bottom:2.5mm}
+.head h1{font-size:26px;letter-spacing:.06em}
+.head .sub{font-size:10.5px;color:#555;margin-top:2px}
+.head .datebox{font-size:11.5px;text-align:right;line-height:2.1}
+.head .datebox b{display:inline-block;min-width:50px}
+.uline{display:inline-block;border-bottom:1.2px solid #888;min-width:78px;height:15px}
+
+/* 記入案内 */
+.guide{font-size:10.5px;color:#b3541e;font-weight:700;margin-bottom:3.5mm}
+
+/* セクション見出し */
+.sec-h{background:#e9edf6;border-left:7px solid #4a5f9e;font-size:14px;
+  font-weight:700;padding:5px 10px;margin:0 0 7px;letter-spacing:.04em}
+
+/* 種別(新設)＋コンディション評価 共通の横並び選択 */
+.pick{display:flex;gap:0;border:2px solid #4a5f9e;border-radius:5px;overflow:hidden}
+.pick .opt{flex:1;text-align:center;font-size:14px;font-weight:700;
+  padding:9px 2px;border-right:1.4px solid #c4cde6;line-height:1.35}
+.pick .opt:last-child{border-right:none}
+.pick .opt .en{display:block;font-size:8.5px;color:#888;font-weight:400;margin-top:1px}
+.pick .opt .ck{display:inline-block;width:24px;height:24px;border:2.4px solid #555;
+  border-radius:50%;margin-bottom:4px}
+
+/* 種別セクションは色を変えて区別 */
+.kind .sec-h{background:#e6f2ea;border-left-color:#3f8a5f}
+.kind .pick{border-color:#3f8a5f;margin-bottom:4.5mm}
+.kind .pick .opt{border-right-color:#bcd9c8}
+
+.cond .pick{margin-bottom:4.5mm}
+
+/* チェックリスト2段組 */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 10mm;margin-bottom:4.5mm}
+.two.div .list:first-child{border-right:1.4px dashed #ccc;padding-right:9mm}
+.list{display:flex;flex-direction:column}
+.item{display:flex;align-items:center;font-size:15px;gap:13px;
+  padding:7px 4px;border-bottom:1.2px solid #eee}
+.item:last-child{border-bottom:none}
+.box{width:27px;height:27px;border:2.6px solid #333;border-radius:5px;flex:none}
+
+/* 付属品セクションを強調 */
+.attach .sec-h{background:#fdeede;border-left-color:#d98a2b}
+.attach .box{border-color:#c9791f}
+
+/* 品番メモ(新設) */
+.code .sec-h{background:#fdf2e0;border-left-color:#c9791f}
+.code .row{display:flex;align-items:center;gap:10px;
+  border:1.5px solid #bbb;border-radius:5px;padding:7px 10px;margin-bottom:4px}
+.code .row .lbl{font-size:12px;font-weight:700;min-width:112px;color:#8a5a12}
+.code .row .fill{flex:1;border-bottom:1.4px solid #999;height:20px}
+.code .hint{font-size:9.5px;color:#8a5a12;margin:2px 2px 4.5mm;line-height:1.5}
+
+/* 自由記入 */
+.free .sec-h{margin-bottom:7px}
+.free .lines{border:1.5px solid #bbb;border-radius:5px;height:17mm;padding:6px 10px;
+  background:repeating-linear-gradient(#fff,#fff 10mm,#e4e4e4 10mm,#e4e4e4 calc(10mm + 1px))}
+.free .hint{font-size:9.5px;color:#888;margin:4px 2px 0;padding-bottom:6mm}
+
+/* フッター */
+.foot{position:absolute;left:12mm;right:12mm;bottom:5mm;
+  text-align:center;font-size:8.5px;color:#999;
+  border-top:1px solid #ddd;padding-top:2mm}
+</style>
+
+<div class="page">
+
+  <div class="head">
+    <div>
+      <h1>検品チェック表</h1>
+      <div class="sub">古本・メディア 出品前コンディション確認シート</div>
+    </div>
+    <div class="datebox">
+      <div><b>検品日</b> <span class="uline"></span> 年 <span class="uline" style="min-width:34px"></span> 月 <span class="uline" style="min-width:34px"></span> 日</div>
+      <div><b>検品者</b> <span class="uline" style="min-width:124px"></span></div>
+    </div>
+  </div>
+
+  <div class="guide">記入方法：□ の中に大きく「レ点（✓）」を入れてください。種別とコンディション評価は ○ の中に印。</div>
+
+  <!-- 種別(2026-07-26 新設) -->
+  <div class="kind">
+    <div class="sec-h">種別（1つ選択）※必須</div>
+    <div class="pick">
+      <div class="opt"><span class="ck"></span><br>本<span class="en">Book</span></div>
+      <div class="opt"><span class="ck"></span><br>CD<span class="en">CD</span></div>
+      <div class="opt"><span class="ck"></span><br>DVD<span class="en">DVD</span></div>
+      <div class="opt"><span class="ck"></span><br>ゲーム<span class="en">Game</span></div>
+      <div class="opt"><span class="ck"></span><br>レコード<span class="en">Record</span></div>
+    </div>
+  </div>
+
+  <!-- コンディション評価 -->
+  <div class="cond">
+    <div class="sec-h">コンディション評価（1つ選択）※必須</div>
+    <div class="pick">
+      <div class="opt"><span class="ck"></span><br>新品<span class="en">New</span></div>
+      <div class="opt"><span class="ck"></span><br>新品同様<span class="en">Like New</span></div>
+      <div class="opt"><span class="ck"></span><br>美品<span class="en">Very Good</span></div>
+      <div class="opt"><span class="ck"></span><br>良い<span class="en">Good</span></div>
+      <div class="opt"><span class="ck"></span><br>可<span class="en">Acceptable</span></div>
+    </div>
+  </div>
+
+  <!-- 状態チェック -->
+  <div class="sec-h">状態チェック（該当する箇所に ✓）</div>
+  <div class="two div">
+    <div class="list">
+      <div class="item"><span class="box"></span>表紙/カバーに傷</div>
+      <div class="item"><span class="box"></span>日焼け・変色</div>
+      <div class="item"><span class="box"></span>折れ・ヨレ</div>
+      <div class="item"><span class="box"></span>採番・蔵書印（図書館除籍）</div>
+      <div class="item"><span class="box"></span>帯なし</div>
+    </div>
+    <div class="list">
+      <div class="item"><span class="box"></span>汚れ・シミ</div>
+      <div class="item"><span class="box"></span>書き込み・線引き</div>
+      <div class="item"><span class="box"></span>水濡れ跡</div>
+      <div class="item"><span class="box"></span>裁断されています</div>
+      <div class="item"><span class="box"></span>その他の傷・使用感</div>
+    </div>
+  </div>
+
+  <!-- 付属品チェック -->
+  <div class="attach">
+    <div class="sec-h">付属品チェック（不足があれば ✓）</div>
+    <div class="two div">
+      <div class="list">
+        <div class="item"><span class="box"></span>付属の箱がない</div>
+        <div class="item"><span class="box"></span>付属のケースがない</div>
+      </div>
+      <div class="list">
+        <div class="item"><span class="box"></span>付属品の欠品</div>
+        <div class="item"><span class="box"></span>付属の説明書がない</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 品番メモ(2026-07-26 新設・CD/DVD/ゲーム/レコード用) -->
+  <div class="code">
+    <div class="sec-h">品番メモ（CD・DVD・ゲーム・レコードのとき記入）</div>
+    <div class="row"><span class="lbl">品番（規格番号）</span><span class="fill"></span></div>
+    <div class="hint">
+      ディスクの<b>印刷面</b>か<b>裏ジャケットの下</b>にある「アルファベット＋ハイフン＋数字」（例 KTGS-30255CD／HICC-1001）。
+      ★ディスク中心のリング部分に刻まれた細かい文字（マトリクス番号）は<b>別物なので使いません</b>。
+      バーコードが読めれば品番は空欄で構いません。
+    </div>
+  </div>
+
+  <!-- 自由記入 -->
+  <div class="free">
+    <div class="sec-h">その他・自由記入（＝マスター）</div>
+    <div class="lines"></div>
+    <div class="hint">例：中古品です。細かな傷や使用感がある場合があります。／ ※ここに書いた内容が各販路の説明文の大元になります。</div>
+  </div>
+
+  <div class="foot">SS Investor / 検品チェック表 v3（2026-07-26 種別・品番メモを追加）</div>
+
+</div>
