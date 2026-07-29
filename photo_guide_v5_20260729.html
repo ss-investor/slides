@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>出品写真ガイド v5</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@page{size:A4 portrait;margin:0}
+html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;
+  font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;color:#1c2530}
+.page{width:210mm;height:293mm;overflow:hidden;background:#fff;margin:0 auto;
+  padding:9mm 12mm 8mm;position:relative}
+.head{display:flex;align-items:center;gap:11px;border-bottom:3.5px solid #1666c9;padding-bottom:6px}
+.head .badge{background:#1666c9;color:#fff;font-weight:800;font-size:12.5px;padding:5px 11px;border-radius:7px;white-space:nowrap}
+.head h1{font-size:20px;font-weight:800;white-space:nowrap}
+.head .sub{margin-left:auto;font-size:9.2px;color:#5b6b7c;text-align:right;line-height:1.4;width:58mm}
+.lead{font-size:10.2px;color:#34445a;margin:4px 0 5px;line-height:1.4}
+.lead b{color:#c0392b}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.card{border:1.6px solid #d7e0ea;border-radius:10px;padding:6px 10px;background:#fbfdff}
+.card.wide{grid-column:1 / -1}
+.card h2{font-size:12.8px;font-weight:800;color:#0f3f7a;display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.num{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;
+  background:#1666c9;color:#fff;font-size:12px;font-weight:800;flex:0 0 auto}
+.card p{font-size:9.8px;line-height:1.4;color:#2b3a4b}
+.card p+p{margin-top:2px}
+.card b{color:#0f3f7a}
+.hot{color:#c0392b;font-weight:800}
+.card ul{list-style:none;margin-top:2px}
+.card li{font-size:9.7px;line-height:1.4;color:#2b3a4b;padding-left:11px;position:relative}
+.card li::before{content:"・";position:absolute;left:0;color:#1666c9;font-weight:800}
+.card li b{color:#0f3f7a}
+
+/* 赤枠カード(最重要) */
+.card.key{border-color:#e8a0a0;background:#fff7f6}
+.card.key h2{color:#c0392b}
+.card.key .num{background:#c0392b}
+.card.key li::before{color:#c0392b}
+
+/* フォルダ構成ツリー */
+.tree{background:#0f2c4d;border-radius:8px;padding:6px 10px;color:#e8f1fb;font-size:9.3px;line-height:1.55;
+  font-family:"SF Mono","Menlo",monospace;margin-top:3px}
+.tree .root{color:#ffd479;font-weight:700}
+.tree .route{color:#8fd0ff}
+.tree .item{color:#c7f9d6}
+.tree .cmt{color:#88a3bf}
+.tree .n1{padding-left:14px}.tree .n2{padding-left:30px}.tree .n3{padding-left:46px}
+
+/* 写真の種類 */
+.shots{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:3px}
+.shot{border:1.5px solid #cdd9e6;border-radius:8px;padding:5px 2px 4px;text-align:center;background:#fff}
+.shot .ic{font-size:16px;line-height:1}
+.shot .nm{font-size:9.5px;font-weight:800;color:#0f3f7a;margin-top:2px}
+.shot .ds{font-size:7.6px;color:#5b6b7c;line-height:1.2;margin-top:1px}
+.shot.bar{border-color:#c0392b;background:#fff5f4;border-width:2.2px}
+.shot.bar .nm{color:#c0392b}
+
+.note{font-size:8.9px;color:#5b6b7c;margin-top:2px;line-height:1.32}
+
+/* 良い例・悪い例 */
+.gb{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:3px}
+.gb div{border-radius:8px;padding:4px 8px;font-size:9.4px;line-height:1.32}
+.good{background:#eafaf0;border:1.5px solid #7fd6a0}
+.bad{background:#fdeeee;border:1.5px solid #eba3a3}
+.gb .t{font-weight:800;font-size:10.2px;display:block;margin-bottom:1px}
+.good .t{color:#1a8a4e}.bad .t{color:#c0392b}
+
+/* 種別ごとの場所テーブル */
+.wh{width:100%;border-collapse:collapse;margin-top:3px;font-size:9.4px}
+.wh th{background:#fdeede;color:#8a5a12;font-weight:800;padding:2.5px 6px;border:1px solid #e5cfa8;text-align:left;white-space:nowrap}
+.wh td{padding:2.5px 6px;border:1px solid #e5cfa8;line-height:1.3;vertical-align:top}
+.wh .md{background:#fff8ef;font-weight:800;color:#8a5a12;white-space:nowrap}
+.wh .ng{background:#fdeeee;color:#a33}
+.wh tr.hl td,.wh tr.hl .md{background:#fff2e0}
+
+.chk{background:#fff8e6;border:1.7px solid #f0d488;border-radius:9px;padding:5px 12px;margin-top:5px}
+.chk .t{font-size:11.2px;font-weight:800;color:#8a6d1a;margin-bottom:1px}
+.chk ul{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:1px 12px}
+.chk li{font-size:9.5px;color:#5c4d20;line-height:1.35}
+.chk li::before{content:"☑ ";color:#c9a227;font-weight:800}
+
+.foot{position:absolute;left:12mm;right:12mm;bottom:6mm;border-top:1.6px solid #d7e0ea;
+  padding-top:5px;font-size:9.6px;color:#44586c;line-height:1.4}
+.foot b{color:#0f3f7a}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="head">
+    <span class="badge">作業者むけ</span>
+    <h1>出品写真の撮り方・入れ方ガイド</h1>
+    <div class="sub">Google ドライブ「出品写真」フォルダ用<br>1商品＝1フォルダ／v5（2026-07-29 <b>まとめ売り・レンタル落ちを追加</b>）</div>
+  </div>
+
+  <p class="lead">
+    仕入れた商品を出品するために、<b>検品票</b>と<b>商品写真</b>をドライブに入れてください。
+    下のとおり入れれば、システムが自動で商品を特定します。<b>迷ったらこの1枚を見れば大丈夫です。</b>
+  </p>
+
+  <div class="grid">
+
+    <!-- 1 フォルダの作り方 -->
+    <div class="card">
+      <h2><span class="num">1</span>フォルダの作り方</h2>
+      <p>仕入れ経路のフォルダの中に <b>番号フォルダ（1・2・3…の連番）</b> を作ります。番号は<b>連番のままでOK</b>。</p>
+      <div class="tree">
+        <div class="root">📁 出品写真/</div>
+        <div class="route n1">📁 1、ポータル経由/ <span class="cmt">← 経路</span></div>
+        <div class="item n2">📁 1/ <span class="cmt">← 1商品ぶん</span></div>
+        <div class="n3 cmt">検品票＋商品写真</div>
+        <div class="route n1">📁 2、サムライソウル/ <span class="cmt">← 漫画のまとめ売り</span></div>
+      </div>
+    </div>
+
+    <!-- 2 1フォルダ1商品 -->
+    <div class="card">
+      <h2><span class="num">2</span>1フォルダ＝1商品（セットは1セット）</h2>
+      <p><span class="hot">1つの番号フォルダには、1つの商品だけ</span>。ちがう商品を同じフォルダに混ぜないでください。</p>
+      <p><b>まとめ売り（全巻セット）は、セットまるごとで「1商品」</b>です。24冊あっても、フォルダは1つ・検品票も1枚。</p>
+      <p class="note">※ 混ざると別の商品として出品される事故になります。</p>
+    </div>
+
+    <!-- 3 商品写真の種類 -->
+    <div class="card">
+      <h2><span class="num">3</span>入れるもの・写真の種類</h2>
+      <p><b>ア）検品票</b>…1枚　<b>イ）商品写真</b>…下の5種類</p>
+      <div class="shots">
+        <div class="shot"><div class="ic">📕</div><div class="nm">正面</div><div class="ds">表紙・おもて</div></div>
+        <div class="shot"><div class="ic">📖</div><div class="nm">背面</div><div class="ds">裏表紙・裏面</div></div>
+        <div class="shot"><div class="ic">📚</div><div class="nm">横</div><div class="ds">側面・背</div></div>
+        <div class="shot bar"><div class="ic">|||</div><div class="nm">バーコード</div><div class="ds">商品特定の要</div></div>
+        <div class="shot bar"><div class="ic">📄</div><div class="nm">奥付</div><div class="ds">本は必ず</div></div>
+      </div>
+      <p class="note">順番も枚数も自由。同じ種類が何枚あってもOKです。</p>
+    </div>
+
+    <!-- 4 バーコードは大きく(最重要) -->
+    <div class="card key">
+      <h2><span class="num">4</span>バーコードは必ず「1枚だけ」で大きく</h2>
+      <p><span class="hot">バーコードだけを画面いっぱいに写した写真を、必ず1枚</span>入れてください。ここで商品が決まります。</p>
+      <div class="gb">
+        <div class="good"><span class="t">◯</span>画面いっぱい・くっきり・数字まで全部入っている。</div>
+        <div class="bad"><span class="t">×</span>ピンぼけ／小さい／<b>端が切れている</b>。</div>
+      </div>
+      <p class="note">★ 端が数ミリ切れているだけで読み取れません（実際に起きました）。<b>余白を広めに</b>入れてください。</p>
+    </div>
+
+    <!-- 5 まとめ売り(新規) -->
+    <div class="card key">
+      <h2><span class="num">5</span>まとめ売り（全巻セット）の撮り方 ← 新</h2>
+      <ul>
+        <li><b>背表紙を並べて全体を1枚</b>。<span class="hot">何巻が欠けているか一目でわかるように</span>並べます。</li>
+        <li>代表として<b>1巻の 表紙・裏表紙・バーコード</b>を撮ります（全巻ぶんは不要）。</li>
+        <li>状態の悪い巻があれば、その巻だけ<b>追加で1枚</b>。</li>
+      </ul>
+      <p class="note">★ <b>欠けている巻は写真では判断しません。</b>検品票の「欠けている巻」で番号を押してください。</p>
+    </div>
+
+    <!-- 6 レンタル落ち(新規) -->
+    <div class="card key">
+      <h2><span class="num">6</span>レンタル落ちのシール ← 新</h2>
+      <ul>
+        <li><b>シールが写った写真を必ず1枚。</b>隠さず、そのまま撮ってください。</li>
+        <li><span class="hot">シールは剥がさないでください。</span>紙が破れて、かえって状態が悪くなります。</li>
+        <li><span class="hot">レンタル店のシールのバーコードは撮らない。</span>商品のバーコードは<b>裏表紙の下</b>（978で始まる番号）です。</li>
+      </ul>
+      <p class="note">★ お店のシールの番号を読むと、<b>まったく別の本として登録されます。</b>剥がせないことは説明文に書いて売ります。</p>
+    </div>
+
+    <!-- 7 奥付 -->
+    <div class="card key wide">
+      <h2><span class="num">7</span>本は「奥付」を必ず1枚</h2>
+      <p><b>奥付</b>＝本のいちばん最後（まれに最初）にある、<b>書名・著者・発行年月日・第◯刷・出版社</b>が書かれたページです。
+         <span class="hot">奥付のあるものは、必ず1枚撮ってください。</span>
+         同じ表紙でも<b>発行年がちがえば別の商品</b>で、取り違えるとお客様からの返品につながります。</p>
+      <p class="note">★ 実例：函入りの全集で1974年版と2001年復刊版が<b>見た目そっくり</b>→奥付が無く出品を止めました。
+         ★ 奥付が無い本（古い洋書など）はスキップでOK。<b>CD・DVD・ゲームは不要</b>です。
+         ★ <b>まとめ売りは、代表の1巻だけ</b>で構いません。</p>
+    </div>
+
+    <!-- 8 種別ごとの場所 -->
+    <div class="card key wide">
+      <h2><span class="num">8</span>バーコードと品番は「種別ごとに場所が違う」</h2>
+      <p><b>おもて面には、まず写っていません。ほとんどが「裏面の下のほう」です。</b>
+         バーコードが無い／読めないときは、かわりに<b>品番（規格番号）</b>で商品を特定します。</p>
+      <table class="wh">
+        <tr>
+          <th style="width:23mm">種別</th>
+          <th style="width:54mm">バーコード（これが最優先）</th>
+          <th>品番・奥付＝バーコードが無い／読めないときの手がかり</th>
+        </tr>
+        <tr class="hl">
+          <td class="md">本</td>
+          <td>裏表紙の下のほう（978〜）</td>
+          <td><b>奥付を必ず1枚</b>（発行年・第◯刷で版を確認します）</td>
+        </tr>
+        <tr>
+          <td class="md">CD</td>
+          <td><b>裏ジャケットの下のほう</b>／ケースに入れたままでOK</td>
+          <td><b>裏ジャケット下部</b>／<b>ディスクの印刷面</b>　例：<b>TOCP-8555</b></td>
+        </tr>
+        <tr>
+          <td class="md">DVD・Blu-ray</td>
+          <td><b>裏面（背面）の下のほう</b>／トールケースは表から読めません</td>
+          <td><b>裏面の下部</b>／<b>ディスクの印刷面</b>　例：<b>PCBC-50240</b></td>
+        </tr>
+        <tr>
+          <td class="md">ゲーム</td>
+          <td>裏面の下のほう</td>
+          <td>裏面下部／ディスク・カセットのラベル面</td>
+        </tr>
+        <tr>
+          <th class="ng">× 使わない</th>
+          <td class="ng" colspan="2">ディスク<b>中心のリング部分</b>の細かい文字／<b>レンタル店・図書館のシールの番号</b>（どちらも商品の特定には使えません）</td>
+        </tr>
+      </table>
+      <p class="note">★ <b>帯が無いCDは、品番だけが手がかりです。</b>ディスクの印刷面を1枚、必ず撮ってください。
+        ★ <b>特典ディスク・ブックレットなどの付属品が入っていたら、それも1枚撮ってください。</b>初回限定盤かどうかで値段が変わります。</p>
+    </div>
+
+  </div><!-- /grid -->
+
+  <div class="chk">
+    <div class="t">9. きれいに撮るコツ（全部の写真に共通）</div>
+    <ul>
+      <li>明るい場所で撮る</li>
+      <li>映り込み・影を避ける</li>
+      <li>画面いっぱいに写す</li>
+      <li>ピントを合わせる</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <b>まとめ：</b>経路フォルダ → 番号フォルダ（1商品＝まとめ売りは1セット）→ その中に「検品票」＋「正面・背面・横・バーコード」。
+    <b>バーコードは裏面の下。切れないよう大きく1枚。本は奥付も1枚。まとめ売りは背表紙を並べて1枚。レンタルのシールは剥がさず、そのまま1枚。</b>
+  </div>
+
+</div>
+</body>
+</html>
