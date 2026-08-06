@@ -144,6 +144,8 @@
   .reset:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   @media (prefers-reduced-motion: reduce) { .tick, .bar i { transition: none; } }
   .title { font-weight: 600; font-size: 15.5px; line-height: 1.45; overflow-wrap: anywhere; }
+  .retired { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 2px; background: var(--ink-faint); color: var(--card); font-size: 11px; font-weight: 700; letter-spacing: .04em; vertical-align: 2px; }
+  .gap.is-done b { color: var(--ink-faint); font-size: 17px; }
   .pending { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 2px; background: var(--warn); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .04em; vertical-align: 2px; }
   .gap.is-warn b { color: var(--warn); }
   .liar { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 2px; background: var(--alarm); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .04em; vertical-align: 2px; }
@@ -202,16 +204,17 @@
   <dl class="totals">
     <div class="total"><dt>調べたセット</dt><dd>93<small> 件</small></dd></div>
     <div class="total is-have"><dt>そろっている</dt><dd>59<small> 件</small></dd></div>
-    <div class="total is-miss"><dt>手を打つべきもの</dt><dd>29<small> 件</small></dd></div>
+    <div class="total is-miss"><dt>お尻が足りない</dt><dd>29<small> 件</small></dd></div>
     <div class="total is-alarm"><dt>うち表示が事実と違う</dt><dd>2<small> 件</small></dd></div>
     <div class="total"><dt>足りない冊数</dt><dd>89<small> 冊以上</small></dd></div>
+    <div class="total"><dt>欠番（対応済み）</dt><dd>4<small> 件</small></dd></div>
   </dl>
 
   <div class="progress">
     <span class="label">現場での確認</span>
     <span class="num"><b id="done">0</b> <small>/ <span id="all">0</span> 件</small></span>
     <span class="bar"><i id="fill"></i></span>
-    <button type="button" class="reset" id="reset">印をすべて消す</button>
+    <button type="button" class="reset" id="reset">最初の状態に戻す</button>
   </div>
 
   <div class="legend">
@@ -222,9 +225,9 @@
   </div>
 
   <section>
-    <h2>1. お尻の巻が足りない <span class="count">29件・保管箱の番号順</span></h2>
+    <h2>1. 手を打つべきもの <span class="count">33件（不足29件＋欠番4件）・保管箱の番号順</span></h2>
     <p class="note"><b style="color:var(--alarm)">まず「表示が事実と違う」の2件（ぶどうとスミレ／三度のメシと、アレが好き。）から手を打ってください。</b>まだ続きが出ている作品を「全巻完結」と書いて売っており、買った人が全巻そろうつもりで受け取るため、返品や低評価に直結します。<b style="color:var(--warn)">薔薇色ノ約束</b>は巻は足りていますが、完結したという確証が取れませんでした。「全巻完結セット」の表示は外したほうが安全です。</p>
-    <p class="note">不足が多いものほど、そろえたときの売価が大きく上がります。今回取り下げた「反抗期なカレシ」はB-16、「蝶か犯か」はB-17にありました。同じ箱に不足品が固まっているので、その2箱から見るのが早いと思われます。</p>
+    <p class="note">不足が多いものほど、そろえたときの売価が大きく上がります。<b>欠番・対応済み</b>の4件は、続きが見つかって既に取り下げたもので、最初から印が付いています。B-16とB-17はその欠番が出た箱なので、続きが眠っている可能性が高い箱です。</p>
 
     <div class="box">
       <div class="box-head"><span class="box-no">B-1</span><span class="box-sum">1件 / 1冊 不足</span></div>
@@ -291,7 +294,7 @@
     </div>
 
     <div class="box">
-      <div class="box-head"><span class="box-no">B-16</span><span class="box-sum">5件 / 9冊 不足　★取り下げた「反抗期なカレシ」と同じ箱</span></div>
+      <div class="box-head"><span class="box-no">B-16</span><span class="box-sum">5件 / 9冊 不足（ほか 欠番1件）</span></div>
       <div class="item"><input type="checkbox" class="tick" data-k="三神先生の愛し方" aria-label="三神先生の愛し方 を確認済みにする"><div class="title">三神先生の愛し方</div><div class="gap"><b>3</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span></div>
         <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 8巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
@@ -311,11 +314,14 @@
       <div class="item"><input type="checkbox" class="tick" data-k="あさひ先輩のお気にいり" aria-label="あさひ先輩のお気にいり を確認済みにする"><div class="title">あさひ先輩のお気にいり</div><div class="gap"><b>1</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp miss">7</span></div>
         <div class="meta"><span><span class="k">手元</span> 1〜6巻</span><span><span class="k">既刊</span> 7巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="item"><input type="checkbox" class="tick" data-k="欠番:反抗期なカレシ" checked aria-label="反抗期なカレシ を確認済みにする"><div class="title">反抗期なカレシ<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
+        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 1〜6巻（6冊）</span><span><span class="k">理由</span> 7〜9巻が後から見つかった（本日 取り下げ）</span><span><span class="k">今は</span> 出品していません</span></div></div>
       </div>
+    </div>
     </div>
 
     <div class="box">
-      <div class="box-head"><span class="box-no">B-17</span><span class="box-sum">4件 / 15冊 不足　★取り下げた「蝶か犯か」と同じ箱</span></div>
+      <div class="box-head"><span class="box-no">B-17</span><span class="box-sum">4件 / 15冊 不足（ほか 欠番2件）</span></div>
       <div class="item"><input type="checkbox" class="tick" data-k="三日月と流れ星" aria-label="三日月と流れ星 を確認済みにする"><div class="title">三日月と流れ星</div><div class="gap"><b>5</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span></div>
         <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全8巻で完結</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
@@ -331,7 +337,13 @@
       <div class="item"><input type="checkbox" class="tick" data-k="恋人は旦那さま" aria-label="恋人は旦那さま を確認済みにする"><div class="title">恋人は旦那さま</div><div class="gap"><b>2</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span></div>
         <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 全7巻で完結</span><span><span class="k">売価</span> ¥1,100</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="item"><input type="checkbox" class="tick" data-k="欠番:蝶か犯か" checked aria-label="蝶か犯か ～極道様 溢れて溢れて泣かせたい～ を確認済みにする"><div class="title">蝶か犯か ～極道様 溢れて溢れて泣かせたい～<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
+        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 1〜6巻（6冊）</span><span><span class="k">理由</span> 7〜9巻が後から見つかった（本日 取り下げ）</span><span><span class="k">今は</span> 出品していません</span></div></div>
       </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="欠番:黒豹と16歳" checked aria-label="黒豹と16歳 を確認済みにする"><div class="title">黒豹と16歳<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
+        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 9冊（8巻・9巻抜け）</span><span><span class="k">理由</span> 8巻・9巻が後から見つかった（8月4日）→ 11巻そろいで再登録し出品済み</span><span><span class="k">今は</span> 出品していません</span></div></div>
+      </div>
+    </div>
     </div>
 
     <div class="box">
@@ -367,7 +379,7 @@
     </div>
 
     <div class="box">
-      <div class="box-head"><span class="box-no">B-28</span><span class="box-sum">3件 / 8冊 不足</span></div>
+      <div class="box-head"><span class="box-no">B-28</span><span class="box-sum">3件 / 8冊 不足（ほか 欠番1件）</span></div>
       <div class="item"><input type="checkbox" class="tick" data-k="はたらく細胞BLACK" aria-label="はたらく細胞BLACK を確認済みにする"><div class="title">はたらく細胞BLACK</div><div class="gap"><b>5</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span></div>
         <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全8巻で完結</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
@@ -379,7 +391,10 @@
       <div class="item"><input type="checkbox" class="tick" data-k="さよならミニスカート" aria-label="さよならミニスカート を確認済みにする"><div class="title">さよならミニスカート</div><div class="gap"><b>1</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span></div>
         <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 4巻</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="item"><input type="checkbox" class="tick" data-k="欠番:ガラスの仮面" checked aria-label="ガラスの仮面 を確認済みにする"><div class="title">ガラスの仮面<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
+        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 17冊（15巻・16巻抜け）</span><span><span class="k">理由</span> 15巻・16巻を後から探して補うため（8月4日）</span><span><span class="k">今は</span> 出品していません</span></div></div>
       </div>
+    </div>
     </div>
   </section>
 
@@ -462,24 +477,6 @@
     </div>
   </section>
 
-  <section>
-    <h2>4. 欠番にしたもの <span class="count">4件・出品していません</span></h2>
-    <p class="note">あとから続きの巻が見つかったため、そのセットの登録を取り消したものです。現物がそろってから撮り直して登録し直します。黒豹と16歳は、すでに11巻そろいで登録し直して出品済みです。</p>
-    <div class="box">
-      <div class="tablewrap">
-        <table>
-          <thead><tr><th class="cb"></th><th>箱</th><th>作品名</th><th class="n">取り消した中身</th><th>欠番にした理由</th></tr></thead>
-          <tbody>
-            <tr><td class="cb"><input type="checkbox" class="tick" data-k="反抗期なカレシ" aria-label="反抗期なカレシ を確認済みにする"></td><td class="box-cell">B-16</td><td>反抗期なカレシ</td><td class="n">1〜6巻（6冊）</td><td>7〜9巻が後から見つかった（本日 取り下げ）</td></tr>
-            <tr><td class="cb"><input type="checkbox" class="tick" data-k="蝶か犯か ～極道様 溢れて溢れて泣かせたい～" aria-label="蝶か犯か ～極道様 溢れて溢れて泣かせたい～ を確認済みにする"></td><td class="box-cell">B-17</td><td>蝶か犯か ～極道様 溢れて溢れて泣かせたい～</td><td class="n">1〜6巻（6冊）</td><td>7〜9巻が後から見つかった（本日 取り下げ）</td></tr>
-            <tr><td class="cb"><input type="checkbox" class="tick" data-k="黒豹と16歳" aria-label="黒豹と16歳 を確認済みにする"></td><td class="box-cell">B-17</td><td>黒豹と16歳</td><td class="n">9冊（8巻・9巻抜け）</td><td>8巻・9巻が後から見つかった（8月4日）→ 11巻そろいで再登録済み</td></tr>
-            <tr><td class="cb"><input type="checkbox" class="tick" data-k="ガラスの仮面" aria-label="ガラスの仮面 を確認済みにする"></td><td class="box-cell">B-28</td><td>ガラスの仮面</td><td class="n">17冊（15巻・16巻抜け）</td><td>15巻・16巻を後から探して補うため（8月4日）</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
   <footer>
     <p><b>調べ方</b>　作品ごとに「今どこまで発行されているか」を出版社・書店・電子書店の情報で1件ずつ確認しました。当社のカタログ照合だけでは、そもそもデータの無い作品が「先の巻は無い」と誤って判定されるため、判断には使っていません。</p>
     <p><b>分冊版にご注意ください。</b>　電子書店には紙の単行本とは別に「分冊版」「マイクロ版」があり、巻数が何倍にもなります（例：君がブルーバードは紙で全3巻、電子の分冊版で全12巻）。この一覧の既刊数はすべて紙の単行本の巻数です。</p>
@@ -512,10 +509,10 @@
     var state = load();
     all.textContent = boxes.length;
     boxes.forEach(function (b) {
-      if (state[b.dataset.k]) b.checked = true;
+      if (b.dataset.k in state) b.checked = !!state[b.dataset.k];
       b.addEventListener('change', function () {
         var st = load();
-        if (b.checked) st[b.dataset.k] = 1; else delete st[b.dataset.k];
+        st[b.dataset.k] = b.checked ? 1 : 0;
         save(st);
         paint();
       });
@@ -523,8 +520,8 @@
     paint();
 
     reset.addEventListener('click', function () {
-      if (!window.confirm('付けた印をすべて消します。よろしいですか。')) return;
-      boxes.forEach(function (b) { b.checked = false; });
+      if (!window.confirm('付けた印を消して最初の状態に戻します。よろしいですか。（欠番・対応済みの印は残ります）')) return;
+      boxes.forEach(function (b) { b.checked = b.defaultChecked; });
       save({});
       paint();
     });
