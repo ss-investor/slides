@@ -103,7 +103,7 @@
   .box-no { font-weight: 700; font-size: 16px; letter-spacing: .02em; color: var(--accent); font-variant-numeric: tabular-nums; }
   .box-sum { font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 
-  .item { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 4px 14px; padding: 13px 18px; border-bottom: 1px solid var(--rule-soft); align-items: start; }
+  .item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 14px; padding: 13px 18px; border-bottom: 1px solid var(--rule-soft); align-items: start; }
   .item:last-child { border-bottom: 0; }
   .tick {
     appearance: none; -webkit-appearance: none;
@@ -118,9 +118,13 @@
   .tick:hover { border-color: var(--have); }
   .tick:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .tick-sample { width: 20px; height: 20px; border: 2px solid var(--ink-faint); border-radius: 3px; display: inline-block; vertical-align: -5px; }
-  .item:has(.tick:checked) .title, .item:has(.tick:checked) .meta, .item:has(.tick:checked) .gap { opacity: .42; }
-  .item:has(.tick:checked) .spines { opacity: .42; }
-  .item:has(.tick:checked) .title { text-decoration: line-through; text-decoration-color: var(--ink-faint); }
+  .item:has([data-step="relist"]:checked) .title, .item:has([data-step="relist"]:checked) .meta, .item:has([data-step="relist"]:checked) .gap { opacity: .42; }
+  .item:has([data-step="relist"]:checked) .spines { opacity: .42; }
+  .item:has([data-step="relist"]:checked) .title { text-decoration: line-through; text-decoration-color: var(--ink-faint); }
+  .steps { display: flex; flex-wrap: wrap; gap: 7px 20px; padding-top: 3px; }
+  .step { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--ink-soft); cursor: pointer; user-select: none; }
+  .step input { width: 19px; height: 19px; margin: 0; }
+  .step:has(input:checked) { color: var(--have); }
   tr:has(.tick:checked) td:not(.cb) { opacity: .42; text-decoration: line-through; text-decoration-color: var(--ink-faint); }
   td.cb, th.cb { width: 34px; padding-right: 0; }
   .panel .checkline { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; cursor: pointer; }
@@ -152,7 +156,7 @@
   .gap { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .gap b { display: block; font-size: 22px; line-height: 1.2; color: var(--miss); }
   .gap span { font-size: 11px; color: var(--ink-soft); letter-spacing: .04em; }
-  .detail { grid-column: 2; display: flex; flex-direction: column; gap: 7px; }
+  .detail { grid-column: 1; display: flex; flex-direction: column; gap: 7px; }
 
   .spines { display: flex; flex-wrap: wrap; gap: 3px; padding: 1px 0; }
   .sp { width: 15px; height: 21px; border-radius: 1px; font-size: 9px; line-height: 21px; text-align: center; font-variant-numeric: tabular-nums; color: var(--ink-faint); }
@@ -181,8 +185,8 @@
   footer b { color: var(--ink); }
 
   @media (max-width: 560px) {
-    .item { grid-template-columns: 26px minmax(0, 1fr); }
-    .gap { grid-row: auto; grid-column: 2; text-align: left; display: flex; align-items: baseline; gap: 6px; }
+    .item { grid-template-columns: minmax(0, 1fr); }
+    .gap { grid-row: auto; grid-column: 1; text-align: left; display: flex; align-items: baseline; gap: 6px; }
     .gap b { display: inline; font-size: 17px; }
   }
   @media print {
@@ -211,7 +215,7 @@
   </dl>
 
   <div class="progress">
-    <span class="label">現場での確認</span>
+    <span class="label">作業の進み</span>
     <span class="num"><b id="done">0</b> <small>/ <span id="all">0</span> 件</small></span>
     <span class="bar"><i id="fill"></i></span>
     <button type="button" class="reset" id="reset">最初の状態に戻す</button>
@@ -221,7 +225,7 @@
     <span class="row"><span class="sp have">7</span> 手元にある巻</span>
     <span class="row"><span class="sp miss">8</span> 足りない巻</span>
     <span class="row"><span class="sp more"></span> さらに続きが出ている可能性</span>
-    <span class="row"><span class="tick-sample"></span> 確認したら押す（閉じても印は残ります）</span>
+    <span class="row"><span class="tick-sample"></span> 押すと印が残ります（閉じても消えません）</span>
   </div>
 
   <section>
@@ -231,170 +235,204 @@
 
     <div class="box">
       <div class="box-head"><span class="box-no">B-1</span><span class="box-sum">1件 / 1冊 不足</span></div>
-      <div class="item"><input type="checkbox" class="tick" data-k="アンサー" aria-label="アンサー を確認済みにする"><div class="title">アンサー</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+      <div class="item"><div class="title">アンサー</div><div class="gap"><b>1</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp miss">8</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜7巻</span><span><span class="k">既刊</span> 8巻（連載中）</span><span><span class="k">売価</span> ¥2,200</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜7巻</span><span><span class="k">既刊</span> 8巻（連載中）</span><span><span class="k">売価</span> ¥2,200</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:アンサー" aria-label="アンサー を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:アンサー" aria-label="アンサー を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
       </div>
     </div>
 
     <div class="box">
       <div class="box-head"><span class="box-no">B-2</span><span class="box-sum">1件 / 2冊 不足</span></div>
-      <div class="item"><input type="checkbox" class="tick" data-k="桜色キスホリック" aria-label="桜色キスホリック を確認済みにする"><div class="title">桜色キスホリック</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+      <div class="item"><div class="title">桜色キスホリック</div><div class="gap"><b>2</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 全7巻で完結</span><span><span class="k">売価</span> ¥1,100</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 全7巻で完結</span><span><span class="k">売価</span> ¥1,100</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:桜色キスホリック" aria-label="桜色キスホリック を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:桜色キスホリック" aria-label="桜色キスホリック を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
       </div>
     </div>
 
     <div class="box">
       <div class="box-head"><span class="box-no">B-3</span><span class="box-sum">4件 / 11冊 不足</span></div>
-      <div class="item"><input type="checkbox" class="tick" data-k="鬼の花嫁は喰べられたい" aria-label="鬼の花嫁は喰べられたい を確認済みにする"><div class="title">鬼の花嫁は喰べられたい</div><div class="gap"><b>5</b><span>冊 不足</span></div>
+      <div class="item"><div class="title">鬼の花嫁は喰べられたい</div><div class="gap"><b>5</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp miss">9</span><span class="sp miss">10</span><span class="sp miss">11</span><span class="sp miss">12</span><span class="sp miss">13</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜8巻</span><span><span class="k">既刊</span> 13巻</span><span><span class="k">売価</span> ¥2,100</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜8巻</span><span><span class="k">既刊</span> 13巻</span><span><span class="k">売価</span> ¥2,100</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:鬼の花嫁は喰べられたい" aria-label="鬼の花嫁は喰べられたい を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:鬼の花嫁は喰べられたい" aria-label="鬼の花嫁は喰べられたい を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="亡国のマルグリット" aria-label="亡国のマルグリット を確認済みにする"><div class="title">亡国のマルグリット</div><div class="gap"><b>3</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">亡国のマルグリット</div><div class="gap"><b>3</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp miss">14</span><span class="sp miss">15</span><span class="sp miss">16</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜13巻</span><span><span class="k">既刊</span> 16巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜13巻</span><span><span class="k">既刊</span> 16巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:亡国のマルグリット" aria-label="亡国のマルグリット を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:亡国のマルグリット" aria-label="亡国のマルグリット を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="極カノ" aria-label="極カノ を確認済みにする"><div class="title">極カノ</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">極カノ</div><div class="gap"><b>2</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp miss">3</span><span class="sp miss">4</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜2巻</span><span><span class="k">既刊</span> 4巻</span><span><span class="k">売価</span> ¥900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜2巻</span><span><span class="k">既刊</span> 4巻</span><span><span class="k">売価</span> ¥900</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:極カノ" aria-label="極カノ を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:極カノ" aria-label="極カノ を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="ちびまる子ちゃん" aria-label="ちびまる子ちゃん を確認済みにする"><div class="title">ちびまる子ちゃん</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">ちびまる子ちゃん</div><div class="gap"><b>1</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp have">15</span><span class="sp have">16</span><span class="sp have">17</span><span class="sp miss">18</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜17巻</span><span><span class="k">既刊</span> 18巻</span><span><span class="k">売価</span> ¥4,200</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜17巻</span><span><span class="k">既刊</span> 18巻</span><span><span class="k">売価</span> ¥4,200</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:ちびまる子ちゃん" aria-label="ちびまる子ちゃん を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:ちびまる子ちゃん" aria-label="ちびまる子ちゃん を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
       </div>
     </div>
 
     <div class="box">
       <div class="box-head"><span class="box-no">B-11</span><span class="box-sum">4件 / 7冊 不足（ほか 要確認1件）</span></div>
-      <div class="item"><input type="checkbox" class="tick" data-k="三度のメシと、アレが好き。" aria-label="三度のメシと、アレが好き。 を確認済みにする"><div class="title">三度のメシと、アレが好き。<span class="liar">表示が事実と違う</span></div><div class="gap"><b>1</b><span>冊 不足</span></div>
+      <div class="item"><div class="title">三度のメシと、アレが好き。<span class="liar">表示が事実と違う</span></div><div class="gap"><b>1</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全4巻で完結</span><span><span class="k">売価</span> ¥900</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span><span><span class="k">今の表示</span> 「1〜3巻 全巻完結セット」</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全4巻で完結</span><span><span class="k">売価</span> ¥900</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span><span><span class="k">今の表示</span> 「1〜3巻 全巻完結セット」</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:三度のメシと、アレが好き。" aria-label="三度のメシと、アレが好き。 を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:三度のメシと、アレが好き。" aria-label="三度のメシと、アレが好き。 を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="いびってこない義母と義姉" aria-label="いびってこない義母と義姉 を確認済みにする"><div class="title">いびってこない義母と義姉</div><div class="gap"><b>4</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">いびってこない義母と義姉</div><div class="gap"><b>4</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 9巻</span><span><span class="k">売価</span> ¥1,600</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 9巻</span><span><span class="k">売価</span> ¥1,600</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:いびってこない義母と義姉" aria-label="いびってこない義母と義姉 を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:いびってこない義母と義姉" aria-label="いびってこない義母と義姉 を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="恋するMOON DOG" aria-label="恋するMOON DOG を確認済みにする"><div class="title">恋するMOON DOG</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">恋するMOON DOG</div><div class="gap"><b>2</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp miss">12</span><span class="sp miss">13</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜11巻</span><span><span class="k">既刊</span> 13巻</span><span><span class="k">売価</span> ¥1,500</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span></div></div>
-        <div class="item"><input type="checkbox" class="tick" data-k="薔薇色ノ約束" aria-label="薔薇色ノ約束 を確認済みにする"><div class="title">薔薇色ノ約束<span class="pending">完結か確認が必要</span></div><div class="gap is-warn"><b>?</b><span>要確認</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜11巻</span><span><span class="k">既刊</span> 13巻</span><span><span class="k">売価</span> ¥1,500</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:恋するMOON DOG" aria-label="恋するMOON DOG を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:恋するMOON DOG" aria-label="恋するMOON DOG を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
+      </div>
+      <div class="item"><div class="title">薔薇色ノ約束<span class="pending">完結か確認が必要</span></div><div class="gap is-warn"><b>?</b><span>要確認</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp more"></span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜13巻</span><span><span class="k">既刊</span> 13巻（完結したか確証なし）</span><span><span class="k">売価</span> ¥1,600</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span><span><span class="k">今の表示</span> 「1〜13巻 全巻完結セット」</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜13巻</span><span><span class="k">既刊</span> 13巻（完結したか確証なし）</span><span><span class="k">売価</span> ¥1,600</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span><span><span class="k">今の表示</span> 「1〜13巻 全巻完結セット」</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:薔薇色ノ約束" aria-label="薔薇色ノ約束 を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:薔薇色ノ約束" aria-label="薔薇色ノ約束 を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
       </div>
     </div>
     </div>
 
     <div class="box">
       <div class="box-head"><span class="box-no">B-12</span><span class="box-sum">1件 / 7冊 不足</span></div>
-      <div class="item"><input type="checkbox" class="tick" data-k="社長とあんあん" aria-label="社長とあんあん を確認済みにする"><div class="title">社長とあんあん</div><div class="gap"><b>7</b><span>冊 不足</span></div>
+      <div class="item"><div class="title">社長とあんあん</div><div class="gap"><b>7</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp have">15</span><span class="sp miss">16</span><span class="sp miss">17</span><span class="sp miss">18</span><span class="sp miss">19</span><span class="sp miss">20</span><span class="sp miss">21</span><span class="sp miss">22</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜15巻</span><span><span class="k">既刊</span> 22巻</span><span><span class="k">売価</span> ¥1,700</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜15巻</span><span><span class="k">既刊</span> 22巻</span><span><span class="k">売価</span> ¥1,700</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:社長とあんあん" aria-label="社長とあんあん を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:社長とあんあん" aria-label="社長とあんあん を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
       </div>
     </div>
 
     <div class="box">
       <div class="box-head"><span class="box-no">B-16</span><span class="box-sum">5件 / 9冊 不足（ほか 欠番1件）</span></div>
-      <div class="item"><input type="checkbox" class="tick" data-k="三神先生の愛し方" aria-label="三神先生の愛し方 を確認済みにする"><div class="title">三神先生の愛し方</div><div class="gap"><b>3</b><span>冊 不足</span></div>
+      <div class="item"><div class="title">三神先生の愛し方</div><div class="gap"><b>3</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 8巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 8巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:三神先生の愛し方" aria-label="三神先生の愛し方 を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:三神先生の愛し方" aria-label="三神先生の愛し方 を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="かげきしょうじょ!!" aria-label="かげきしょうじょ!! を確認済みにする"><div class="title">かげきしょうじょ!!</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">かげきしょうじょ!!</div><div class="gap"><b>2</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp miss">15</span><span class="sp miss">16</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜14巻</span><span><span class="k">既刊</span> 16巻（連載中）</span><span><span class="k">売価</span> ¥2,300</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜14巻</span><span><span class="k">既刊</span> 16巻（連載中）</span><span><span class="k">売価</span> ¥2,300</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:かげきしょうじょ!!" aria-label="かげきしょうじょ!! を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:かげきしょうじょ!!" aria-label="かげきしょうじょ!! を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="大福ちゃんと王子さま" aria-label="大福ちゃんと王子さま を確認済みにする"><div class="title">大福ちゃんと王子さま</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">大福ちゃんと王子さま</div><div class="gap"><b>2</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp miss">8</span><span class="sp miss">9</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜7巻</span><span><span class="k">既刊</span> 9巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜7巻</span><span><span class="k">既刊</span> 9巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:大福ちゃんと王子さま" aria-label="大福ちゃんと王子さま を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:大福ちゃんと王子さま" aria-label="大福ちゃんと王子さま を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="ミントチョコレート" aria-label="ミントチョコレート を確認済みにする"><div class="title">ミントチョコレート</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">ミントチョコレート</div><div class="gap"><b>1</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp miss">14</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜13巻</span><span><span class="k">既刊</span> 14巻（連載中）</span><span><span class="k">売価</span> ¥2,300</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜13巻</span><span><span class="k">既刊</span> 14巻（連載中）</span><span><span class="k">売価</span> ¥2,300</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:ミントチョコレート" aria-label="ミントチョコレート を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:ミントチョコレート" aria-label="ミントチョコレート を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="あさひ先輩のお気にいり" aria-label="あさひ先輩のお気にいり を確認済みにする"><div class="title">あさひ先輩のお気にいり</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">あさひ先輩のお気にいり</div><div class="gap"><b>1</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp miss">7</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜6巻</span><span><span class="k">既刊</span> 7巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
-        <div class="item"><input type="checkbox" class="tick" data-k="欠番:反抗期なカレシ" checked aria-label="反抗期なカレシ を確認済みにする"><div class="title">反抗期なカレシ<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
-        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 1〜6巻（6冊）</span><span><span class="k">理由</span> 7〜9巻が後から見つかった（本日 取り下げ）</span><span><span class="k">今は</span> 出品していません</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜6巻</span><span><span class="k">既刊</span> 7巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:あさひ先輩のお気にいり" aria-label="あさひ先輩のお気にいり を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:あさひ先輩のお気にいり" aria-label="あさひ先輩のお気にいり を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-    </div>
+      </div>
+      <div class="item"><div class="title">反抗期なカレシ<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
+        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 1〜6巻（6冊）</span><span><span class="k">理由</span> 7〜9巻が後から見つかった（本日 取り下げ）</span><span><span class="k">今は</span> 出品していません</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:欠番:反抗期なカレシ" checked aria-label="反抗期なカレシ を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:欠番:反抗期なカレシ" aria-label="反抗期なカレシ を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
+      </div>
     </div>
 
     <div class="box">
       <div class="box-head"><span class="box-no">B-17</span><span class="box-sum">4件 / 15冊 不足（ほか 欠番2件）</span></div>
-      <div class="item"><input type="checkbox" class="tick" data-k="三日月と流れ星" aria-label="三日月と流れ星 を確認済みにする"><div class="title">三日月と流れ星</div><div class="gap"><b>5</b><span>冊 不足</span></div>
+      <div class="item"><div class="title">三日月と流れ星</div><div class="gap"><b>5</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全8巻で完結</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全8巻で完結</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:三日月と流れ星" aria-label="三日月と流れ星 を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:三日月と流れ星" aria-label="三日月と流れ星 を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="大正ロマンチカ" aria-label="大正ロマンチカ を確認済みにする"><div class="title">大正ロマンチカ</div><div class="gap"><b>5</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">大正ロマンチカ</div><div class="gap"><b>5</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp have">15</span><span class="sp have">16</span><span class="sp have">17</span><span class="sp have">18</span><span class="sp miss">19</span><span class="sp miss">20</span><span class="sp miss">21</span><span class="sp miss">22</span><span class="sp miss">23</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜18巻</span><span><span class="k">既刊</span> 全23巻で完結</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜18巻</span><span><span class="k">既刊</span> 全23巻で完結</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:大正ロマンチカ" aria-label="大正ロマンチカ を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:大正ロマンチカ" aria-label="大正ロマンチカ を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="たまのごほうび" aria-label="たまのごほうび を確認済みにする"><div class="title">たまのごほうび</div><div class="gap"><b>3</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">たまのごほうび</div><div class="gap"><b>3</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜4巻</span><span><span class="k">既刊</span> 7巻</span><span><span class="k">売価</span> ¥1,200</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜4巻</span><span><span class="k">既刊</span> 7巻</span><span><span class="k">売価</span> ¥1,200</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:たまのごほうび" aria-label="たまのごほうび を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:たまのごほうび" aria-label="たまのごほうび を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="恋人は旦那さま" aria-label="恋人は旦那さま を確認済みにする"><div class="title">恋人は旦那さま</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">恋人は旦那さま</div><div class="gap"><b>2</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 全7巻で完結</span><span><span class="k">売価</span> ¥1,100</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
-        <div class="item"><input type="checkbox" class="tick" data-k="欠番:蝶か犯か" checked aria-label="蝶か犯か ～極道様 溢れて溢れて泣かせたい～ を確認済みにする"><div class="title">蝶か犯か ～極道様 溢れて溢れて泣かせたい～<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
-        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 1〜6巻（6冊）</span><span><span class="k">理由</span> 7〜9巻が後から見つかった（本日 取り下げ）</span><span><span class="k">今は</span> 出品していません</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 全7巻で完結</span><span><span class="k">売価</span> ¥1,100</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:恋人は旦那さま" aria-label="恋人は旦那さま を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:恋人は旦那さま" aria-label="恋人は旦那さま を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="欠番:黒豹と16歳" checked aria-label="黒豹と16歳 を確認済みにする"><div class="title">黒豹と16歳<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
-        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 9冊（8巻・9巻抜け）</span><span><span class="k">理由</span> 8巻・9巻が後から見つかった（8月4日）→ 11巻そろいで再登録し出品済み</span><span><span class="k">今は</span> 出品していません</span></div></div>
       </div>
-    </div>
+      <div class="item"><div class="title">蝶か犯か ～極道様 溢れて溢れて泣かせたい～<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
+        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 1〜6巻（6冊）</span><span><span class="k">理由</span> 7〜9巻が後から見つかった（本日 取り下げ）</span><span><span class="k">今は</span> 出品していません</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:欠番:蝶か犯か" checked aria-label="蝶か犯か ～極道様 溢れて溢れて泣かせたい～ を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:欠番:蝶か犯か" aria-label="蝶か犯か ～極道様 溢れて溢れて泣かせたい～ を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
+      </div>
+      <div class="item"><div class="title">黒豹と16歳<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
+        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 9冊（8巻・9巻抜け）</span><span><span class="k">理由</span> 8巻・9巻が後から見つかった（8月4日）→ 11巻そろいで再登録し出品済み</span><span><span class="k">今は</span> 出品していません</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:欠番:黒豹と16歳" checked aria-label="黒豹と16歳 を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:欠番:黒豹と16歳" checked aria-label="黒豹と16歳 を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
+      </div>
     </div>
 
     <div class="box">
       <div class="box-head"><span class="box-no">B-18</span><span class="box-sum">2件 / 10冊 不足</span></div>
-      <div class="item"><input type="checkbox" class="tick" data-k="ハチミツにはつこい" aria-label="ハチミツにはつこい を確認済みにする"><div class="title">ハチミツにはつこい</div><div class="gap"><b>8</b><span>冊 不足</span></div>
+      <div class="item"><div class="title">ハチミツにはつこい</div><div class="gap"><b>8</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span><span class="sp miss">10</span><span class="sp miss">11</span><span class="sp miss">12</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜4巻</span><span><span class="k">既刊</span> 12巻</span><span><span class="k">売価</span> ¥1,800</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜4巻</span><span><span class="k">既刊</span> 12巻</span><span><span class="k">売価</span> ¥1,800</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:ハチミツにはつこい" aria-label="ハチミツにはつこい を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:ハチミツにはつこい" aria-label="ハチミツにはつこい を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="学園ベビーシッターズ" aria-label="学園ベビーシッターズ を確認済みにする"><div class="title">学園ベビーシッターズ</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">学園ベビーシッターズ</div><div class="gap"><b>2</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp have">15</span><span class="sp have">16</span><span class="sp have">17</span><span class="sp have">18</span><span class="sp have">19</span><span class="sp have">20</span><span class="sp have">21</span><span class="sp have">22</span><span class="sp have">23</span><span class="sp have">24</span><span class="sp have">25</span><span class="sp miss">26</span><span class="sp miss">27</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜25巻</span><span><span class="k">既刊</span> 27巻（連載中）</span><span><span class="k">売価</span> ¥2,700</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜25巻</span><span><span class="k">既刊</span> 27巻（連載中）</span><span><span class="k">売価</span> ¥2,700</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:学園ベビーシッターズ" aria-label="学園ベビーシッターズ を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:学園ベビーシッターズ" aria-label="学園ベビーシッターズ を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
       </div>
     </div>
 
     <div class="box">
       <div class="box-head"><span class="box-no">B-19</span><span class="box-sum">4件 / 19冊以上 不足</span></div>
-      <div class="item"><input type="checkbox" class="tick" data-k="ぶどうとスミレ" aria-label="ぶどうとスミレ を確認済みにする"><div class="title">ぶどうとスミレ<span class="liar">表示が事実と違う</span></div><div class="gap"><b>10</b><span>冊 不足</span></div>
+      <div class="item"><div class="title">ぶどうとスミレ<span class="liar">表示が事実と違う</span></div><div class="gap"><b>10</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp miss">3</span><span class="sp miss">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span><span class="sp miss">10</span><span class="sp miss">11</span><span class="sp miss">12</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜2巻</span><span><span class="k">既刊</span> 全12巻で完結</span><span><span class="k">売価</span> ¥900</span><span><span class="k">出品中</span> BASE・メルカリ</span><span><span class="k">今の表示</span> 「1〜2巻 全巻完結セット」</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜2巻</span><span><span class="k">既刊</span> 全12巻で完結</span><span><span class="k">売価</span> ¥900</span><span><span class="k">出品中</span> BASE・メルカリ</span><span><span class="k">今の表示</span> 「1〜2巻 全巻完結セット」</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:ぶどうとスミレ" aria-label="ぶどうとスミレ を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:ぶどうとスミレ" aria-label="ぶどうとスミレ を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="センチメンタル キス" aria-label="センチメンタル キス を確認済みにする"><div class="title">センチメンタル キス</div><div class="gap"><b>7+</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">センチメンタル キス</div><div class="gap"><b>7+</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span><span class="sp miss">10</span><span class="sp miss">11</span><span class="sp miss">12</span><span class="sp more"></span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 12巻以上（連載中）</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 12巻以上（連載中）</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:センチメンタル キス" aria-label="センチメンタル キス を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:センチメンタル キス" aria-label="センチメンタル キス を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="初めて恋をした日に読む話" aria-label="初めて恋をした日に読む話 を確認済みにする"><div class="title">初めて恋をした日に読む話</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">初めて恋をした日に読む話</div><div class="gap"><b>1</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp have">15</span><span class="sp have">16</span><span class="sp have">17</span><span class="sp have">18</span><span class="sp have">19</span><span class="sp miss">20</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜19巻</span><span><span class="k">既刊</span> 20巻</span><span><span class="k">売価</span> ¥2,400</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜19巻</span><span><span class="k">既刊</span> 20巻</span><span><span class="k">売価</span> ¥2,400</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:初めて恋をした日に読む話" aria-label="初めて恋をした日に読む話 を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:初めて恋をした日に読む話" aria-label="初めて恋をした日に読む話 を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="秘密 season 0" aria-label="秘密 season 0 を確認済みにする"><div class="title">秘密 season 0</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">秘密 season 0</div><div class="gap"><b>1</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp miss">13</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜12巻</span><span><span class="k">既刊</span> 13巻</span><span><span class="k">売価</span> ¥3,200</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜12巻</span><span><span class="k">既刊</span> 13巻</span><span><span class="k">売価</span> ¥3,200</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:秘密 season 0" aria-label="秘密 season 0 を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:秘密 season 0" aria-label="秘密 season 0 を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
       </div>
     </div>
 
     <div class="box">
       <div class="box-head"><span class="box-no">B-28</span><span class="box-sum">3件 / 8冊 不足（ほか 欠番1件）</span></div>
-      <div class="item"><input type="checkbox" class="tick" data-k="はたらく細胞BLACK" aria-label="はたらく細胞BLACK を確認済みにする"><div class="title">はたらく細胞BLACK</div><div class="gap"><b>5</b><span>冊 不足</span></div>
+      <div class="item"><div class="title">はたらく細胞BLACK</div><div class="gap"><b>5</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全8巻で完結</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全8巻で完結</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:はたらく細胞BLACK" aria-label="はたらく細胞BLACK を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:はたらく細胞BLACK" aria-label="はたらく細胞BLACK を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="どうしようもない僕とキスしよう" aria-label="どうしようもない僕とキスしよう を確認済みにする"><div class="title">どうしようもない僕とキスしよう</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">どうしようもない僕とキスしよう</div><div class="gap"><b>2</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp miss">10</span><span class="sp miss">11</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜9巻</span><span><span class="k">既刊</span> 全11巻で完結</span><span><span class="k">売価</span> ¥1,600</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜9巻</span><span><span class="k">既刊</span> 全11巻で完結</span><span><span class="k">売価</span> ¥1,600</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:どうしようもない僕とキスしよう" aria-label="どうしようもない僕とキスしよう を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:どうしようもない僕とキスしよう" aria-label="どうしようもない僕とキスしよう を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-      <div class="item"><input type="checkbox" class="tick" data-k="さよならミニスカート" aria-label="さよならミニスカート を確認済みにする"><div class="title">さよならミニスカート</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+      </div>
+      <div class="item"><div class="title">さよならミニスカート</div><div class="gap"><b>1</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span></div>
-        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 4巻</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
-        <div class="item"><input type="checkbox" class="tick" data-k="欠番:ガラスの仮面" checked aria-label="ガラスの仮面 を確認済みにする"><div class="title">ガラスの仮面<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
-        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 17冊（15巻・16巻抜け）</span><span><span class="k">理由</span> 15巻・16巻を後から探して補うため（8月4日）</span><span><span class="k">今は</span> 出品していません</span></div></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 4巻</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:さよならミニスカート" aria-label="さよならミニスカート を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:さよならミニスカート" aria-label="さよならミニスカート を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
       </div>
-    </div>
+      </div>
+      <div class="item"><div class="title">ガラスの仮面<span class="retired">欠番・対応済み</span></div><div class="gap is-done"><b>済</b><span>取り下げ済み</span></div>
+        <div class="detail"><div class="meta"><span><span class="k">取り消した中身</span> 17冊（15巻・16巻抜け）</span><span><span class="k">理由</span> 15巻・16巻を後から探して補うため（8月4日）</span><span><span class="k">今は</span> 出品していません</span><div class="steps"><label class="step"><input type="checkbox" class="tick" data-step="moved" data-k="箱:欠番:ガラスの仮面" checked aria-label="ガラスの仮面 を歯抜け箱へ入れた"> 歯抜け箱へ入れた</label><label class="step"><input type="checkbox" class="tick" data-step="relist" data-k="再出品:欠番:ガラスの仮面" aria-label="ガラスの仮面 を続きを見つけて再出品した"> 続きを見つけて再出品した</label></div></div>
+      </div>
+      </div>
     </div>
   </section>
 
@@ -483,7 +521,6 @@
     <p><b>連載中のものは時間とともに変わります。</b>　アンサー・かげきしょうじょ!!・ミントチョコレート・学園ベビーシッターズ・センチメンタル キス・赤髪の白雪姫は連載が続いています。新しい巻が出れば、そろっていたものも「足りない」側に移ります。</p>
     <p><b>この一覧に載っていないもの</b>　在庫台帳に登録されていない検品記録（ヒカルの碁、はいからさんが通る）は、出品されていないため対象外です。</p>
   </footer>
-</div>
 
 <script>
   (function () {
