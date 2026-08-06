@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="サムライソウル案件の全93セットについて、既刊の最終巻まで揃っているかを1件ずつ調べた一覧。">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+</style>
+</head>
+<body>
+<title>サムライソウル案件 巻数そろい一覧（全93セット）</title>
+<style>
+  :root {
+    --ground: #f2f4f7;
+    --card: #ffffff;
+    --ink: #16181d;
+    --ink-soft: #5c6472;
+    --ink-faint: #8b93a1;
+    --rule: #dde1e8;
+    --rule-soft: #e9ecf1;
+    --accent: #1f4f6b;
+    --accent-soft: #e3edf3;
+    --have: #2f6d55;
+    --have-soft: #dcece4;
+    --miss: #c0392b;
+    --miss-soft: #f7e0dc;
+    --alarm: #a3231a;
+    --alarm-ground: #fdf1ef;
+    --warn: #8a5300;
+    --warn-soft: #fbf0dd;
+    --sold: #4a3a86;
+    --sold-soft: #ebe7f7;
+    --shadow: 0 1px 2px rgba(20, 26, 38, .06), 0 4px 14px rgba(20, 26, 38, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #14161b; --card: #1c1f26; --ink: #e9ecf1; --ink-soft: #a3abba; --ink-faint: #757e8d;
+      --rule: #2d323c; --rule-soft: #262b34; --accent: #7fb6d4; --accent-soft: #1e2c36;
+      --have: #6cbf9b; --have-soft: #1d2c26; --miss: #e8837a; --miss-soft: #331f1d;
+      --alarm: #f08b81; --alarm-ground: #2a1a18; --warn: #d7a253; --warn-soft: #2b2418;
+      --sold: #a99ce0; --sold-soft: #232037;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #14161b; --card: #1c1f26; --ink: #e9ecf1; --ink-soft: #a3abba; --ink-faint: #757e8d;
+    --rule: #2d323c; --rule-soft: #262b34; --accent: #7fb6d4; --accent-soft: #1e2c36;
+    --have: #6cbf9b; --have-soft: #1d2c26; --miss: #e8837a; --miss-soft: #331f1d;
+    --alarm: #f08b81; --alarm-ground: #2a1a18; --warn: #d7a253; --warn-soft: #2b2418;
+    --sold: #a99ce0; --sold-soft: #232037;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+  }
+  :root[data-theme="light"] {
+    --ground: #f2f4f7; --card: #ffffff; --ink: #16181d; --ink-soft: #5c6472; --ink-faint: #8b93a1;
+    --rule: #dde1e8; --rule-soft: #e9ecf1; --accent: #1f4f6b; --accent-soft: #e3edf3;
+    --have: #2f6d55; --have-soft: #dcece4; --miss: #c0392b; --miss-soft: #f7e0dc;
+    --alarm: #a3231a; --alarm-ground: #fdf1ef; --warn: #8a5300; --warn-soft: #fbf0dd;
+    --sold: #4a3a86; --sold-soft: #ebe7f7;
+    --shadow: 0 1px 2px rgba(20,26,38,.06), 0 4px 14px rgba(20,26,38,.05);
+  }
+
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic Medium", "Meiryo", system-ui, sans-serif;
+    font-size: 15px; line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 40px 20px 80px; display: flex; flex-direction: column; gap: 36px; }
+
+  header { display: flex; flex-direction: column; gap: 10px; }
+  .eyebrow { font-size: 12px; letter-spacing: .14em; color: var(--ink-faint); font-weight: 600; }
+  h1 { margin: 0; font-size: clamp(26px, 4vw, 34px); line-height: 1.3; letter-spacing: -.01em; text-wrap: balance; }
+  .lede { margin: 0; max-width: 64ch; color: var(--ink-soft); }
+
+  .totals { display: flex; flex-wrap: wrap; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .total { flex: 1 1 140px; background: var(--card); padding: 15px 18px; display: flex; flex-direction: column; gap: 2px; }
+  .total dt { font-size: 12px; color: var(--ink-soft); letter-spacing: .03em; }
+  .total dd { margin: 0; font-size: 25px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
+  .total dd small { font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+  .total.is-alarm dd { color: var(--alarm); }
+  .total.is-miss dd { color: var(--miss); }
+  .total.is-have dd { color: var(--have); }
+
+  section { display: flex; flex-direction: column; gap: 14px; }
+  h2 { margin: 0; font-size: 19px; letter-spacing: .01em; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  h2 .count { font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+  .note { margin: 0; color: var(--ink-soft); font-size: 14px; max-width: 70ch; }
+
+  .panel { border-radius: 4px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .panel.alarm { background: var(--alarm-ground); border: 1px solid var(--alarm); }
+  .panel.alarm h2 { color: var(--alarm); }
+  .panel.alarm .note { color: var(--ink); }
+  .panel.sold { background: var(--sold-soft); border: 1px solid var(--sold); }
+  .panel.sold h2 { color: var(--sold); }
+  .panel.warn { background: var(--warn-soft); border: 1px solid var(--warn); }
+  .panel.warn h2 { color: var(--warn); }
+  .panel .note { color: var(--ink); }
+
+  .box { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; box-shadow: var(--shadow); overflow: hidden; }
+  .box-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 11px 18px; background: var(--accent-soft); border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
+  .box-no { font-weight: 700; font-size: 16px; letter-spacing: .02em; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .box-sum { font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+  .item { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 4px 14px; padding: 13px 18px; border-bottom: 1px solid var(--rule-soft); align-items: start; }
+  .item:last-child { border-bottom: 0; }
+  .tick {
+    appearance: none; -webkit-appearance: none;
+    width: 22px; height: 22px; margin: 1px 0 0; flex: none;
+    border: 2px solid var(--ink-faint); border-radius: 3px;
+    background: var(--card); cursor: pointer; display: grid; place-content: center;
+    transition: background-color .12s ease, border-color .12s ease;
+  }
+  .tick::after { content: ""; width: 11px; height: 6px; border-left: 2.5px solid #fff; border-bottom: 2.5px solid #fff; transform: rotate(-45deg) translate(1px, -2px); opacity: 0; }
+  .tick:checked { background: var(--have); border-color: var(--have); }
+  .tick:checked::after { opacity: 1; }
+  .tick:hover { border-color: var(--have); }
+  .tick:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .tick-sample { width: 20px; height: 20px; border: 2px solid var(--ink-faint); border-radius: 3px; display: inline-block; vertical-align: -5px; }
+  .item:has(.tick:checked) .title, .item:has(.tick:checked) .meta, .item:has(.tick:checked) .gap { opacity: .42; }
+  .item:has(.tick:checked) .spines { opacity: .42; }
+  .item:has(.tick:checked) .title { text-decoration: line-through; text-decoration-color: var(--ink-faint); }
+  tr:has(.tick:checked) td:not(.cb) { opacity: .42; text-decoration: line-through; text-decoration-color: var(--ink-faint); }
+  td.cb, th.cb { width: 34px; padding-right: 0; }
+  .panel .checkline { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; cursor: pointer; }
+
+  .progress {
+    position: sticky; top: 0; z-index: 5;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    background: var(--card); border: 1px solid var(--rule); border-radius: 4px;
+    padding: 12px 18px; box-shadow: var(--shadow);
+  }
+  .progress .label { font-size: 13px; color: var(--ink-soft); letter-spacing: .03em; }
+  .progress .num { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--have); }
+  .progress .num small { font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+  .bar { flex: 1 1 180px; height: 8px; min-width: 140px; background: var(--rule-soft); border-radius: 99px; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--have); border-radius: 99px; transition: width .18s ease; }
+  .reset {
+    font: inherit; font-size: 13px; padding: 5px 14px; cursor: pointer;
+    background: none; border: 1px solid var(--rule); border-radius: 3px; color: var(--ink-soft);
+  }
+  .reset:hover { border-color: var(--miss); color: var(--miss); }
+  .reset:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .tick, .bar i { transition: none; } }
+  .title { font-weight: 600; font-size: 15.5px; line-height: 1.45; overflow-wrap: anywhere; }
+  .liar { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 2px; background: var(--alarm); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .04em; vertical-align: 2px; }
+  .gap { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .gap b { display: block; font-size: 22px; line-height: 1.2; color: var(--miss); }
+  .gap span { font-size: 11px; color: var(--ink-soft); letter-spacing: .04em; }
+  .detail { grid-column: 2; display: flex; flex-direction: column; gap: 7px; }
+
+  .spines { display: flex; flex-wrap: wrap; gap: 3px; padding: 1px 0; }
+  .sp { width: 15px; height: 21px; border-radius: 1px; font-size: 9px; line-height: 21px; text-align: center; font-variant-numeric: tabular-nums; color: var(--ink-faint); }
+  .sp.have { background: var(--have-soft); border: 1px solid var(--have); color: var(--have); font-weight: 700; }
+  .sp.miss { background: var(--miss-soft); border: 1px dashed var(--miss); color: var(--miss); font-weight: 700; }
+  .sp.more { border: 1px dashed var(--ink-faint); background: none; }
+  .meta { display: flex; flex-wrap: wrap; gap: 5px 16px; font-size: 12.5px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .meta .k { color: var(--ink-faint); }
+
+  .tablewrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule-soft); vertical-align: baseline; }
+  th { font-size: 12px; font-weight: 600; color: var(--ink-soft); letter-spacing: .04em; background: var(--card); border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.box-cell { font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.ch { color: var(--ink-soft); font-size: 12.5px; }
+  .ok { color: var(--have); font-weight: 700; white-space: nowrap; }
+  .yen { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; font-size: 13px; color: var(--ink-soft); padding: 13px 18px; background: var(--card); border: 1px solid var(--rule); border-radius: 4px; }
+  .legend .row { display: flex; align-items: center; gap: 7px; }
+
+  footer { border-top: 1px solid var(--rule); padding-top: 20px; color: var(--ink-soft); font-size: 13.5px; display: flex; flex-direction: column; gap: 8px; }
+  footer p { margin: 0; max-width: 74ch; }
+  footer b { color: var(--ink); }
+
+  @media (max-width: 560px) {
+    .item { grid-template-columns: 26px minmax(0, 1fr); }
+    .gap { grid-row: auto; grid-column: 2; text-align: left; display: flex; align-items: baseline; gap: 6px; }
+    .gap b { display: inline; font-size: 17px; }
+  }
+  @media print {
+    body { background: #fff; }
+    .box, .legend, .panel { box-shadow: none; break-inside: avoid; }
+    .progress { position: static; box-shadow: none; }
+    .tick { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .wrap { padding: 0; gap: 20px; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">サムライソウル案件（漫画喫茶の撤退本）・2026年8月6日 全数調査</div>
+    <h1>巻数のそろい 全93セット一覧</h1>
+    <p class="lede">セットごとに「その作品が今どこまで発行されているか」を出版社・書店の情報で1件ずつ確認し、手元の最終巻と突き合わせました。お尻の巻が足りないものは、別の箱から続きが出てくる可能性があります。</p>
+  </header>
+
+  <dl class="totals">
+    <div class="total"><dt>調べたセット</dt><dd>93<small> 件</small></dd></div>
+    <div class="total is-have"><dt>そろっている</dt><dd>59<small> 件</small></dd></div>
+    <div class="total is-miss"><dt>お尻が足りない</dt><dd>28<small> 件</small></dd></div>
+    <div class="total is-alarm"><dt>表示が事実と違う</dt><dd>2<small> 件</small></dd></div>
+    <div class="total"><dt>足りない冊数</dt><dd>89<small> 冊以上</small></dd></div>
+  </dl>
+
+  <div class="progress">
+    <span class="label">現場での確認</span>
+    <span class="num"><b id="done">0</b> <small>/ <span id="all">0</span> 件</small></span>
+    <span class="bar"><i id="fill"></i></span>
+    <button type="button" class="reset" id="reset">印をすべて消す</button>
+  </div>
+
+  <div class="panel alarm">
+    <h2>1. すぐ手を打つべき2件 <span class="count">「全巻完結セット」と表示して販売中</span></h2>
+    <p class="note">この2件は、まだ続きが出ている作品を「全巻完結」と書いて売っています。買った人が全巻そろうつもりで受け取るため、返品や低評価に直結します。表示を直すか、買えない状態にするかを先に決める必要があります。</p>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-19</span><span class="box-sum">売価 ¥900 ／ 10冊 不足</span></div>
+      <div class="item">
+        <input type="checkbox" class="tick" data-k="ぶどうとスミレ" aria-label="ぶどうとスミレ を確認済みにする">
+        <div class="title">ぶどうとスミレ<span class="liar">表示が事実と違う</span></div>
+        <div class="gap"><b>10</b><span>冊 不足</span></div>
+        <div class="detail">
+          <div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp miss">3</span><span class="sp miss">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span><span class="sp miss">10</span><span class="sp miss">11</span><span class="sp miss">12</span></div>
+          <div class="meta">
+            <span><span class="k">手元</span> 1〜2巻</span><span><span class="k">既刊</span> 全12巻で完結</span>
+            <span><span class="k">出品中</span> BASE・メルカリ</span>
+            <span><span class="k">今の表示</span> 「1〜2巻 全巻完結セット」</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-11</span><span class="box-sum">売価 ¥900 ／ 1冊 不足</span></div>
+      <div class="item">
+        <input type="checkbox" class="tick" data-k="三度のメシと、アレが好き。" aria-label="三度のメシと、アレが好き。 を確認済みにする">
+        <div class="title">三度のメシと、アレが好き。<span class="liar">表示が事実と違う</span></div>
+        <div class="gap"><b>1</b><span>冊 不足</span></div>
+        <div class="detail">
+          <div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span></div>
+          <div class="meta">
+            <span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全4巻で完結</span>
+            <span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span>
+            <span><span class="k">今の表示</span> 「1〜3巻 全巻完結セット」</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel sold">
+    <h2>2. 売れた1件の確認結果 <span class="count">問題ありません。そのまま発送できます</span></h2>
+    <label class="checkline"><input type="checkbox" class="tick" data-k="恋と呼ぶには気持ち悪い" aria-label="恋と呼ぶには気持ち悪い を確認済みにする"> 発送してよいか現物を見て確認した</label>
+    <p class="note"><b>恋と呼ぶには気持ち悪い</b>（保管箱 B-11 ／ メルカリ ¥1,100 ／ 8月4日に売却・まだ発送していません）。全8巻で完結している作品で、手元も1〜8巻そろっています。「全巻完結セット」という表示どおりの中身です。</p>
+  </div>
+
+  <div class="panel warn">
+    <h2>3. 判断を保留した1件 <span class="count">完結したという確証が取れませんでした</span></h2>
+    <label class="checkline"><input type="checkbox" class="tick" data-k="薔薇色ノ約束" aria-label="薔薇色ノ約束 を確認済みにする"> 表示を直すか判断した</label>
+    <p class="note"><b>薔薇色ノ約束</b>（保管箱 B-11 ／ 1〜13巻 ／ 売価 ¥1,600 ／ BASE・メルカリ・Qoo10で出品中）。13巻まで持っていて既刊も13巻ですが、この作品が完結したという確証が取れませんでした。巻は足りていませんが、「全巻完結セット」の表示は外したほうが安全です。</p>
+  </div>
+
+  <div class="legend">
+    <span class="row"><span class="sp have">7</span> 手元にある巻</span>
+    <span class="row"><span class="sp miss">8</span> 足りない巻</span>
+    <span class="row"><span class="sp more"></span> さらに続きが出ている可能性</span>
+    <span class="row"><span class="tick-sample"></span> 確認したら押す（閉じても印は残ります）</span>
+  </div>
+
+  <section>
+    <h2>4. お尻の巻が足りない <span class="count">26件（上の2件を除く）・保管箱の番号順</span></h2>
+    <p class="note">不足が多いものほど、そろえたときの売価が大きく上がります。今回取り下げた「反抗期なカレシ」はB-16、「蝶か犯か」はB-17にありました。同じ箱に不足品が固まっているので、その2箱から見るのが早いと思われます。</p>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-1</span><span class="box-sum">1件 / 1冊 不足</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="アンサー" aria-label="アンサー を確認済みにする"><div class="title">アンサー</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp miss">8</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜7巻</span><span><span class="k">既刊</span> 8巻（連載中）</span><span><span class="k">売価</span> ¥2,200</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-2</span><span class="box-sum">1件 / 2冊 不足</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="桜色キスホリック" aria-label="桜色キスホリック を確認済みにする"><div class="title">桜色キスホリック</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 全7巻で完結</span><span><span class="k">売価</span> ¥1,100</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-3</span><span class="box-sum">4件 / 11冊 不足</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="鬼の花嫁は喰べられたい" aria-label="鬼の花嫁は喰べられたい を確認済みにする"><div class="title">鬼の花嫁は喰べられたい</div><div class="gap"><b>5</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp miss">9</span><span class="sp miss">10</span><span class="sp miss">11</span><span class="sp miss">12</span><span class="sp miss">13</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜8巻</span><span><span class="k">既刊</span> 13巻</span><span><span class="k">売価</span> ¥2,100</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="亡国のマルグリット" aria-label="亡国のマルグリット を確認済みにする"><div class="title">亡国のマルグリット</div><div class="gap"><b>3</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp miss">14</span><span class="sp miss">15</span><span class="sp miss">16</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜13巻</span><span><span class="k">既刊</span> 16巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="極カノ" aria-label="極カノ を確認済みにする"><div class="title">極カノ</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp miss">3</span><span class="sp miss">4</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜2巻</span><span><span class="k">既刊</span> 4巻</span><span><span class="k">売価</span> ¥900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="ちびまる子ちゃん" aria-label="ちびまる子ちゃん を確認済みにする"><div class="title">ちびまる子ちゃん</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp have">15</span><span class="sp have">16</span><span class="sp have">17</span><span class="sp miss">18</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜17巻</span><span><span class="k">既刊</span> 18巻</span><span><span class="k">売価</span> ¥4,200</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-11</span><span class="box-sum">2件 / 6冊 不足</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="いびってこない義母と義姉" aria-label="いびってこない義母と義姉 を確認済みにする"><div class="title">いびってこない義母と義姉</div><div class="gap"><b>4</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 9巻</span><span><span class="k">売価</span> ¥1,600</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="恋するMOON DOG" aria-label="恋するMOON DOG を確認済みにする"><div class="title">恋するMOON DOG</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp miss">12</span><span class="sp miss">13</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜11巻</span><span><span class="k">既刊</span> 13巻</span><span><span class="k">売価</span> ¥1,500</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span></div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-12</span><span class="box-sum">1件 / 7冊 不足</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="社長とあんあん" aria-label="社長とあんあん を確認済みにする"><div class="title">社長とあんあん</div><div class="gap"><b>7</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp have">15</span><span class="sp miss">16</span><span class="sp miss">17</span><span class="sp miss">18</span><span class="sp miss">19</span><span class="sp miss">20</span><span class="sp miss">21</span><span class="sp miss">22</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜15巻</span><span><span class="k">既刊</span> 22巻</span><span><span class="k">売価</span> ¥1,700</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span></div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-16</span><span class="box-sum">5件 / 9冊 不足　★取り下げた「反抗期なカレシ」と同じ箱</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="三神先生の愛し方" aria-label="三神先生の愛し方 を確認済みにする"><div class="title">三神先生の愛し方</div><div class="gap"><b>3</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 8巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="かげきしょうじょ!!" aria-label="かげきしょうじょ!! を確認済みにする"><div class="title">かげきしょうじょ!!</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp miss">15</span><span class="sp miss">16</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜14巻</span><span><span class="k">既刊</span> 16巻（連載中）</span><span><span class="k">売価</span> ¥2,300</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="大福ちゃんと王子さま" aria-label="大福ちゃんと王子さま を確認済みにする"><div class="title">大福ちゃんと王子さま</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp miss">8</span><span class="sp miss">9</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜7巻</span><span><span class="k">既刊</span> 9巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="ミントチョコレート" aria-label="ミントチョコレート を確認済みにする"><div class="title">ミントチョコレート</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp miss">14</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜13巻</span><span><span class="k">既刊</span> 14巻（連載中）</span><span><span class="k">売価</span> ¥2,300</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="あさひ先輩のお気にいり" aria-label="あさひ先輩のお気にいり を確認済みにする"><div class="title">あさひ先輩のお気にいり</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp miss">7</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜6巻</span><span><span class="k">既刊</span> 7巻</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-17</span><span class="box-sum">4件 / 15冊 不足　★取り下げた「蝶か犯か」と同じ箱</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="三日月と流れ星" aria-label="三日月と流れ星 を確認済みにする"><div class="title">三日月と流れ星</div><div class="gap"><b>5</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全8巻で完結</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="大正ロマンチカ" aria-label="大正ロマンチカ を確認済みにする"><div class="title">大正ロマンチカ</div><div class="gap"><b>5</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp have">15</span><span class="sp have">16</span><span class="sp have">17</span><span class="sp have">18</span><span class="sp miss">19</span><span class="sp miss">20</span><span class="sp miss">21</span><span class="sp miss">22</span><span class="sp miss">23</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜18巻</span><span><span class="k">既刊</span> 全23巻で完結</span><span><span class="k">売価</span> ¥1,900</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="たまのごほうび" aria-label="たまのごほうび を確認済みにする"><div class="title">たまのごほうび</div><div class="gap"><b>3</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜4巻</span><span><span class="k">既刊</span> 7巻</span><span><span class="k">売価</span> ¥1,200</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="恋人は旦那さま" aria-label="恋人は旦那さま を確認済みにする"><div class="title">恋人は旦那さま</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 全7巻で完結</span><span><span class="k">売価</span> ¥1,100</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-18</span><span class="box-sum">2件 / 10冊 不足</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="ハチミツにはつこい" aria-label="ハチミツにはつこい を確認済みにする"><div class="title">ハチミツにはつこい</div><div class="gap"><b>8</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span><span class="sp miss">10</span><span class="sp miss">11</span><span class="sp miss">12</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜4巻</span><span><span class="k">既刊</span> 12巻</span><span><span class="k">売価</span> ¥1,800</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="学園ベビーシッターズ" aria-label="学園ベビーシッターズ を確認済みにする"><div class="title">学園ベビーシッターズ</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp have">15</span><span class="sp have">16</span><span class="sp have">17</span><span class="sp have">18</span><span class="sp have">19</span><span class="sp have">20</span><span class="sp have">21</span><span class="sp have">22</span><span class="sp have">23</span><span class="sp have">24</span><span class="sp have">25</span><span class="sp miss">26</span><span class="sp miss">27</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜25巻</span><span><span class="k">既刊</span> 27巻（連載中）</span><span><span class="k">売価</span> ¥2,700</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-19</span><span class="box-sum">3件 / 9冊以上 不足（ぶどうとスミレを除く）</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="センチメンタル キス" aria-label="センチメンタル キス を確認済みにする"><div class="title">センチメンタル キス</div><div class="gap"><b>7+</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span><span class="sp miss">10</span><span class="sp miss">11</span><span class="sp miss">12</span><span class="sp more"></span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 12巻以上（連載中）</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="初めて恋をした日に読む話" aria-label="初めて恋をした日に読む話 を確認済みにする"><div class="title">初めて恋をした日に読む話</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp have">14</span><span class="sp have">15</span><span class="sp have">16</span><span class="sp have">17</span><span class="sp have">18</span><span class="sp have">19</span><span class="sp miss">20</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜19巻</span><span><span class="k">既刊</span> 20巻</span><span><span class="k">売価</span> ¥2,400</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="秘密 season 0" aria-label="秘密 season 0 を確認済みにする"><div class="title">秘密 season 0</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp miss">13</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜12巻</span><span><span class="k">既刊</span> 13巻</span><span><span class="k">売価</span> ¥3,200</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-head"><span class="box-no">B-28</span><span class="box-sum">3件 / 8冊 不足</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="はたらく細胞BLACK" aria-label="はたらく細胞BLACK を確認済みにする"><div class="title">はたらく細胞BLACK</div><div class="gap"><b>5</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全8巻で完結</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・eBay・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="どうしようもない僕とキスしよう" aria-label="どうしようもない僕とキスしよう を確認済みにする"><div class="title">どうしようもない僕とキスしよう</div><div class="gap"><b>2</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp miss">10</span><span class="sp miss">11</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜9巻</span><span><span class="k">既刊</span> 全11巻で完結</span><span><span class="k">売価</span> ¥1,600</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+      <div class="item"><input type="checkbox" class="tick" data-k="さよならミニスカート" aria-label="さよならミニスカート を確認済みにする"><div class="title">さよならミニスカート</div><div class="gap"><b>1</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 4巻</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. そろっている <span class="count">59件・このまま売って問題ありません</span></h2>
+    <p class="note">既刊の最後の巻まで手元にあるものです。完結した作品だけでなく、連載中でも今出ている巻をすべて持っているもの（赤髪の白雪姫など）を含みます。連載中のものは、次の巻が出た時点で「足りない」側に移ります。</p>
+    <div class="box">
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th class="cb"></th><th>箱</th><th>作品名</th><th class="n">手元</th><th class="n">既刊</th><th class="n">売価</th><th>出品中</th></tr></thead>
+          <tbody>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="王子が私をあきらめない!" aria-label="王子が私をあきらめない! を確認済みにする"></td><td class="box-cell">B-1</td><td>王子が私をあきらめない!</td><td class="n">1〜12巻</td><td class="n">全12巻 完結</td><td class="n yen">¥2,200</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="きみと青い春のはじまり" aria-label="きみと青い春のはじまり を確認済みにする"></td><td class="box-cell">B-1</td><td>きみと青い春のはじまり</td><td class="n">1〜5巻</td><td class="n">全5巻 完結</td><td class="n yen">¥1,900</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="春待つ僕ら" aria-label="春待つ僕ら を確認済みにする"></td><td class="box-cell">B-1</td><td>春待つ僕ら</td><td class="n">1〜14巻</td><td class="n">全14巻 完結</td><td class="n yen">¥2,300</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="墜落JKと廃人教師" aria-label="墜落JKと廃人教師 を確認済みにする"></td><td class="box-cell">B-1</td><td>墜落JKと廃人教師</td><td class="n">1〜20巻</td><td class="n">全20巻 完結</td><td class="n yen">¥3,100</td><td class="ch">Amazon・BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="スイッチガール!!" aria-label="スイッチガール!! を確認済みにする"></td><td class="box-cell">B-1</td><td>スイッチガール!!</td><td class="n">1〜25巻</td><td class="n">全25巻 完結</td><td class="n yen">¥2,700</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="『未』成熟" aria-label="『未』成熟 を確認済みにする"></td><td class="box-cell">B-1</td><td>『未』成熟</td><td class="n">1〜7巻</td><td class="n">全7巻 完結</td><td class="n yen">¥1,900</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="きよく、やましく、もどかしく。" aria-label="きよく、やましく、もどかしく。 を確認済みにする"></td><td class="box-cell">B-2</td><td>きよく、やましく、もどかしく。</td><td class="n">1〜7巻</td><td class="n">全7巻 完結</td><td class="n yen">¥1,600</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="ふつつかものですが" aria-label="ふつつかものですが を確認済みにする"></td><td class="box-cell">B-2</td><td>ふつつかものですが</td><td class="n">1〜4巻</td><td class="n">全4巻 完結</td><td class="n yen">¥1,100</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="消えた初恋" aria-label="消えた初恋 を確認済みにする"></td><td class="box-cell">B-2</td><td>消えた初恋</td><td class="n">1〜9巻</td><td class="n">全9巻 完結</td><td class="n yen">¥1,600</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="俺物語!!" aria-label="俺物語!! を確認済みにする"></td><td class="box-cell">B-2</td><td>俺物語!!</td><td class="n">1〜14巻</td><td class="n">全13巻＋番外編1巻</td><td class="n yen">¥2,000</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="クロノカノン（魔法陣クロノカノン）" aria-label="クロノカノン（魔法陣クロノカノン） を確認済みにする"></td><td class="box-cell">B-2</td><td>クロノカノン（魔法陣クロノカノン）</td><td class="n">1〜5巻</td><td class="n">全5巻 完結</td><td class="n yen">¥1,100</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="脱いで触って愛して" aria-label="脱いで触って愛して を確認済みにする"></td><td class="box-cell">B-2</td><td>脱いで触って愛して</td><td class="n">1〜18巻</td><td class="n">全18巻 完結</td><td class="n yen">¥1,900</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="恋とヒミツの学生寮" aria-label="恋とヒミツの学生寮 を確認済みにする"></td><td class="box-cell">B-2</td><td>恋とヒミツの学生寮</td><td class="n">1〜4巻</td><td class="n">全4巻 完結</td><td class="n yen">¥1,100</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="赤髪の白雪姫" aria-label="赤髪の白雪姫 を確認済みにする"></td><td class="box-cell">B-2</td><td>赤髪の白雪姫</td><td class="n">1〜27巻</td><td class="n">27巻（連載中）</td><td class="n yen">¥3,100</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="つむぐと恋になるふたり" aria-label="つむぐと恋になるふたり を確認済みにする"></td><td class="box-cell">B-3</td><td>つむぐと恋になるふたり</td><td class="n">1〜4巻</td><td class="n">全4巻 完結</td><td class="n yen">¥1,200</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="LOVE SO LIFE" aria-label="LOVE SO LIFE を確認済みにする"></td><td class="box-cell">B-3</td><td>LOVE SO LIFE</td><td class="n">1〜17巻</td><td class="n">全17巻 完結</td><td class="n yen">¥1,800</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="あきら先生は誰にも言えない" aria-label="あきら先生は誰にも言えない を確認済みにする"></td><td class="box-cell">B-3</td><td>あきら先生は誰にも言えない</td><td class="n">1〜10巻</td><td class="n">全10巻 完結</td><td class="n yen">¥1,600</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="溺れるナイフ" aria-label="溺れるナイフ を確認済みにする"></td><td class="box-cell">B-3</td><td>溺れるナイフ</td><td class="n">1〜17巻</td><td class="n">全17巻 完結</td><td class="n yen">¥4,000</td><td class="ch">Amazon・BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="バディゴ! BUDDY GO" aria-label="バディゴ! BUDDY GO を確認済みにする"></td><td class="box-cell">B-11</td><td>バディゴ! BUDDY GO</td><td class="n">1〜12巻</td><td class="n">全12巻 完結</td><td class="n yen">¥1,600</td><td class="ch">BASE・メルカリ・Qoo10</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="ヲタクに恋は難しい" aria-label="ヲタクに恋は難しい を確認済みにする"></td><td class="box-cell">B-11</td><td>ヲタクに恋は難しい</td><td class="n">1〜11巻</td><td class="n">全11巻 完結</td><td class="n yen">¥1,500</td><td class="ch">BASE・メルカリ・Qoo10</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="メイド・イン・ハニー" aria-label="メイド・イン・ハニー を確認済みにする"></td><td class="box-cell">B-11</td><td>メイド・イン・ハニー</td><td class="n">1〜6巻</td><td class="n">全6巻 完結</td><td class="n yen">¥1,000</td><td class="ch">BASE・メルカリ・Qoo10</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="古屋先生は杏ちゃんのモノ" aria-label="古屋先生は杏ちゃんのモノ を確認済みにする"></td><td class="box-cell">B-11</td><td>古屋先生は杏ちゃんのモノ</td><td class="n">1〜12巻</td><td class="n">全12巻 完結</td><td class="n yen">¥1,600</td><td class="ch">BASE・メルカリ・Qoo10</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="王子様と灰色の日々" aria-label="王子様と灰色の日々 を確認済みにする"></td><td class="box-cell">B-12</td><td>王子様と灰色の日々</td><td class="n">1〜4巻</td><td class="n">全4巻 完結</td><td class="n yen">¥1,300</td><td class="ch">Amazon・BASE・eBay・メルカリ・Qoo10</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="これからはじまる恋をおしえて" aria-label="これからはじまる恋をおしえて を確認済みにする"></td><td class="box-cell">B-12</td><td>これからはじまる恋をおしえて</td><td class="n">1〜4巻</td><td class="n">全4巻 完結</td><td class="n yen">¥1,300</td><td class="ch">Amazon・BASE・eBay・メルカリ・Qoo10</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="胸が鳴るのは君のせい" aria-label="胸が鳴るのは君のせい を確認済みにする"></td><td class="box-cell">B-12</td><td>胸が鳴るのは君のせい</td><td class="n">6冊</td><td class="n">全5巻＋番外編1巻</td><td class="n yen">¥1,400</td><td class="ch">BASE・eBay・メルカリ・Qoo10</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="かわいすぎる男子がお家で待っています" aria-label="かわいすぎる男子がお家で待っています を確認済みにする"></td><td class="box-cell">B-12</td><td>かわいすぎる男子がお家で待っています</td><td class="n">1〜7巻</td><td class="n">全7巻 完結</td><td class="n yen">¥1,400</td><td class="ch">Amazon・BASE・eBay・メルカリ・Qoo10</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="share" aria-label="share を確認済みにする"></td><td class="box-cell">B-12</td><td>share</td><td class="n">1〜3巻</td><td class="n">全3巻 完結</td><td class="n yen">¥900</td><td class="ch">BASE・メルカリ・Qoo10</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="グッドモーニング・キス" aria-label="グッドモーニング・キス を確認済みにする"></td><td class="box-cell">B-12</td><td>グッドモーニング・キス</td><td class="n">1〜23巻</td><td class="n">全23巻 完結</td><td class="n yen">¥2,600</td><td class="ch">BASE・メルカリ・Qoo10</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="フルーツバスケット" aria-label="フルーツバスケット を確認済みにする"></td><td class="box-cell">B-12</td><td>フルーツバスケット</td><td class="n">1〜23巻</td><td class="n">全23巻 完結</td><td class="n yen">¥2,600</td><td class="ch">BASE・メルカリ・Qoo10</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="花宵道中" aria-label="花宵道中 を確認済みにする"></td><td class="box-cell">B-16</td><td>花宵道中</td><td class="n">1〜6巻</td><td class="n">全6巻 完結</td><td class="n yen">¥1,900</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="キスは、原稿のあとで" aria-label="キスは、原稿のあとで を確認済みにする"></td><td class="box-cell">B-16</td><td>キスは、原稿のあとで</td><td class="n">1〜4巻</td><td class="n">全4巻 完結</td><td class="n yen">¥1,800</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="佐倉は私を好きすぎる" aria-label="佐倉は私を好きすぎる を確認済みにする"></td><td class="box-cell">B-16</td><td>佐倉は私を好きすぎる</td><td class="n">1〜5巻</td><td class="n">全5巻 完結</td><td class="n yen">¥1,900</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="ひよ恋" aria-label="ひよ恋 を確認済みにする"></td><td class="box-cell">B-16</td><td>ひよ恋</td><td class="n">1〜14巻</td><td class="n">全14巻 完結</td><td class="n yen">¥2,300</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="きみはこわれた王子くん" aria-label="きみはこわれた王子くん を確認済みにする"></td><td class="box-cell">B-16</td><td>きみはこわれた王子くん</td><td class="n">1〜2巻</td><td class="n">全2巻 完結</td><td class="n yen">¥900</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="ういらぶ。" aria-label="ういらぶ。 を確認済みにする"></td><td class="box-cell">B-17</td><td>ういらぶ。</td><td class="n">1〜11巻</td><td class="n">全11巻 完結</td><td class="n yen">¥1,600</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="5時から9時まで" aria-label="5時から9時まで を確認済みにする"></td><td class="box-cell">B-17</td><td>5時から9時まで</td><td class="n">1〜16巻</td><td class="n">全16巻 完結</td><td class="n yen">¥1,800</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="Bite Maker ～王様のΩ～" aria-label="Bite Maker ～王様のΩ～ を確認済みにする"></td><td class="box-cell">B-17</td><td>Bite Maker ～王様のΩ～</td><td class="n">1〜11巻</td><td class="n">全11巻 完結</td><td class="n yen">¥1,600</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="初恋はじめました。" aria-label="初恋はじめました。 を確認済みにする"></td><td class="box-cell">B-17</td><td>初恋はじめました。</td><td class="n">1〜5巻</td><td class="n">全5巻 完結</td><td class="n yen">¥1,100</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="君がブルーバード" aria-label="君がブルーバード を確認済みにする"></td><td class="box-cell">B-17</td><td>君がブルーバード</td><td class="n">1〜3巻</td><td class="n">全3巻 完結</td><td class="n yen">¥1,000</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="黒豹と16歳" aria-label="黒豹と16歳 を確認済みにする"></td><td class="box-cell">B-17</td><td>黒豹と16歳</td><td class="n">1〜11巻</td><td class="n">全11巻 完結</td><td class="n yen">¥2,200</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="青の花 器の森" aria-label="青の花 器の森 を確認済みにする"></td><td class="box-cell">B-18</td><td>青の花 器の森</td><td class="n">1〜10巻</td><td class="n">全10巻 完結</td><td class="n yen">¥3,500</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="海神の花嫁" aria-label="海神の花嫁 を確認済みにする"></td><td class="box-cell">B-18</td><td>海神の花嫁</td><td class="n">1〜8巻</td><td class="n">全8巻 完結</td><td class="n yen">¥2,000</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="鬼の千年恋" aria-label="鬼の千年恋 を確認済みにする"></td><td class="box-cell">B-18</td><td>鬼の千年恋</td><td class="n">1〜4巻</td><td class="n">全4巻 完結</td><td class="n yen">¥1,800</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="ハロー、イノセント" aria-label="ハロー、イノセント を確認済みにする"></td><td class="box-cell">B-18</td><td>ハロー、イノセント</td><td class="n">1〜8巻</td><td class="n">全8巻 完結</td><td class="n yen">¥2,000</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="呪い子の召使い" aria-label="呪い子の召使い を確認済みにする"></td><td class="box-cell">B-18</td><td>呪い子の召使い</td><td class="n">1〜9巻</td><td class="n">全9巻 完結</td><td class="n yen">¥2,000</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="花のち晴れ～花男 Next Season～" aria-label="花のち晴れ～花男 Next Season～ を確認済みにする"></td><td class="box-cell">B-18</td><td>花のち晴れ～花男 Next Season～</td><td class="n">1〜15巻</td><td class="n">全15巻 完結</td><td class="n yen">¥2,300</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="三日月まおは♂♀をえらべない" aria-label="三日月まおは♂♀をえらべない を確認済みにする"></td><td class="box-cell">B-19</td><td>三日月まおは♂♀をえらべない</td><td class="n">1〜5巻</td><td class="n">全5巻 完結</td><td class="n yen">¥1,100</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="スキ キライ キス" aria-label="スキ キライ キス を確認済みにする"></td><td class="box-cell">B-19</td><td>スキ キライ キス</td><td class="n">1〜3巻</td><td class="n">全3巻 完結</td><td class="n yen">¥1,000</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="オレンジ チョコレート" aria-label="オレンジ チョコレート を確認済みにする"></td><td class="box-cell">B-19</td><td>オレンジ チョコレート</td><td class="n">1〜13巻</td><td class="n">全13巻 完結</td><td class="n yen">¥1,600</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="高嶺と花" aria-label="高嶺と花 を確認済みにする"></td><td class="box-cell">B-19</td><td>高嶺と花</td><td class="n">1〜18巻</td><td class="n">全18巻 完結</td><td class="n yen">¥1,900</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="秘密 THE TOP SECRET 新装版" aria-label="秘密 THE TOP SECRET 新装版 を確認済みにする"></td><td class="box-cell">B-19</td><td>秘密 THE TOP SECRET 新装版</td><td class="n">1〜12巻</td><td class="n">全12巻 完結</td><td class="n yen">¥2,100</td><td class="ch">BASE・eBay・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="キスで起こして。" aria-label="キスで起こして。 を確認済みにする"></td><td class="box-cell">B-19</td><td>キスで起こして。</td><td class="n">1〜8巻</td><td class="n">全8巻 完結</td><td class="n yen">¥2,000</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="ロマンチカクロック" aria-label="ロマンチカクロック を確認済みにする"></td><td class="box-cell">B-28</td><td>ロマンチカクロック</td><td class="n">1〜10巻</td><td class="n">全10巻 完結</td><td class="n yen">¥1,600</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="マルタの恋" aria-label="マルタの恋 を確認済みにする"></td><td class="box-cell">B-28</td><td>マルタの恋</td><td class="n">1〜3巻</td><td class="n">全3巻 完結</td><td class="n yen">¥1,000</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="恋に無駄口" aria-label="恋に無駄口 を確認済みにする"></td><td class="box-cell">B-28</td><td>恋に無駄口</td><td class="n">1〜12巻</td><td class="n">全12巻 完結</td><td class="n yen">¥1,700</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="不覚にもきゅんときた" aria-label="不覚にもきゅんときた を確認済みにする"></td><td class="box-cell">B-28</td><td>不覚にもきゅんときた</td><td class="n">1〜3巻</td><td class="n">全3巻 完結</td><td class="n yen">¥1,000</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="雛鳥のワルツ" aria-label="雛鳥のワルツ を確認済みにする"></td><td class="box-cell">B-28</td><td>雛鳥のワルツ</td><td class="n">1〜9巻</td><td class="n">全9巻 完結</td><td class="n yen">¥1,600</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="愛してるぜベイベ★★" aria-label="愛してるぜベイベ★★ を確認済みにする"></td><td class="box-cell">B-28</td><td>愛してるぜベイベ★★</td><td class="n">1〜7巻</td><td class="n">全7巻 完結</td><td class="n yen">¥1,200</td><td class="ch">BASE・メルカリ</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="天に恋う" aria-label="天に恋う を確認済みにする"></td><td class="box-cell">B-28</td><td>天に恋う</td><td class="n">1〜17巻</td><td class="n">全17巻 完結</td><td class="n yen">¥1,800</td><td class="ch">BASE・メルカリ</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>6. 欠番にしたもの <span class="count">4件・出品していません</span></h2>
+    <p class="note">あとから続きの巻が見つかったため、そのセットの登録を取り消したものです。現物がそろってから撮り直して登録し直します。黒豹と16歳は、すでに11巻そろいで登録し直して出品済みです。</p>
+    <div class="box">
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th class="cb"></th><th>箱</th><th>作品名</th><th class="n">取り消した中身</th><th>欠番にした理由</th></tr></thead>
+          <tbody>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="反抗期なカレシ" aria-label="反抗期なカレシ を確認済みにする"></td><td class="box-cell">B-16</td><td>反抗期なカレシ</td><td class="n">1〜6巻（6冊）</td><td>7〜9巻が後から見つかった（本日 取り下げ）</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="蝶か犯か ～極道様 溢れて溢れて泣かせたい～" aria-label="蝶か犯か ～極道様 溢れて溢れて泣かせたい～ を確認済みにする"></td><td class="box-cell">B-17</td><td>蝶か犯か ～極道様 溢れて溢れて泣かせたい～</td><td class="n">1〜6巻（6冊）</td><td>7〜9巻が後から見つかった（本日 取り下げ）</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="黒豹と16歳" aria-label="黒豹と16歳 を確認済みにする"></td><td class="box-cell">B-17</td><td>黒豹と16歳</td><td class="n">9冊（8巻・9巻抜け）</td><td>8巻・9巻が後から見つかった（8月4日）→ 11巻そろいで再登録済み</td></tr>
+            <tr><td class="cb"><input type="checkbox" class="tick" data-k="ガラスの仮面" aria-label="ガラスの仮面 を確認済みにする"></td><td class="box-cell">B-28</td><td>ガラスの仮面</td><td class="n">17冊（15巻・16巻抜け）</td><td>15巻・16巻を後から探して補うため（8月4日）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>調べ方</b>　作品ごとに「今どこまで発行されているか」を出版社・書店・電子書店の情報で1件ずつ確認しました。当社のカタログ照合だけでは、そもそもデータの無い作品が「先の巻は無い」と誤って判定されるため、判断には使っていません。</p>
+    <p><b>分冊版にご注意ください。</b>　電子書店には紙の単行本とは別に「分冊版」「マイクロ版」があり、巻数が何倍にもなります（例：君がブルーバードは紙で全3巻、電子の分冊版で全12巻）。この一覧の既刊数はすべて紙の単行本の巻数です。</p>
+    <p><b>連載中のものは時間とともに変わります。</b>　アンサー・かげきしょうじょ!!・ミントチョコレート・学園ベビーシッターズ・センチメンタル キス・赤髪の白雪姫は連載が続いています。新しい巻が出れば、そろっていたものも「足りない」側に移ります。</p>
+    <p><b>この一覧に載っていないもの</b>　在庫台帳に登録されていない検品記録（ヒカルの碁、はいからさんが通る）は、出品されていないため対象外です。</p>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var KEY = 'samurai-volume-check-v1';
+    var boxes = Array.prototype.slice.call(document.querySelectorAll('.tick[data-k]'));
+    var done = document.getElementById('done');
+    var all = document.getElementById('all');
+    var fill = document.getElementById('fill');
+    var reset = document.getElementById('reset');
+
+    function load() {
+      try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; }
+    }
+    function save(state) {
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    }
+    function paint() {
+      var n = boxes.filter(function (b) { return b.checked; }).length;
+      done.textContent = n;
+      fill.style.width = boxes.length ? (n / boxes.length * 100) + '%' : '0';
+    }
+
+    var state = load();
+    all.textContent = boxes.length;
+    boxes.forEach(function (b) {
+      if (state[b.dataset.k]) b.checked = true;
+      b.addEventListener('change', function () {
+        var st = load();
+        if (b.checked) st[b.dataset.k] = 1; else delete st[b.dataset.k];
+        save(st);
+        paint();
+      });
+    });
+    paint();
+
+    reset.addEventListener('click', function () {
+      if (!window.confirm('付けた印をすべて消します。よろしいですか。')) return;
+      boxes.forEach(function (b) { b.checked = false; });
+      save({});
+      paint();
+    });
+  })();
+</script>
+
+</body>
+</html>
