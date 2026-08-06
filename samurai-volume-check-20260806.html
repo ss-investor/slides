@@ -144,6 +144,8 @@
   .reset:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   @media (prefers-reduced-motion: reduce) { .tick, .bar i { transition: none; } }
   .title { font-weight: 600; font-size: 15.5px; line-height: 1.45; overflow-wrap: anywhere; }
+  .pending { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 2px; background: var(--warn); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .04em; vertical-align: 2px; }
+  .gap.is-warn b { color: var(--warn); }
   .liar { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 2px; background: var(--alarm); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .04em; vertical-align: 2px; }
   .gap { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .gap b { display: block; font-size: 22px; line-height: 1.2; color: var(--miss); }
@@ -200,8 +202,8 @@
   <dl class="totals">
     <div class="total"><dt>調べたセット</dt><dd>93<small> 件</small></dd></div>
     <div class="total is-have"><dt>そろっている</dt><dd>59<small> 件</small></dd></div>
-    <div class="total is-miss"><dt>お尻が足りない</dt><dd>28<small> 件</small></dd></div>
-    <div class="total is-alarm"><dt>表示が事実と違う</dt><dd>2<small> 件</small></dd></div>
+    <div class="total is-miss"><dt>手を打つべきもの</dt><dd>29<small> 件</small></dd></div>
+    <div class="total is-alarm"><dt>うち表示が事実と違う</dt><dd>2<small> 件</small></dd></div>
     <div class="total"><dt>足りない冊数</dt><dd>89<small> 冊以上</small></dd></div>
   </dl>
 
@@ -212,57 +214,6 @@
     <button type="button" class="reset" id="reset">印をすべて消す</button>
   </div>
 
-  <div class="panel alarm">
-    <h2>1. すぐ手を打つべき2件 <span class="count">「全巻完結セット」と表示して販売中</span></h2>
-    <p class="note">この2件は、まだ続きが出ている作品を「全巻完結」と書いて売っています。買った人が全巻そろうつもりで受け取るため、返品や低評価に直結します。表示を直すか、買えない状態にするかを先に決める必要があります。</p>
-
-    <div class="box">
-      <div class="box-head"><span class="box-no">B-19</span><span class="box-sum">売価 ¥900 ／ 10冊 不足</span></div>
-      <div class="item">
-        <input type="checkbox" class="tick" data-k="ぶどうとスミレ" aria-label="ぶどうとスミレ を確認済みにする">
-        <div class="title">ぶどうとスミレ<span class="liar">表示が事実と違う</span></div>
-        <div class="gap"><b>10</b><span>冊 不足</span></div>
-        <div class="detail">
-          <div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp miss">3</span><span class="sp miss">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span><span class="sp miss">10</span><span class="sp miss">11</span><span class="sp miss">12</span></div>
-          <div class="meta">
-            <span><span class="k">手元</span> 1〜2巻</span><span><span class="k">既刊</span> 全12巻で完結</span>
-            <span><span class="k">出品中</span> BASE・メルカリ</span>
-            <span><span class="k">今の表示</span> 「1〜2巻 全巻完結セット」</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="box">
-      <div class="box-head"><span class="box-no">B-11</span><span class="box-sum">売価 ¥900 ／ 1冊 不足</span></div>
-      <div class="item">
-        <input type="checkbox" class="tick" data-k="三度のメシと、アレが好き。" aria-label="三度のメシと、アレが好き。 を確認済みにする">
-        <div class="title">三度のメシと、アレが好き。<span class="liar">表示が事実と違う</span></div>
-        <div class="gap"><b>1</b><span>冊 不足</span></div>
-        <div class="detail">
-          <div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span></div>
-          <div class="meta">
-            <span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全4巻で完結</span>
-            <span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span>
-            <span><span class="k">今の表示</span> 「1〜3巻 全巻完結セット」</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel sold">
-    <h2>2. 売れた1件の確認結果 <span class="count">問題ありません。そのまま発送できます</span></h2>
-    <label class="checkline"><input type="checkbox" class="tick" data-k="恋と呼ぶには気持ち悪い" aria-label="恋と呼ぶには気持ち悪い を確認済みにする"> 発送してよいか現物を見て確認した</label>
-    <p class="note"><b>恋と呼ぶには気持ち悪い</b>（保管箱 B-11 ／ メルカリ ¥1,100 ／ 8月4日に売却・まだ発送していません）。全8巻で完結している作品で、手元も1〜8巻そろっています。「全巻完結セット」という表示どおりの中身です。</p>
-  </div>
-
-  <div class="panel warn">
-    <h2>3. 判断を保留した1件 <span class="count">完結したという確証が取れませんでした</span></h2>
-    <label class="checkline"><input type="checkbox" class="tick" data-k="薔薇色ノ約束" aria-label="薔薇色ノ約束 を確認済みにする"> 表示を直すか判断した</label>
-    <p class="note"><b>薔薇色ノ約束</b>（保管箱 B-11 ／ 1〜13巻 ／ 売価 ¥1,600 ／ BASE・メルカリ・Qoo10で出品中）。13巻まで持っていて既刊も13巻ですが、この作品が完結したという確証が取れませんでした。巻は足りていませんが、「全巻完結セット」の表示は外したほうが安全です。</p>
-  </div>
-
   <div class="legend">
     <span class="row"><span class="sp have">7</span> 手元にある巻</span>
     <span class="row"><span class="sp miss">8</span> 足りない巻</span>
@@ -271,7 +222,8 @@
   </div>
 
   <section>
-    <h2>4. お尻の巻が足りない <span class="count">26件（上の2件を除く）・保管箱の番号順</span></h2>
+    <h2>1. お尻の巻が足りない <span class="count">29件・保管箱の番号順</span></h2>
+    <p class="note"><b style="color:var(--alarm)">まず「表示が事実と違う」の2件（ぶどうとスミレ／三度のメシと、アレが好き。）から手を打ってください。</b>まだ続きが出ている作品を「全巻完結」と書いて売っており、買った人が全巻そろうつもりで受け取るため、返品や低評価に直結します。<b style="color:var(--warn)">薔薇色ノ約束</b>は巻は足りていますが、完結したという確証が取れませんでした。「全巻完結セット」の表示は外したほうが安全です。</p>
     <p class="note">不足が多いものほど、そろえたときの売価が大きく上がります。今回取り下げた「反抗期なカレシ」はB-16、「蝶か犯か」はB-17にありました。同じ箱に不足品が固まっているので、その2箱から見るのが早いと思われます。</p>
 
     <div class="box">
@@ -311,7 +263,11 @@
     </div>
 
     <div class="box">
-      <div class="box-head"><span class="box-no">B-11</span><span class="box-sum">2件 / 6冊 不足</span></div>
+      <div class="box-head"><span class="box-no">B-11</span><span class="box-sum">4件 / 7冊 不足（ほか 要確認1件）</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="三度のメシと、アレが好き。" aria-label="三度のメシと、アレが好き。 を確認済みにする"><div class="title">三度のメシと、アレが好き。<span class="liar">表示が事実と違う</span></div><div class="gap"><b>1</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp miss">4</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜3巻</span><span><span class="k">既刊</span> 全4巻で完結</span><span><span class="k">売価</span> ¥900</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span><span><span class="k">今の表示</span> 「1〜3巻 全巻完結セット」</span></div></div>
+      </div>
       <div class="item"><input type="checkbox" class="tick" data-k="いびってこない義母と義姉" aria-label="いびってこない義母と義姉 を確認済みにする"><div class="title">いびってこない義母と義姉</div><div class="gap"><b>4</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span></div>
         <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 9巻</span><span><span class="k">売価</span> ¥1,600</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span></div></div>
@@ -319,7 +275,11 @@
       <div class="item"><input type="checkbox" class="tick" data-k="恋するMOON DOG" aria-label="恋するMOON DOG を確認済みにする"><div class="title">恋するMOON DOG</div><div class="gap"><b>2</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp miss">12</span><span class="sp miss">13</span></div>
         <div class="meta"><span><span class="k">手元</span> 1〜11巻</span><span><span class="k">既刊</span> 13巻</span><span><span class="k">売価</span> ¥1,500</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span></div></div>
+        <div class="item"><input type="checkbox" class="tick" data-k="薔薇色ノ約束" aria-label="薔薇色ノ約束 を確認済みにする"><div class="title">薔薇色ノ約束<span class="pending">完結か確認が必要</span></div><div class="gap is-warn"><b>?</b><span>要確認</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp have">6</span><span class="sp have">7</span><span class="sp have">8</span><span class="sp have">9</span><span class="sp have">10</span><span class="sp have">11</span><span class="sp have">12</span><span class="sp have">13</span><span class="sp more"></span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜13巻</span><span><span class="k">既刊</span> 13巻（完結したか確証なし）</span><span><span class="k">売価</span> ¥1,600</span><span><span class="k">出品中</span> BASE・メルカリ・Qoo10</span><span><span class="k">今の表示</span> 「1〜13巻 全巻完結セット」</span></div></div>
       </div>
+    </div>
     </div>
 
     <div class="box">
@@ -387,7 +347,11 @@
     </div>
 
     <div class="box">
-      <div class="box-head"><span class="box-no">B-19</span><span class="box-sum">3件 / 9冊以上 不足（ぶどうとスミレを除く）</span></div>
+      <div class="box-head"><span class="box-no">B-19</span><span class="box-sum">4件 / 19冊以上 不足</span></div>
+      <div class="item"><input type="checkbox" class="tick" data-k="ぶどうとスミレ" aria-label="ぶどうとスミレ を確認済みにする"><div class="title">ぶどうとスミレ<span class="liar">表示が事実と違う</span></div><div class="gap"><b>10</b><span>冊 不足</span></div>
+        <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp miss">3</span><span class="sp miss">4</span><span class="sp miss">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span><span class="sp miss">10</span><span class="sp miss">11</span><span class="sp miss">12</span></div>
+        <div class="meta"><span><span class="k">手元</span> 1〜2巻</span><span><span class="k">既刊</span> 全12巻で完結</span><span><span class="k">売価</span> ¥900</span><span><span class="k">出品中</span> BASE・メルカリ</span><span><span class="k">今の表示</span> 「1〜2巻 全巻完結セット」</span></div></div>
+      </div>
       <div class="item"><input type="checkbox" class="tick" data-k="センチメンタル キス" aria-label="センチメンタル キス を確認済みにする"><div class="title">センチメンタル キス</div><div class="gap"><b>7+</b><span>冊 不足</span></div>
         <div class="detail"><div class="spines"><span class="sp have">1</span><span class="sp have">2</span><span class="sp have">3</span><span class="sp have">4</span><span class="sp have">5</span><span class="sp miss">6</span><span class="sp miss">7</span><span class="sp miss">8</span><span class="sp miss">9</span><span class="sp miss">10</span><span class="sp miss">11</span><span class="sp miss">12</span><span class="sp more"></span></div>
         <div class="meta"><span><span class="k">手元</span> 1〜5巻</span><span><span class="k">既刊</span> 12巻以上（連載中）</span><span><span class="k">売価</span> ¥1,000</span><span><span class="k">出品中</span> BASE・メルカリ</span></div></div>
@@ -419,8 +383,14 @@
     </div>
   </section>
 
+  <div class="panel sold">
+    <h2>2. 売れた1件の確認結果 <span class="count">問題ありません。そのまま発送できます</span></h2>
+    <label class="checkline"><input type="checkbox" class="tick" data-k="恋と呼ぶには気持ち悪い" aria-label="恋と呼ぶには気持ち悪い を確認済みにする"> 発送してよいか現物を見て確認した</label>
+    <p class="note"><b>恋と呼ぶには気持ち悪い</b>（保管箱 B-11 ／ メルカリ ¥1,100 ／ 8月4日に売却・まだ発送していません）。全8巻で完結している作品で、手元も1〜8巻そろっています。「全巻完結セット」という表示どおりの中身です。</p>
+  </div>
+
   <section>
-    <h2>5. そろっている <span class="count">59件・このまま売って問題ありません</span></h2>
+    <h2>3. そろっている <span class="count">59件・このまま売って問題ありません</span></h2>
     <p class="note">既刊の最後の巻まで手元にあるものです。完結した作品だけでなく、連載中でも今出ている巻をすべて持っているもの（赤髪の白雪姫など）を含みます。連載中のものは、次の巻が出た時点で「足りない」側に移ります。</p>
     <div class="box">
       <div class="tablewrap">
@@ -493,7 +463,7 @@
   </section>
 
   <section>
-    <h2>6. 欠番にしたもの <span class="count">4件・出品していません</span></h2>
+    <h2>4. 欠番にしたもの <span class="count">4件・出品していません</span></h2>
     <p class="note">あとから続きの巻が見つかったため、そのセットの登録を取り消したものです。現物がそろってから撮り直して登録し直します。黒豹と16歳は、すでに11巻そろいで登録し直して出品済みです。</p>
     <div class="box">
       <div class="tablewrap">
