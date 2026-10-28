@@ -1113,7 +1113,7 @@
         <strong>継続コマンド</strong>（<code>~/projects/ebay-arbitrage/apps/scraper</code>で）：<br>
         <code>export EBAY_CLIENT_ID=$(gcloud secrets versions access latest --secret=ebay-app-id-prod)</code><br>
         <code>export EBAY_CLIENT_SECRET=$(gcloud secrets versions access latest --secret=ebay-cert-id-prod)</code><br>
-        <code>export DB_URL="postgresql://app:…@35.221.125.218:5432/ebay_arbitrage?sslmode=require"</code>（接続情報は本書「技術メモ」参照）<br>
+        <code>export DB_URL="postgresql://app:…@（DBの住所は非公開）:5432/ebay_arbitrage?sslmode=require"</code>（接続情報は本書「技術メモ」参照）<br>
         <code>GENRE=game ORDER=margin LIMIT=600 uv run python scripts/ebay_export_scan.py</code> ←/games表示対象を埋める<br>
         ・<strong>GENRE=book / cd / dvd</strong> も同様に回せる（is_cd=398,104・is_dvd=565,023件マスタ有り）。<br>
         ・★<strong>eBay Browse API 無料枠=5,000 calls/日</strong>。1回のLIMITは数百〜800程度に抑え日を分ける。<code>RECHECK_DAYS=7</code>で既確認分は自動スキップ。停止=<code>touch /tmp/ebay_export_scan_stop</code>。認証はBrowse=アプリ認証(ユーザートークン不要)。
@@ -1389,7 +1389,7 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.ssinvestor.arbitrage
       <h4>DB接続</h4>
       <div class="formula">
 PSQL="/opt/homebrew/Cellar/libpq/18.3/bin/psql"<br>
-DB_URL="postgresql://app:bYiKxN9yE7lm7nU17gW51JR2p7ZbypP2@35.221.125.218:5432/ebay_arbitrage?sslmode=require"<br>
+DB_URL="（接続先とパスワードは母艦の apps/scraper/.env の DATABASE_URL を参照）"<br>
 "$PSQL" "$DB_URL"
       </div>
 
